@@ -43,4 +43,3 @@ The project encompasses the following key aspects:
   Emulate memory for storing instructions and data.
 
   ### 3. Mechanism of Loading Instructions to Memory
-  Describe how instructions are loaded into memory for execution.
