@@ -7,10 +7,13 @@
 #include "memory.hpp"
 
 InstructionCycle::InstructionCycle() {
-    Processor proc;
-    Memory mem;
+    proc.VMInit();
 }
 
-void InstructionCycle::IFetch() {
+Processor InstructionCycle::retProcessorObj() {
+    return proc;
+}
 
+Memory InstructionCycle::retMemoryObj() {
+    return mem;
 }

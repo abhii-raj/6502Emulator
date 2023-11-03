@@ -9,6 +9,7 @@
 #include <cstdint>
 
 class Processor {
+public:
     uint16_t PC; // 16 bit Program Counter register
     uint8_t A;   // 8 bit Accumulator register
     uint8_t X;   // 8 bit Index register X specific to 6502
@@ -22,7 +23,6 @@ class Processor {
 
     // Initialises the values of relevant registers before instruction fetch
     void VMInit();
-
 };
 
 
