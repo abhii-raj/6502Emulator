@@ -5,7 +5,7 @@
 #include "processor.hpp"
 
 void Processor::VMInit() {
-    PC = 0b0000000000000000;
+    PC = 0b0000000000001010;
     A = 0;
     X = 0;
     Y = 0;

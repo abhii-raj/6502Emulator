@@ -7,5 +7,6 @@ int main() {
     dataView dv;
 
     dv.FDump(IC.retProcessorObj());
+    dv.PCDump_hex(IC.retProcessorObj());
     return 0;
 }

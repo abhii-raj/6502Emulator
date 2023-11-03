@@ -9,10 +9,13 @@
 class dataView {
 public:
     // register dump
-    /***void PCDump_hex(Processor P);
+    void PCDump_hex(Processor P);
     void ADump_hex(Processor P);
     void XDump_hex(Processor P);
-    void YDump_hex(Processor P);***/
+    void YDump_hex(Processor P);
+    void ADump_bin(Processor P);
+    void XDump_bin(Processor P);
+    void YDump_bin(Processor P);
 
     // outputs the individual bits of the flag register
     // from 7th bit to 0th bit
