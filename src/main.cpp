@@ -6,6 +6,6 @@ int main() {
     InstructionCycle IC;
     dataView dv;
 
-    dv.FDump_hex(IC.retProcessorObj());
+    dv.FDump(IC.retProcessorObj());
     return 0;
 }

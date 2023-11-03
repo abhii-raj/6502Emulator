@@ -13,7 +13,10 @@ public:
     void ADump_hex(Processor P);
     void XDump_hex(Processor P);
     void YDump_hex(Processor P);***/
-    void FDump_hex(Processor P);
+
+    // outputs the individual bits of the flag register
+    // from 7th bit to 0th bit
+    void FDump(Processor P);
 
     // mem dump
     //void StackDump_hex();
