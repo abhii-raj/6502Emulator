@@ -11,6 +11,12 @@ class Memory {
     // has 2^16 addressable memory locations
     // each memory location has 8 bits
     uint8_t addrLoc[65536];
+public:
+    void setMem(int loc, int val);
+    void readMem(int loc);
+
+    // inserts some random instruction at few locations
+    Memory();
 };
 
 

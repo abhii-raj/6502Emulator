@@ -5,7 +5,7 @@
 #include "processor.hpp"
 
 void Processor::VMInit() {
-    PC = 0b0000000000001010;
+    PC = 0x0400; // for now assume that PC starts from 0x0400
     A = 0;
     X = 0;
     Y = 0;
