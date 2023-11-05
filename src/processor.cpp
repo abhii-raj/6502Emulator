@@ -14,3 +14,8 @@ void Processor::VMInit() {
     // unused 5th bit(5th bit) and Interrupt bit(2nd bit) is set as 1
     FR = 0b00100100;
 }
+
+// increments the clock tick by the parameter value
+void Processor::updateClock(int ticks) {
+    cpuClock += ticks;
+}

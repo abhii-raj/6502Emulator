@@ -21,8 +21,14 @@ public:
     // negative(N), overflow(O), reserved, break(B), decimal(D), interrupt disable(I), zero(Z), and carry(C) bit
     uint8_t FR;
 
+    // cpu clock
+    long cpuClock = 0;
+
     // Initialises the values of relevant registers before instruction fetch
     void VMInit();
+
+    // increments the clock tick by the parameter value
+    void updateClock(int ticks);
 };
 
 
