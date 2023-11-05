@@ -29,6 +29,9 @@ public:
 
     // increments the clock tick by the parameter value
     void updateClock(int ticks);
+
+    // gives the location of top of the stack
+    int retStackTopLoc();
 };
 
 

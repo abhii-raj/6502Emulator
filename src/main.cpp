@@ -1,5 +1,6 @@
 #include <iostream>
 #include "memory.hpp"
+#include "processor.hpp"
 //#include "instructionCycle.hpp"
 //#include "dataView.hpp"
 
@@ -28,6 +29,9 @@ int main() {
     memo.readMem(0x040D);
     memo.readMem(0x040E);
 
+    Processor P;
+    P.VMInit();
+    std::cout << std::hex << P.retStackTopLoc() << std::endl;
 
     return 0;
 }
