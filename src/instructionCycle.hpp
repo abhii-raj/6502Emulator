@@ -34,6 +34,15 @@ class InstructionCycle {
             {}
     };
 
+    void LDA_imdt();  // LDA #oper
+    void LDA_zpg();   // LDA oper
+    void LDA_zpgx();  // LDA oper, X
+    void LDA_abs();   // LDA oper
+    void LDA_absx();  // LDA oper, X
+    void LDA_absy();  // LDA oper, Y
+    void LDA_ind_x(); // LDA (oper ,X)
+    void LDA_ind_y(); // LDA (oper), Y .... verify addressing mode
+
 public:
     InstructionCycle();
     void IFetch();
