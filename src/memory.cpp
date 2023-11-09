@@ -35,6 +35,9 @@ Memory::Memory() {
     setMem(0x040C, 0x8D); // STA
     setMem(0x040D, 0x02); // $0202
     setMem(0x040E, 0x02);
+
+    // termination instruction for now
+    setMem(0x0411, 0x69);
 }
 
 void Memory::setMem(int loc, int val) {
@@ -43,4 +46,8 @@ void Memory::setMem(int loc, int val) {
 
 void Memory::readMem(int loc) {
     std::cout << std::hex << (int)addrLoc[loc] << std::endl;
+}
+
+uint8_t Memory::readMemVal(int loc) {
+    return addrLoc[loc];
 }

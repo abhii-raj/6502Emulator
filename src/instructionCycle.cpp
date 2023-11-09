@@ -17,3 +17,28 @@ Processor InstructionCycle::retProcessorObj() {
 Memory InstructionCycle::retMemoryObj() {
     return mem;
 }
+
+void InstructionCycle::IFetch() {
+    uint8_t opc;
+    while((opc = mem.readMemVal(proc.PC)) != 0x69) {
+
+        Execute(opc);
+        UpdatePC(opc);
+        proc.updateClock(opc);
+    }
+}
+
+void InstructionCycle::Execute(uint8_t opcode) {
+    switch (opcode) {
+        case 0xA9:
+            break;
+        case 0x8D:
+            break;
+    }
+}
+
+void InstructionCycle::UpdatePC(uint8_t opcode) {
+    proc.PC += InstrByteTable[proc.highNibble(opcode)][proc.lowNibble(opcode)];
+}
+
+

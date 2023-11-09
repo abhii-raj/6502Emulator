@@ -9,6 +9,28 @@
 #include <cstdint>
 
 class Processor {
+
+    // table to store how many cpu clock cycle is taken by a particular instruction
+    // first index is the high nibble value
+    // second index is the low nibble value
+    int InstrTicksTable[16][16] = {
+            {},
+            {},
+            {},
+            {},
+            {},
+            {},
+            {},
+            {},
+            {},
+            {},
+            {},
+            {},
+            {},
+            {},
+            {},
+            {}
+    };
 public:
     uint16_t PC; // 16 bit Program Counter register
     uint8_t A;   // 8 bit Accumulator register
@@ -27,11 +49,14 @@ public:
     // Initialises the values of relevant registers before instruction fetch
     void VMInit();
 
-    // increments the clock tick by the parameter value
-    void updateClock(int ticks);
+    // increments the clock tick depending on opcode
+    void updateClock(uint8_t opcode);
 
     // gives the location of top of the stack
     int retStackTopLoc();
+
+    uint8_t lowNibble(uint8_t opcode);
+    uint8_t highNibble(uint8_t opcode);
 };
 
 

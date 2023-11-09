@@ -21,11 +21,19 @@ void Processor::VMInit() {
 }
 
 // increments the clock tick by the parameter value
-void Processor::updateClock(int ticks) {
-    cpuClock += ticks;
+void Processor::updateClock(uint8_t opcode) {
+    cpuClock += InstrTicksTable[lowNibble(opcode)][highNibble(opcode)];
 }
 
 // gives the location of top of the stack
 int Processor::retStackTopLoc() {
     return (SP + 0x100);
+}
+
+uint8_t Processor::lowNibble(uint8_t opcode) {
+    return (opcode % 16);
+}
+uint8_t Processor::highNibble(uint8_t opcode) {
+    opcode = opcode / 16;
+    return (opcode % 16);
 }

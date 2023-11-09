@@ -14,7 +14,7 @@ class Memory {
 public:
     void setMem(int loc, int val);
     void readMem(int loc);
-
+    uint8_t readMemVal(int loc);
     // inserts some random instruction at few locations
     Memory();
 };
