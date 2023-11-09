@@ -57,6 +57,14 @@ public:
 
     uint8_t lowNibble(uint8_t opcode);
     uint8_t highNibble(uint8_t opcode);
+
+    void setNegativeBit();
+    void setOverflowBit();
+    void setBreakBit();
+    void setDecimalBit();
+    void setInterruptDisableBit();
+    void setZeroBit();
+    void setCarryBit();
 };
 
 

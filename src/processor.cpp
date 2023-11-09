@@ -37,3 +37,25 @@ uint8_t Processor::highNibble(uint8_t opcode) {
     opcode = opcode / 16;
     return (opcode % 16);
 }
+
+void Processor::setNegativeBit() {
+    FR = FR|0b10000000;
+}
+void Processor::setOverflowBit() {
+    FR = FR|0b01000000;
+}
+void Processor::setBreakBit() {
+    FR = FR|0b00010000;
+}
+void Processor::setDecimalBit() {
+    FR = FR|0b00001000;
+}
+void Processor::setInterruptDisableBit() {
+    FR = FR|0b00000100;
+}
+void Processor::setZeroBit() {
+    FR = FR|0b00000010;
+}
+void Processor::setCarryBit() {
+    FR = FR|0b00000001;
+}
