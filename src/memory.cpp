@@ -40,14 +40,26 @@ Memory::Memory() {
     setMem(0x0402, 0x69);
 }
 
-void Memory::setMem(int loc, int val) {
+void Memory::setMem(uint16_t loc, uint8_t val) {
     addrLoc[loc] = val;
 }
 
-void Memory::readMem(int loc) {
+void Memory::readMem(uint16_t loc) {
     std::cout << std::hex << (int)addrLoc[loc] << std::endl;
 }
 
-uint8_t Memory::readMemVal(int loc) {
+uint8_t Memory::readMemVal(uint16_t loc) {
     return addrLoc[loc];
+}
+
+// reads next two words(of 8 bits each) from memory and returns the effective 16-bit  number
+// uses little endian
+// less significant byte are at earlier location
+uint16_t Memory::readNextTwoWords(uint16_t startLoc) {
+    uint16_t lsB = (uint16_t)readMemVal(startLoc);
+    uint16_t msB = (uint16_t)readMemVal(startLoc + 1);
+    msB = (msB << 8);
+    uint16_t effVal = lsB + msB;
+
+    return effVal;
 }
