@@ -14,7 +14,7 @@ Memory::Memory() {
     setMem(0x0401, 0x01); // #$01
 
     // STA $0200
-    setMem(0x0402, 0x8D); // STA
+    /***setMem(0x0402, 0x8D); // STA
     setMem(0x0403, 0x00); // $0200
     setMem(0x0404, 0x02);
 
@@ -34,10 +34,10 @@ Memory::Memory() {
     // STA $0202
     setMem(0x040C, 0x8D); // STA
     setMem(0x040D, 0x02); // $0202
-    setMem(0x040E, 0x02);
+    setMem(0x040E, 0x02);****/
 
     // termination instruction for now
-    setMem(0x0411, 0x69);
+    setMem(0x0402, 0x69);
 }
 
 void Memory::setMem(int loc, int val) {
