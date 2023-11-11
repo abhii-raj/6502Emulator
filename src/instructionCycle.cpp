@@ -9,6 +9,20 @@
 
 InstructionCycle::InstructionCycle() {
     proc.VMInit();
+
+    uint8_t opcode;
+    dataView dv;
+    while((opcode = IFetch()) != 0x69) {
+        dv.ADump_hex(proc);
+        dv.PCDump_hex(proc);
+        dv.FDump(proc);
+        Execute(opcode);
+        //UpdatePC(opc);
+        //proc.updateClock(opc);
+    }
+    dv.ADump_hex(proc);
+    dv.PCDump_hex(proc);
+    dv.FDump(proc);
 }
 
 Processor InstructionCycle::retProcessorObj() {
@@ -19,21 +33,9 @@ Memory InstructionCycle::retMemoryObj() {
     return mem;
 }
 
-void InstructionCycle::IFetch() {
-    uint8_t opc;
-    dataView dv;
-    while(mem.readMemVal(proc.PC) != 0x69) {
-        opc = mem.readMemVal(proc.PC);
-        dv.ADump_hex(proc);
-        dv.PCDump_hex(proc);
-        dv.FDump(proc);
-        Execute(opc);
-        //UpdatePC(opc);
-        //proc.updateClock(opc);
-    }
-    dv.ADump_hex(proc);
-    dv.PCDump_hex(proc);
-    dv.FDump(proc);
+uint8_t InstructionCycle::IFetch() {
+    uint8_t opc = mem.readMemVal(proc.PC);
+    return opc;
 }
 
 void InstructionCycle::Execute(uint8_t opcode) {
