@@ -12,7 +12,7 @@ void dataView::PCDump_hex(Processor P) {
 }
 
 void dataView::ADump_hex(Processor P) {
-    std::cout << std::hex << P.A << std::endl;
+    std::cout << std::hex << (unsigned)P.A << std::endl;
 }
 
 void dataView::XDump_hex(Processor P) {

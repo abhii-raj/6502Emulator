@@ -12,11 +12,16 @@ class Memory {
     // each memory location has 8 bits
     uint8_t addrLoc[65536];
 public:
-    void setMem(int loc, int val);
-    void readMem(int loc);
-    uint8_t readMemVal(int loc);
+    void setMem(uint16_t loc, uint8_t val);
+    void readMem(uint16_t loc);
+    uint8_t readMemVal(uint16_t loc);
     // inserts some random instruction at few locations
     Memory();
+
+    // reads next two words(of 8 bits each) from memory and returns the effective 16 bit  number
+    // uses little endian
+    // less significant byte are at earlier location
+    uint16_t readNextTwoWords(uint16_t startLoc);
 };
 
 

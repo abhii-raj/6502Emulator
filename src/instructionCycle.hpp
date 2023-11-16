@@ -45,7 +45,7 @@ class InstructionCycle {
 
 public:
     InstructionCycle();
-    void IFetch();
+    uint8_t IFetch();
     //void IDecode();
     void Execute(uint8_t opcode);
     void UpdatePC(uint8_t opcode);
