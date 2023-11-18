@@ -8,8 +8,9 @@
 
 #include <cstdint>
 
-class Processor {
+#include "memory.hpp"
 
+class Processor {
     // table to store how many cpu clock cycle is taken by a particular instruction
     // first index is the high nibble value
     // second index is the low nibble value
@@ -31,6 +32,30 @@ class Processor {
             {2,6,0,0,3,3,5,0,2,2,2,0,4,4,6,0},
             {2,5,0,0,0,4,6,0,2,4,0,0,0,4,6,0}
     };
+
+    // table to store how many subsequent words(or bytes) is used by a particular instruction
+    // first index is the high nibble value
+    // second index is the low nibble value
+    int InstrByteTable[16][16] = {
+            {1,2,0,0,0,2,2,0,1,2,1,0,0,3,3,0},
+            {2,2,0,0,0,2,2,0,1,3,0,0,0,3,3,0},
+            {3,2,0,0,2,2,2,0,1,2,1,0,3,3,3,0},
+            {2,2,0,0,0,2,2,0,1,3,0,0,0,3,3,0},
+            {1,2,0,0,0,2,2,0,1,2,1,0,3,3,3,0},
+            {2,2,0,0,0,2,2,0,1,3,0,0,0,3,3,0},
+            {1,2,0,0,0,2,2,0,1,2,1,0,3,3,3,0},
+            {2,2,0,0,0,2,2,0,1,3,0,0,0,3,3,0},
+            {0,2,0,0,2,2,2,0,1,0,1,0,3,3,3,0},
+            {2,2,0,0,2,2,2,0,1,3,1,0,0,3,0,0},
+            {2,2,2,0,2,2,2,0,1,2,1,0,3,3,3,0},
+            {2,2,0,0,2,2,2,0,1,3,1,0,3,3,3,0},
+            {2,2,0,0,2,2,2,0,1,2,1,0,3,3,3,0},
+            {2,2,0,0,0,2,2,0,1,3,0,0,0,3,3,0},
+            {2,2,0,0,2,2,2,0,1,2,1,0,3,3,3,0},
+            {2,2,0,0,0,2,2,0,1,3,0,0,0,3,3,0}
+    };
+
+    //Memory mem;
 public:
     uint16_t PC; // 16 bit Program Counter register
     uint8_t A;   // 8 bit Accumulator register
@@ -52,6 +77,9 @@ public:
     // increments the clock tick depending on opcode
     void updateClock(uint8_t opcode);
 
+    // increments PC depending on opcode
+    void UpdatePC(uint8_t opcode);
+
     // gives the location of top of the stack
     int retStackTopLoc();
 
@@ -65,6 +93,16 @@ public:
     void setInterruptDisableBit();
     void setZeroBit();
     void setCarryBit();
+
+    // Processor Instructions
+    void LDA_imdt(Memory mem);  // LDA #oper
+    void LDA_zpg(Memory mem);   // LDA oper
+    void LDA_zpgx(Memory mem);  // LDA oper, X
+    void LDA_abs(Memory mem);   // LDA oper
+    void LDA_absx(Memory mem);  // LDA oper, X
+    void LDA_absy(Memory mem);  // LDA oper, Y
+    void LDA_ind_x(Memory mem); // LDA (oper ,X)
+    void LDA_ind_y(Memory mem); // LDA (oper), Y .... verify addressing mode
 };
 
 

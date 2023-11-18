@@ -3,6 +3,7 @@
 //
 
 #include "processor.hpp"
+#include "memory.hpp"
 
 void Processor::VMInit() {
     PC = 0x0400; // for now assume that PC starts from 0x0400
@@ -39,6 +40,10 @@ uint8_t Processor::highNibble(uint8_t opcode) {
     return (opcode % 16);
 }
 
+void Processor::UpdatePC(uint8_t opcode) {
+    PC += InstrByteTable[highNibble(opcode)][lowNibble(opcode)];
+}
+
 void Processor::setNegativeBit() {
     FR = FR|0b10000000;
 }
@@ -60,3 +65,31 @@ void Processor::setZeroBit() {
 void Processor::setCarryBit() {
     FR = FR|0b00000001;
 }
+
+void Processor::LDA_imdt(Memory mem) {
+    A = mem.readMemVal(PC + 1);
+    if(A == 0) {
+        setZeroBit();
+    }
+    if((A & 0b10000000) == 0b10000000) {
+        setNegativeBit();
+    }
+
+    updateClock(mem.readMemVal(PC));
+    UpdatePC(mem.readMemVal(PC));
+}
+
+void Processor::LDA_abs(Memory mem) {
+    uint16_t nextTwoWordsAddr = mem.readNextTwoWords(PC + 1);
+    A = mem.readMemVal(nextTwoWordsAddr);
+
+    if(A == 0) {
+        setZeroBit();
+    }
+    if((A & 0b10000000) == 0b10000000) {
+        setNegativeBit();
+    }
+    updateClock(mem.readMemVal(PC));
+    UpdatePC(mem.readMemVal(PC));
+}
+
