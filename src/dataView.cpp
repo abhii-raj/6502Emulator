@@ -6,6 +6,7 @@
 #include "processor.hpp"
 
 #include <iostream>
+#include <list>
 
 void dataView::PCDump_hex(Processor P) {
     std::cout << std::hex << P.PC << std::endl;
@@ -57,11 +58,16 @@ void dataView::YDump_bin(Processor P) {
 // outputs the individual bits of the flag register
 // from 7th bit to 0th bit
 void dataView::FDump(Processor P) {
+    int temp_flagbits[8];
+    std::cout << "N V - B D I Z C" << std::endl;
     uint8_t tempF = P.FR;
     uint8_t t = 0b00000001;
     for(int idx = 0; idx < 8; idx++) {
-        std::cout << (tempF & t)  << " ";
+        temp_flagbits[idx] = (tempF & t);
         tempF = tempF>>1;
+    }
+    for(int idx=7;idx>=0;idx--) {
+        std::cout << temp_flagbits[idx] << " ";
     }
     std::cout << std::endl;
 }

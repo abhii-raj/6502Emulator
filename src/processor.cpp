@@ -12,6 +12,7 @@ void Processor::VMInit() {
 
     // values initialised with reference to 6502 specifications
     // unused 5th bit(5th bit) and Interrupt bit(2nd bit) is set as 1
+    // N V - B D I Z C
     FR = 0b00100100;
 
     // stack pointer register initialisation
