@@ -19,8 +19,6 @@ InstructionCycle::InstructionCycle() {
         dv.PCDump_hex(proc);
         dv.FDump(proc);
         Execute(opcode);
-        //UpdatePC(opc);
-        //proc.updateClock(opc);
     }
     dv.ADump_hex(proc);
     dv.PCDump_hex(proc);
@@ -45,7 +43,8 @@ void InstructionCycle::Execute(uint8_t opcode) {
         case 0xA9:
             LDA_imdt();
             break;
-        case 0x8D:
+        case 0xAD:
+            LDA_abs();
             break;
     }
 }
@@ -56,6 +55,21 @@ void InstructionCycle::UpdatePC(uint8_t opcode) {
 
 void InstructionCycle::LDA_imdt() {
     proc.A = mem.readMemVal(proc.PC + 1);
+    if(proc.A == 0) {
+        proc.setZeroBit();
+    }
+    if((proc.A & 0b10000000) == 0b10000000) {
+        proc.setNegativeBit();
+    }
+
+    proc.updateClock(mem.readMemVal(proc.PC));
+    UpdatePC(mem.readMemVal(proc.PC));
+}
+
+void InstructionCycle::LDA_abs() {
+    uint16_t nextTwoWordsAddr = mem.readNextTwoWords(proc.PC + 1);
+    proc.A = mem.readMemVal(nextTwoWordsAddr);
+
     if(proc.A == 0) {
         proc.setZeroBit();
     }
