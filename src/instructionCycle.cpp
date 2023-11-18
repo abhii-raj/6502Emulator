@@ -7,6 +7,8 @@
 #include "memory.hpp"
 #include "dataView.hpp"
 
+#include <iostream>
+
 InstructionCycle::InstructionCycle() {
     proc.VMInit();
 
@@ -57,11 +59,11 @@ void InstructionCycle::LDA_imdt() {
     if(proc.A == 0) {
         proc.setZeroBit();
     }
-    // add negative condition
+    if((proc.A & 0b10000000) == 0b10000000) {
+        proc.setNegativeBit();
+    }
 
-    //proc.updateClock(mem.readMemVal(proc.PC));
-    proc.cpuClock += 1;
-    //UpdatePC(mem.readMemVal(proc.PC));
-    proc.PC += 2;
+    proc.updateClock(mem.readMemVal(proc.PC));
+    UpdatePC(mem.readMemVal(proc.PC));
 }
 
