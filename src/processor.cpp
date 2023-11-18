@@ -99,7 +99,42 @@ void Processor::STA_abs(Memory *mem) {
     mem->setMem(nextTwoWordsAddr, A);
 
     //no flag affected
-    
+
+    updateClock(mem->readMemVal(PC));
+    UpdatePC(mem->readMemVal(PC));
+}
+
+void Processor::STA_zpg(Memory *mem) {
+    uint8_t nextWordAddr = mem->readMemVal(PC + 1);
+    mem->setMem((uint16_t)nextWordAddr, A);
+
+    updateClock(mem->readMemVal(PC));
+    UpdatePC(mem->readMemVal(PC));
+}
+
+void Processor::STA_zpgx(Memory *mem) {
+    uint8_t nextWordAddr = mem->readMemVal(PC + 1);
+    nextWordAddr += mem->readMemVal(PC + 2);
+
+    mem->setMem((uint16_t)nextWordAddr, A);
+    updateClock(mem->readMemVal(PC));
+    UpdatePC(mem->readMemVal(PC));
+}
+
+void Processor::STA_absx(Memory *mem) {
+    uint16_t nextTwoWordsAddr = mem->readNextTwoWords(PC + 1);
+    nextTwoWordsAddr += X;
+
+    mem->setMem(nextTwoWordsAddr, A);
+    updateClock(mem->readMemVal(PC));
+    UpdatePC(mem->readMemVal(PC));
+}
+
+void Processor::STA_absy(Memory *mem) {
+    uint16_t nextTwoWordsAddr = mem->readNextTwoWords(PC + 1);
+    nextTwoWordsAddr += Y;
+
+    mem->setMem(nextTwoWordsAddr, A);
     updateClock(mem->readMemVal(PC));
     UpdatePC(mem->readMemVal(PC));
 }
