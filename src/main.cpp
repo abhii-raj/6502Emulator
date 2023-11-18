@@ -10,8 +10,6 @@ int main() {
     Processor P;
     P.VMInit();
     //std::cout << std::hex << P.retStackTopLoc() << std::endl;
-
     IC.IFetch();
-
     return 0;
 }

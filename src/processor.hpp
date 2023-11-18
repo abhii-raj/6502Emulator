@@ -95,14 +95,22 @@ public:
     void setCarryBit();
 
     // Processor Instructions
-    void LDA_imdt(Memory mem);  // LDA #oper
-    void LDA_zpg(Memory mem);   // LDA oper
-    void LDA_zpgx(Memory mem);  // LDA oper, X
-    void LDA_abs(Memory mem);   // LDA oper
-    void LDA_absx(Memory mem);  // LDA oper, X
-    void LDA_absy(Memory mem);  // LDA oper, Y
-    void LDA_ind_x(Memory mem); // LDA (oper ,X)
-    void LDA_ind_y(Memory mem); // LDA (oper), Y .... verify addressing mode
+    void LDA_imdt(Memory *mem);  // LDA #oper
+    void LDA_zpg(Memory *mem);   // LDA oper
+    void LDA_zpgx(Memory *mem);  // LDA oper, X
+    void LDA_abs(Memory *mem);   // LDA oper
+    void LDA_absx(Memory *mem);  // LDA oper, X
+    void LDA_absy(Memory *mem);  // LDA oper, Y
+    void LDA_ind_x(Memory *mem); // LDA (oper ,X)
+    void LDA_ind_y(Memory *mem); // LDA (oper), Y .... verify addressing mode
+
+    void STA_zpg(Memory *mem);
+    void STA_zpgx(Memory *mem);
+    void STA_abs(Memory *mem);
+    void STA_absx(Memory *mem);
+    void STA_absy(Memory *mem);
+    void STA_ind_x(Memory *mem);
+    void STA_ind_y(Memory *mem);
 };
 
 

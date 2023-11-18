@@ -4,6 +4,7 @@
 
 #include "processor.hpp"
 #include "memory.hpp"
+#include <iostream>
 
 void Processor::VMInit() {
     PC = 0x0400; // for now assume that PC starts from 0x0400
@@ -66,8 +67,8 @@ void Processor::setCarryBit() {
     FR = FR|0b00000001;
 }
 
-void Processor::LDA_imdt(Memory mem) {
-    A = mem.readMemVal(PC + 1);
+void Processor::LDA_imdt(Memory *mem) {
+    A = mem->readMemVal(PC + 1);
     if(A == 0) {
         setZeroBit();
     }
@@ -75,13 +76,13 @@ void Processor::LDA_imdt(Memory mem) {
         setNegativeBit();
     }
 
-    updateClock(mem.readMemVal(PC));
-    UpdatePC(mem.readMemVal(PC));
+    updateClock(mem->readMemVal(PC));
+    UpdatePC(mem->readMemVal(PC));
 }
 
-void Processor::LDA_abs(Memory mem) {
-    uint16_t nextTwoWordsAddr = mem.readNextTwoWords(PC + 1);
-    A = mem.readMemVal(nextTwoWordsAddr);
+void Processor::LDA_abs(Memory *mem) {
+    uint16_t nextTwoWordsAddr = mem->readNextTwoWords(PC + 1);
+    A = mem->readMemVal(nextTwoWordsAddr);
 
     if(A == 0) {
         setZeroBit();
@@ -89,7 +90,16 @@ void Processor::LDA_abs(Memory mem) {
     if((A & 0b10000000) == 0b10000000) {
         setNegativeBit();
     }
-    updateClock(mem.readMemVal(PC));
-    UpdatePC(mem.readMemVal(PC));
+    updateClock(mem->readMemVal(PC));
+    UpdatePC(mem->readMemVal(PC));
 }
 
+void Processor::STA_abs(Memory *mem) {
+    uint16_t nextTwoWordsAddr = mem->readNextTwoWords(PC + 1);
+    mem->setMem(nextTwoWordsAddr, A);
+
+    //no flag affected
+    
+    updateClock(mem->readMemVal(PC));
+    UpdatePC(mem->readMemVal(PC));
+}

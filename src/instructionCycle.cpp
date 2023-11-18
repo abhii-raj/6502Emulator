@@ -41,10 +41,13 @@ uint8_t InstructionCycle::IFetch() {
 void InstructionCycle::Execute(uint8_t opcode) {
     switch (opcode) {
         case 0xA9:
-            proc.LDA_imdt(mem);
+            proc.LDA_imdt(&mem);
             break;
         case 0xAD:
-            proc.LDA_abs(mem);
+            proc.LDA_abs(&mem);
+            break;
+        case 0x8D:
+            proc.STA_abs(&mem);
             break;
     }
 }

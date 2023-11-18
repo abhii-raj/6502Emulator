@@ -9,17 +9,21 @@
 // putting some instruction at few locations
 // to be able to write execute routines till assembler is made
 Memory::Memory() {
+
+    setMem(0x0400, 0xA9);
+    setMem(0x0401, 0x23);
+    setMem(0x0402, 0x8D);
+    setMem(0x0403, 0x06);
+    setMem(0x0404, 0x04);
+
+    // termination instruction for now
+    setMem(0x0405, 0x69);
     // LDA #$01
-    setMem(0x0400, 0xA9); // LDA
+    /***setMem(0x0400, 0xA9); // LDA
     setMem(0x0401, 0x01); // #$01
 
-    setMem(0x402, 0xAD);
-    setMem(0x403, 0x07);
-    setMem(0x404, 0x04);
-
-
     // STA $0200
-    /***setMem(0x0402, 0x8D); // STA
+    setMem(0x0402, 0x8D); // STA
     setMem(0x0403, 0x00); // $0200
     setMem(0x0404, 0x02);
 
@@ -39,12 +43,8 @@ Memory::Memory() {
     // STA $0202
     setMem(0x040C, 0x8D); // STA
     setMem(0x040D, 0x02); // $0202
-    setMem(0x040E, 0x02);****/
-
-    // termination instruction for now
-    setMem(0x0405, 0x69);
-
-    setMem(0x0407, 0x55);
+    setMem(0x040E, 0x02);***/
+    //setMem(0x0407, 0x55);
 }
 
 void Memory::setMem(uint16_t loc, uint8_t val) {
