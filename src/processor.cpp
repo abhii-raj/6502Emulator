@@ -138,3 +138,21 @@ void Processor::STA_absy(Memory *mem) {
     updateClock(mem->readMemVal(PC));
     UpdatePC(mem->readMemVal(PC));
 }
+
+void Processor::cmp_imdt(Memory *mem) {
+    uint8_t memoryVal = mem->readMemVal(PC + 1);
+    int temp = A - memoryVal;
+    //std::cout << "memVal - " << (unsigned)memoryVal << std::endl;
+    //std::cout << "temp - " << temp << std::endl;
+    if(temp == 0) {
+        setZeroBit();
+    }
+    if(temp < 0) {
+        setNegativeBit();
+    }
+    if(temp >= 0) {
+        setCarryBit();
+    }
+    updateClock(mem->readMemVal(PC));
+    UpdatePC(mem->readMemVal(PC));
+}

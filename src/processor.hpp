@@ -111,6 +111,8 @@ public:
     void STA_absy(Memory *mem);
     void STA_ind_x(Memory *mem);
     void STA_ind_y(Memory *mem);
+
+    void cmp_imdt(Memory *mem);
 };
 
 

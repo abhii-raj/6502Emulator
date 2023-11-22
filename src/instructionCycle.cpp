@@ -49,5 +49,8 @@ void InstructionCycle::Execute(uint8_t opcode) {
         case 0x8D:
             proc.STA_abs(&mem);
             break;
+        case 0xC9:
+            proc.cmp_imdt(&mem);
+            break;
     }
 }
