@@ -121,6 +121,8 @@ public:
     void cmp_zpgx(Memory *mem);
     void cmp_abs(Memory *mem);
 
+    // testing of all the following instructions not done
+
     /*** TYA Instructions ***/
     void tya_impl(Memory *mem);
 
@@ -129,6 +131,10 @@ public:
 
     /*** TXA Instructions ***/
     void txa_impl(Memory *mem);
+
+    /*** JMP Instructions ***/
+    void jmp_abs(Memory *mem);
+    void jmp_idr(Memory *mem);
 };
 
 

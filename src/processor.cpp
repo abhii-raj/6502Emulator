@@ -243,3 +243,24 @@ void Processor::txa_impl(Memory *mem) {
     updateClock(mem->readMemVal(PC));
     UpdatePC(mem->readMemVal(PC));
 }
+
+void Processor::jmp_abs(Memory *mem) {
+    uint16_t nextTwoWordsAddr = mem->readNextTwoWords(PC + 1);
+
+    // no flag bit set
+
+    updateClock(mem->readMemVal(PC));
+    PC = nextTwoWordsAddr;
+}
+
+void Processor::jmp_idr(Memory *mem) {
+    // address of the actual address to which to jump to
+    uint16_t nextTwoWordsAddr = mem->readNextTwoWords(PC + 1);
+
+    uint16_t addrToJmpTo = mem->readNextTwoWords(mem->readMemVal(nextTwoWordsAddr));
+
+    // no flag bit set
+
+    updateClock(mem->readMemVal(PC));
+    PC = addrToJmpTo;
+}
