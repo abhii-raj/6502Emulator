@@ -209,3 +209,37 @@ void Processor::cmp_abs(Memory *mem) {
     updateClock(mem->readMemVal(PC));
     UpdatePC(mem->readMemVal(PC));
 }
+
+void Processor::tya_impl(Memory *mem) {
+    A = Y;
+
+    if(A==0) {
+        setZeroBit();
+    }
+    if(A<0) {
+        setNegativeBit();
+    }
+
+    updateClock(mem->readMemVal(PC));
+    UpdatePC(mem->readMemVal(PC));
+}
+
+void Processor::txs_impl(Memory *mem) {
+    SP = X;
+    updateClock(mem->readMemVal(PC));
+    UpdatePC(mem->readMemVal(PC));
+}
+
+void Processor::txa_impl(Memory *mem) {
+    A = X;
+
+    if(A==0) {
+        setZeroBit();
+    }
+    if(A<0) {
+        setNegativeBit();
+    }
+
+    updateClock(mem->readMemVal(PC));
+    UpdatePC(mem->readMemVal(PC));
+}

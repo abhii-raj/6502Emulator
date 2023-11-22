@@ -94,6 +94,7 @@ public:
     void setZeroBit();
     void setCarryBit();
 
+    /*** LDA Instructions ***/
     // Processor Instructions
     void LDA_imdt(Memory *mem);  // LDA #oper
     void LDA_zpg(Memory *mem);   // LDA oper
@@ -104,6 +105,7 @@ public:
     void LDA_ind_x(Memory *mem); // LDA (oper ,X)
     void LDA_ind_y(Memory *mem); // LDA (oper), Y .... verify addressing mode
 
+    /*** STA Instructions ***/
     void STA_zpg(Memory *mem);
     void STA_zpgx(Memory *mem);
     void STA_abs(Memory *mem);
@@ -112,12 +114,21 @@ public:
     void STA_ind_x(Memory *mem);
     void STA_ind_y(Memory *mem);
 
+    /*** CMP Instructions ***/
     void cmp_imdt(Memory *mem);
-
-    //testing not done
+    //testing of following functions not done
     void cmp_zpg(Memory *mem);
     void cmp_zpgx(Memory *mem);
     void cmp_abs(Memory *mem);
+
+    /*** TYA Instructions ***/
+    void tya_impl(Memory *mem);
+
+    /*** TXS Instructions ***/
+    void txs_impl(Memory *mem);
+
+    /*** TXA Instructions ***/
+    void txa_impl(Memory *mem);
 };
 
 
