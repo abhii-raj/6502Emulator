@@ -156,3 +156,56 @@ void Processor::cmp_imdt(Memory *mem) {
     updateClock(mem->readMemVal(PC));
     UpdatePC(mem->readMemVal(PC));
 }
+
+void Processor::cmp_zpg(Memory *mem) {
+    uint16_t effAddrToRead = mem->readMemVal(PC + 1);
+    uint8_t effVal = mem->readMemVal(effAddrToRead);
+    int temp = A - effVal;
+    if(temp == 0) {
+        setZeroBit();
+    }
+    if(temp < 0) {
+        setNegativeBit();
+    }
+    if(temp >= 0) {
+        setCarryBit();
+    }
+    updateClock(mem->readMemVal(PC));
+    UpdatePC(mem->readMemVal(PC));
+}
+
+void Processor::cmp_zpgx(Memory *mem) {
+    uint8_t effAddrToRead = mem->readMemVal(PC + 1);
+    effAddrToRead += X;
+
+    uint8_t effValFetched = mem->readMemVal((uint16_t)effAddrToRead);
+    int temp = A - effValFetched;
+    if(temp == 0) {
+        setZeroBit();
+    }
+    if(temp < 0) {
+        setNegativeBit();
+    }
+    if(temp >= 0) {
+        setCarryBit();
+    }
+    updateClock(mem->readMemVal(PC));
+    UpdatePC(mem->readMemVal(PC));
+}
+
+void Processor::cmp_abs(Memory *mem) {
+    uint16_t nextTwoWordsAddr = mem->readNextTwoWords(PC + 1);
+    int temp = A - mem->readMemVal(nextTwoWordsAddr);
+
+    if(temp == 0) {
+        setZeroBit();
+    }
+    if(temp < 0) {
+        setNegativeBit();
+    }
+    if(temp >= 0) {
+        setCarryBit();
+    }
+    updateClock(mem->readMemVal(PC));
+    UpdatePC(mem->readMemVal(PC));
+}

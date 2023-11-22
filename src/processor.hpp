@@ -113,6 +113,11 @@ public:
     void STA_ind_y(Memory *mem);
 
     void cmp_imdt(Memory *mem);
+
+    //testing not done
+    void cmp_zpg(Memory *mem);
+    void cmp_zpgx(Memory *mem);
+    void cmp_abs(Memory *mem);
 };
 
 
