@@ -135,6 +135,13 @@ public:
     /*** JMP Instructions ***/
     void jmp_abs(Memory *mem);
     void jmp_idr(Memory *mem);
+    /*** TAX Instructions ***/
+    void tax_impl(Memory *mem);
+
+    
+    
+    
+    
 };
 
 
