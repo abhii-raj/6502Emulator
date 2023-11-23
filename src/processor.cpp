@@ -277,4 +277,3 @@ void Processor::tax_impl(Memory *mem) {
     updateClock(mem->readMemVal(PC));
     UpdatePC(mem->readMemVal(PC));
 }
-
