@@ -143,6 +143,9 @@ public:
     void tsx_impl(Memory *mem);
       /*** INX Instructions ***/
     void inx_impl(Memory *mem);
+     /*** INY Instructions ***/
+    void iny_impl(Memory *mem);
+    
     
     
     
