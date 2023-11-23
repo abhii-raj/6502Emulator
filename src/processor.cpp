@@ -318,7 +318,7 @@ void Processor::inx_impl(Memory *mem) {
 }
 void Processor::iny_impl(Memory *mem) {
     Y = Y+1;
-
+    
     if(A==0) {
         setZeroBit();
     }
