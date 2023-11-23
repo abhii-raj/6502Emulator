@@ -139,7 +139,8 @@ public:
     void tax_impl(Memory *mem);
     /*** TAY Instructions ***/
     void tay_impl(Memory *mem);
-    
+     /*** TSX Instructions ***/
+    void tsx_impl(Memory *mem);
 };
 
 
