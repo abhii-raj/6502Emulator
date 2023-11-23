@@ -264,3 +264,17 @@ void Processor::jmp_idr(Memory *mem) {
     updateClock(mem->readMemVal(PC));
     PC = addrToJmpTo;
 }
+void Processor::tax_impl(Memory *mem) {
+    x = A;
+
+    if(A==0) {
+        setZeroBit();
+    }
+    if(A<0) {
+        setNegativeBit();
+    }
+
+    updateClock(mem->readMemVal(PC));
+    UpdatePC(mem->readMemVal(PC));
+}
+}
