@@ -141,6 +141,11 @@ public:
     void tay_impl(Memory *mem);
      /*** TSX Instructions ***/
     void tsx_impl(Memory *mem);
+      /*** INX Instructions ***/
+    void inx_impl(Memory *mem);
+    
+    
+    
 };
 
 
