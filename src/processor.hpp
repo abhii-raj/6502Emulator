@@ -146,8 +146,7 @@ public:
      /*** INY Instructions ***/
     void iny_impl(Memory *mem);
     
-    
-    
+      
     
 };
 
