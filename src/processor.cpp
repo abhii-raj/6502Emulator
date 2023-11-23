@@ -264,3 +264,77 @@ void Processor::jmp_idr(Memory *mem) {
     updateClock(mem->readMemVal(PC));
     PC = addrToJmpTo;
 }
+
+void Processor::tax_impl(Memory *mem) {
+    X = A;
+
+    if(X==0) {
+        setZeroBit();
+    }
+    if(X<0) {
+        setNegativeBit();
+    }
+
+    updateClock(mem->readMemVal(PC));
+    UpdatePC(mem->readMemVal(PC));
+}
+
+void Processor::tay_impl(Memory *mem) {
+    Y = A;
+
+    if(Y==0) {
+        setZeroBit();
+    }
+    if(Y<0) {
+        setNegativeBit();
+    }
+
+    updateClock(mem->readMemVal(PC));
+    UpdatePC(mem->readMemVal(PC));
+}
+
+void Processor::tsx_impl(Memory *mem) {
+    X = SP;
+
+    if(X==0) {
+        setZeroBit();
+    }
+    if(X<0) {
+        setNegativeBit();
+    }
+
+    updateClock(mem->readMemVal(PC));
+    UpdatePC(mem->readMemVal(PC));
+}
+
+void Processor::inx_impl(Memory *mem) {
+    X++;
+
+    if(X==0) {
+        setZeroBit();
+    }
+    if(X<0) {
+        setNegativeBit();
+    }
+
+    updateClock(mem->readMemVal(PC));
+    UpdatePC(mem->readMemVal(PC));
+}
+
+void Processor::iny_impl(Memory *mem) {
+    Y++;
+    
+    if(Y==0) {
+        setZeroBit();
+    }
+    if(Y<0) {
+        setNegativeBit();
+    }
+
+    updateClock(mem->readMemVal(PC));
+    UpdatePC(mem->readMemVal(PC));
+}
+
+
+
+
