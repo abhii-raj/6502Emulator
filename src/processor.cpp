@@ -303,6 +303,19 @@ void Processor::tsx_impl(Memory *mem) {
     updateClock(mem->readMemVal(PC));
     UpdatePC(mem->readMemVal(PC));
 }
+void Processor::inx_impl(Memory *mem) {
+    X = X+1;
+
+    if(A==0) {
+        setZeroBit();
+    }
+    if(A<0) {
+        setNegativeBit();
+    }
+
+    updateClock(mem->readMemVal(PC));
+    UpdatePC(mem->readMemVal(PC));
+}
 
 
 
