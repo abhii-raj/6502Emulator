@@ -135,19 +135,21 @@ public:
     /*** JMP Instructions ***/
     void jmp_abs(Memory *mem);
     void jmp_idr(Memory *mem);
+
     /*** TAX Instructions ***/
     void tax_impl(Memory *mem);
+
     /*** TAY Instructions ***/
     void tay_impl(Memory *mem);
+
      /*** TSX Instructions ***/
     void tsx_impl(Memory *mem);
+
       /*** INX Instructions ***/
     void inx_impl(Memory *mem);
+
      /*** INY Instructions ***/
-    void iny_impl(Memory *mem);
-    
-      
-    
+    void iny_impl(Memory *mem); 
 };
 
 
