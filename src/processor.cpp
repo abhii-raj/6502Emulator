@@ -316,7 +316,7 @@ void Processor::inx_impl(Memory *mem) {
     updateClock(mem->readMemVal(PC));
     UpdatePC(mem->readMemVal(PC));
 }
-void Processor::inx_impl(Memory *mem) {
+void Processor::iny_impl(Memory *mem) {
     Y = Y+1;
 
     if(A==0) {
