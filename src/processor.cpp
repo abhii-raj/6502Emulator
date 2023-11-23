@@ -265,7 +265,7 @@ void Processor::jmp_idr(Memory *mem) {
     PC = addrToJmpTo;
 }
 void Processor::tax_impl(Memory *mem) {
-    x = A;
+    X = A;
 
     if(A==0) {
         setZeroBit();
