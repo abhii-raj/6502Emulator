@@ -8,7 +8,7 @@ int main() {
     InstructionCycle IC;
     dataView dv;
     Processor P;
-    P.VMInit();
+    //P.VMInit(IC.retMemoryObj());
     //std::cout << std::hex << P.retStackTopLoc() << std::endl;
     IC.IFetch();
     return 0;

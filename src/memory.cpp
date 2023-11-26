@@ -10,6 +10,10 @@
 // to be able to write execute routines till assembler is made
 Memory::Memory() {
 
+    // setting reset vector
+    setMem(0xFFFC, 0x00);
+    setMem(0xFFFD, 0x04);
+
     setMem(0x0400, 0xA9);
     setMem(0x0401, 0x23);
     setMem(0x0402, 0x8D);

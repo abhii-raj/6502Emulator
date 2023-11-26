@@ -10,7 +10,7 @@
 #include <iostream>
 
 InstructionCycle::InstructionCycle() {
-    proc.VMInit();
+    proc.VMInit(&mem);
 
     uint8_t opcode;
     dataView dv;
@@ -25,12 +25,14 @@ InstructionCycle::InstructionCycle() {
     dv.FDump(proc);
 }
 
-Processor InstructionCycle::retProcessorObj() {
-    return proc;
+Processor* InstructionCycle::retProcessorObj() {
+    Processor *procPtr = &proc;
+    return procPtr;
 }
 
-Memory InstructionCycle::retMemoryObj() {
-    return mem;
+Memory* InstructionCycle::retMemoryObj() {
+    Memory *memPtr = &mem;
+    return memPtr;
 }
 
 uint8_t InstructionCycle::IFetch() {

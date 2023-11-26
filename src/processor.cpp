@@ -6,8 +6,10 @@
 #include "memory.hpp"
 #include <iostream>
 
-void Processor::VMInit() {
-    PC = 0x0400; // for now assume that PC starts from 0x0400
+void Processor::VMInit(Memory *mem) {
+    // read 0xFFFC and 0xFFFD(reset vector) to get the address to initialise PC to
+    uint16_t PCResetAddress = mem->readNextTwoWords(0xFFFC);
+    PC = PCResetAddress;
     A = 0;
     X = 0;
     Y = 0;

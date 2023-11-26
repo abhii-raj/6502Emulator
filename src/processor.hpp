@@ -72,7 +72,7 @@ public:
     long cpuClock = 0;
 
     // Initialises the values of relevant registers before instruction fetch
-    void VMInit();
+    void VMInit(Memory *mem);
 
     // increments the clock tick depending on opcode
     void updateClock(uint8_t opcode);
