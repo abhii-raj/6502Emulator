@@ -115,41 +115,41 @@ public:
     void STA_ind_y(Memory *mem);
 
     /*** CMP Instructions ***/
-    void cmp_imdt(Memory *mem);
+    void CMP_imdt(Memory *mem);
     //testing of following functions not done
-    void cmp_zpg(Memory *mem);
-    void cmp_zpgx(Memory *mem);
-    void cmp_abs(Memory *mem);
+    void CMP_zpg(Memory *mem);
+    void CMP_zpgx(Memory *mem);
+    void CMP_abs(Memory *mem);
 
     // testing of all the following instructions not done
 
     /*** TYA Instructions ***/
-    void tya_impl(Memory *mem);
+    void TYA_impl(Memory *mem);
 
     /*** TXS Instructions ***/
-    void txs_impl(Memory *mem);
+    void TXS_impl(Memory *mem);
 
     /*** TXA Instructions ***/
-    void txa_impl(Memory *mem);
+    void TXA_impl(Memory *mem);
 
     /*** JMP Instructions ***/
-    void jmp_abs(Memory *mem);
-    void jmp_idr(Memory *mem);
+    void JMP_abs(Memory *mem);
+    void JMP_idr(Memory *mem);
 
     /*** TAX Instructions ***/
-    void tax_impl(Memory *mem);
+    void TAX_impl(Memory *mem);
 
     /*** TAY Instructions ***/
-    void tay_impl(Memory *mem);
+    void TAY_impl(Memory *mem);
 
      /*** TSX Instructions ***/
-    void tsx_impl(Memory *mem);
+    void TSX_impl(Memory *mem);
 
       /*** INX Instructions ***/
-    void inx_impl(Memory *mem);
+    void INX_impl(Memory *mem);
 
      /*** INY Instructions ***/
-    void iny_impl(Memory *mem); 
+    void INY_impl(Memory *mem);
 };
 
 

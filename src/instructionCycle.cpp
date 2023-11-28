@@ -52,7 +52,7 @@ void InstructionCycle::Execute(uint8_t opcode) {
             proc.STA_abs(&mem);
             break;
         case 0xC9:
-            proc.cmp_imdt(&mem);
+            proc.CMP_imdt(&mem);
             break;
     }
 }

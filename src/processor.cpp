@@ -141,7 +141,7 @@ void Processor::STA_absy(Memory *mem) {
     UpdatePC(mem->readMemVal(PC));
 }
 
-void Processor::cmp_imdt(Memory *mem) {
+void Processor::CMP_imdt(Memory *mem) {
     uint8_t memoryVal = mem->readMemVal(PC + 1);
     int temp = A - memoryVal;
     //std::cout << "memVal - " << (unsigned)memoryVal << std::endl;
@@ -159,7 +159,7 @@ void Processor::cmp_imdt(Memory *mem) {
     UpdatePC(mem->readMemVal(PC));
 }
 
-void Processor::cmp_zpg(Memory *mem) {
+void Processor::CMP_zpg(Memory *mem) {
     uint16_t effAddrToRead = mem->readMemVal(PC + 1);
     uint8_t effVal = mem->readMemVal(effAddrToRead);
     int temp = A - effVal;
@@ -176,7 +176,7 @@ void Processor::cmp_zpg(Memory *mem) {
     UpdatePC(mem->readMemVal(PC));
 }
 
-void Processor::cmp_zpgx(Memory *mem) {
+void Processor::CMP_zpgx(Memory *mem) {
     uint8_t effAddrToRead = mem->readMemVal(PC + 1);
     effAddrToRead += X;
 
@@ -195,7 +195,7 @@ void Processor::cmp_zpgx(Memory *mem) {
     UpdatePC(mem->readMemVal(PC));
 }
 
-void Processor::cmp_abs(Memory *mem) {
+void Processor::CMP_abs(Memory *mem) {
     uint16_t nextTwoWordsAddr = mem->readNextTwoWords(PC + 1);
     int temp = A - mem->readMemVal(nextTwoWordsAddr);
 
@@ -212,7 +212,7 @@ void Processor::cmp_abs(Memory *mem) {
     UpdatePC(mem->readMemVal(PC));
 }
 
-void Processor::tya_impl(Memory *mem) {
+void Processor::TYA_impl(Memory *mem) {
     A = Y;
 
     if(A==0) {
@@ -226,13 +226,13 @@ void Processor::tya_impl(Memory *mem) {
     UpdatePC(mem->readMemVal(PC));
 }
 
-void Processor::txs_impl(Memory *mem) {
+void Processor::TXS_impl(Memory *mem) {
     SP = X;
     updateClock(mem->readMemVal(PC));
     UpdatePC(mem->readMemVal(PC));
 }
 
-void Processor::txa_impl(Memory *mem) {
+void Processor::TXA_impl(Memory *mem) {
     A = X;
 
     if(A==0) {
@@ -246,7 +246,7 @@ void Processor::txa_impl(Memory *mem) {
     UpdatePC(mem->readMemVal(PC));
 }
 
-void Processor::jmp_abs(Memory *mem) {
+void Processor::JMP_abs(Memory *mem) {
     uint16_t nextTwoWordsAddr = mem->readNextTwoWords(PC + 1);
 
     // no flag bit set
@@ -255,7 +255,7 @@ void Processor::jmp_abs(Memory *mem) {
     PC = nextTwoWordsAddr;
 }
 
-void Processor::jmp_idr(Memory *mem) {
+void Processor::JMP_idr(Memory *mem) {
     // address of the actual address to which to jump to
     uint16_t nextTwoWordsAddr = mem->readNextTwoWords(PC + 1);
 
@@ -267,7 +267,7 @@ void Processor::jmp_idr(Memory *mem) {
     PC = addrToJmpTo;
 }
 
-void Processor::tax_impl(Memory *mem) {
+void Processor::TAX_impl(Memory *mem) {
     X = A;
 
     if(X==0) {
@@ -281,7 +281,7 @@ void Processor::tax_impl(Memory *mem) {
     UpdatePC(mem->readMemVal(PC));
 }
 
-void Processor::tay_impl(Memory *mem) {
+void Processor::TAY_impl(Memory *mem) {
     Y = A;
 
     if(Y==0) {
@@ -295,7 +295,7 @@ void Processor::tay_impl(Memory *mem) {
     UpdatePC(mem->readMemVal(PC));
 }
 
-void Processor::tsx_impl(Memory *mem) {
+void Processor::TSX_impl(Memory *mem) {
     X = SP;
 
     if(X==0) {
@@ -309,7 +309,7 @@ void Processor::tsx_impl(Memory *mem) {
     UpdatePC(mem->readMemVal(PC));
 }
 
-void Processor::inx_impl(Memory *mem) {
+void Processor::INX_impl(Memory *mem) {
     X++;
 
     if(X==0) {
@@ -323,7 +323,7 @@ void Processor::inx_impl(Memory *mem) {
     UpdatePC(mem->readMemVal(PC));
 }
 
-void Processor::iny_impl(Memory *mem) {
+void Processor::INY_impl(Memory *mem) {
     Y++;
     
     if(Y==0) {
