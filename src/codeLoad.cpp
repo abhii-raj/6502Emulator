@@ -3,3 +3,9 @@
 //
 
 #include "codeLoad.hpp"
+
+// read opcodes from the file, and start loading data
+// into memory at addrLoc starting from the 'loc' index
+CodeLoad::CodeLoad(std::string opcodeFilePath, uint16_t loc, Memory *mem) {
+
+}
