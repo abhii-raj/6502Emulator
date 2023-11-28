@@ -1,3 +1,0 @@
-C:/Users/abhis/CLionProjects/6502Emulator/cmake-build-debug/CMakeFiles/6502Emulator.dir
-C:/Users/abhis/CLionProjects/6502Emulator/cmake-build-debug/CMakeFiles/edit_cache.dir
-C:/Users/abhis/CLionProjects/6502Emulator/cmake-build-debug/CMakeFiles/rebuild_cache.dir
