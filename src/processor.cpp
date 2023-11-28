@@ -337,6 +337,21 @@ void Processor::INY_impl(Memory *mem) {
     UpdatePC(mem->readMemVal(PC));
 }
 
+void Processor::INY_impl(Memory *mem) {
+    Y++;
+
+    if(Y==0) {
+        setZeroBit();
+    }
+    if(Y<0) {
+        setNegativeBit();
+    }
+
+    updateClock(mem->readMemVal(PC));
+    UpdatePC(mem->readMemVal(PC));
+}
+
+
 
 
 
