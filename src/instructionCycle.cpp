@@ -96,6 +96,5 @@ void InstructionCycle::Execute(uint8_t opcode) {
         case 0x98:
             proc.TYA_impl(&mem);
             break;
-
     }
 }

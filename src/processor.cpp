@@ -358,7 +358,7 @@ void Processor::DEY_impl(Memory *mem) {
         setZeroBit();
     }
     if(Y<0){
-        setNegativeBit()
+        setNegativeBit();
     }
     updateClock(mem->readMemVal(PC));
     UpdatePC(mem->readMemVal(PC));
@@ -369,7 +369,6 @@ void Processor::CLC_impl(Memory *mem) {
 
     updateClock(mem->readMemVal(PC));
     UpdatePC(mem->readMemVal(PC));
-
 }
 
 void Processor::CLI_impl(Memory *mem) {
