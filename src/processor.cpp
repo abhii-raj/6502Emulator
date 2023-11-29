@@ -337,6 +337,63 @@ void Processor::INY_impl(Memory *mem) {
     UpdatePC(mem->readMemVal(PC));
 }
 
+void Processor::DEX_impl(Memory *mem) {
+    X--;
+
+    if(X==0){
+        setZeroBit();
+    }
+    if(X<0){
+        setNegativeBit();
+    }
+
+    updateClock(mem->readMemVal(PC));
+    UpdatePC(mem->readMemVal(PC));
+}
+
+void Processor::DEY_impl(Memory *mem) {
+    Y--;
+
+    if(Y==0){
+        setZeroBit();
+    }
+    if(Y<0){
+        setNegativeBit()
+    }
+    updateClock(mem->readMemVal(PC));
+    UpdatePC(mem->readMemVal(PC));
+}
+
+void Processor::CLC_impl(Memory *mem) {
+    FR = FR & 0b11111110;
+
+    updateClock(mem->readMemVal(PC));
+    UpdatePC(mem->readMemVal(PC));
+
+}
+
+void Processor::CLI_impl(Memory *mem) {
+    FR = FR & 0b11111011;
+
+    updateClock(mem->readMemVal(PC));
+    UpdatePC(mem->readMemVal(PC));
+}
+
+void Processor::CLD_impl(Memory *mem) {
+    FR = FR & 0b11110111;
+
+    updateClock(mem->readMemVal(PC));
+    UpdatePC(mem->readMemVal(PC));
+}
+
+void Processor::CLV_impl(Memory *mem) {
+    FR = FR & 0b10111111;
+
+    updateClock(mem->readMemVal(PC));
+    UpdatePC(mem->readMemVal(PC));
+}
+
+
 
 
 
