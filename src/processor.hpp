@@ -150,6 +150,24 @@ public:
 
      /*** INY Instructions ***/
     void INY_impl(Memory *mem);
+
+    /***DEX Instructions ***/
+    void DEX_impl(Memory *mem);
+
+    /***DEY Instructions ***/
+    void DEY_impl(Memory *mem);
+
+    /***CLC Instructions ***/
+    void CLC_impl(Memory *mem);
+
+    /***CLD Instructions ***/
+    void CLD_impl(Memory *mem);
+
+    /***CLI Instructions ***/
+    void CLI_impl(Memory *mem);
+
+    /***CLV Instructions ***/
+    void CLV_impl(Memory *mem);
 };
 
 
