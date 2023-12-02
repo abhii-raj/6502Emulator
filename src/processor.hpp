@@ -177,7 +177,16 @@ public:
     /***STX Instructions ***/
     void STX_zpg(Memory *mem);
     void STX_zpgx(Memory *mem);
-    void STX_abs(Memory *mem); 
+    void STX_abs(Memory *mem);
+
+    /***SEI Instructions ***/
+    void SEI_impl(Memory *mem);
+
+    /***SED Instructions ***/
+    void SED_impl(Memory *mem);
+
+     /***SEC Instructions ***/
+    void SEC_impl(Memory *mem);
 };
 
 

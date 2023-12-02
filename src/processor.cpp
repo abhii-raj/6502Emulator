@@ -440,9 +440,22 @@ void Processor::STX_zpgx(Memory *mem) {
     UpdatePC(mem->readMemVal(PC));
 }
 
-void Processor::STX_abs(Memory *mem) {
-    uint16_t nextTwoWordsAddr = mem->readNextTwoWords(PC + 1);
-    mem->setMem(nextTwoWordsAddr, X);
+void Processor::SEI_impl(Memory *mem) {
+    setInterruptDisableBit();
+
+    updateClock(mem->readMemVal(PC));
+    UpdatePC(mem->readMemVal(PC));
+}
+
+void Processor::SED_impl(Memory *mem) {
+    setDecimalBit();
+
+    updateClock(mem->readMemVal(PC));
+    UpdatePC(mem->readMemVal(PC));
+}
+
+void Processor::SEC_impl(Memory *mem) {
+    setCarryBit();
 
     updateClock(mem->readMemVal(PC));
     UpdatePC(mem->readMemVal(PC));
