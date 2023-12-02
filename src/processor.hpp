@@ -173,6 +173,11 @@ public:
     void STY_zpg(Memory *mem);
     void STY_zpgx(Memory *mem);
     void STY_abs(Memory *mem);
+
+    /***STX Instructions ***/
+    void STX_zpg(Memory *mem);
+    void STX_zpgx(Memory *mem);
+    void STX_abs(Memory *mem); 
 };
 
 

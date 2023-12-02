@@ -419,3 +419,31 @@ void Processor::STY_abs(Memory *mem) {
     updateClock(mem->readMemVal(PC));
     UpdatePC(mem->readMemVal(PC));
 }
+
+void Processor::STX_zpg(Memory *mem) {
+    uint16_t effAddrToRead = mem->readMemVal(PC + 1);
+    uint8_t effVal = mem->readMemVal(effAddrToRead);
+    mem->setMem(effVal, X);
+    
+    updateClock(mem->readMemVal(PC));
+    UpdatePC(mem->readMemVal(PC));
+}
+
+void Processor::STX_zpgx(Memory *mem) {
+    uint8_t effAddrToRead = mem->readMemVal(PC + 1);
+    effAddrToRead += X;
+
+    uint8_t effValFetched = mem->readMemVal((uint16_t)effAddrToRead);
+     mem->setMem(effValFetched, X);
+    
+    updateClock(mem->readMemVal(PC));
+    UpdatePC(mem->readMemVal(PC));
+}
+
+void Processor::STX_abs(Memory *mem) {
+    uint16_t nextTwoWordsAddr = mem->readNextTwoWords(PC + 1);
+    mem->setMem(nextTwoWordsAddr, X);
+
+    updateClock(mem->readMemVal(PC));
+    UpdatePC(mem->readMemVal(PC));
+}
