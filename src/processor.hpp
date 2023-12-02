@@ -171,6 +171,8 @@ public:
 
     /***STY Instructions ***/
     void STY_zpg(Memory *mem);
+    void STY_zpgx(Memory *mem);
+    void STY_abs(Memory *mem);
 };
 
 
