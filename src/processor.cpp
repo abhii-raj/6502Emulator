@@ -392,7 +392,11 @@ void Processor::CLV_impl(Memory *mem) {
     UpdatePC(mem->readMemVal(PC));
 }
 
-
-
-
-
+void Processor::STY_zpg(Memory *mem) {
+    uint16_t effAddrToRead = mem->readMemVal(PC + 1);
+    uint8_t effVal = mem->readMemVal(effAddrToRead);
+    mem->setMem(effVal, Y);
+    
+    updateClock(mem->readMemVal(PC));
+    UpdatePC(mem->readMemVal(PC));
+}

@@ -168,6 +168,9 @@ public:
 
     /***CLV Instructions ***/
     void CLV_impl(Memory *mem);
+
+    /***STY Instructions ***/
+    void STY_zpg(Memory *mem);
 };
 
 
