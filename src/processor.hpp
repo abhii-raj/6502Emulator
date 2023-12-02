@@ -187,6 +187,13 @@ public:
 
      /***SEC Instructions ***/
     void SEC_impl(Memory *mem);
+
+     /***INC Instructions ***/
+    void INC_zpg(Memory *mem);
+    void INC_zpgx(Memory *mem);
+    void INC_abs(Memory *mem);
+    void INC_absx(Memory *mem);
+
 };
 
 

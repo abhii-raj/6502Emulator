@@ -440,6 +440,14 @@ void Processor::STX_zpgx(Memory *mem) {
     UpdatePC(mem->readMemVal(PC));
 }
 
+void Processor::STX_abs(Memory *mem) {
+    uint16_t nextTwoWordsAddr = mem->readNextTwoWords(PC + 1);
+    mem->setMem(nextTwoWordsAddr, X);
+
+    updateClock(mem->readMemVal(PC));
+    UpdatePC(mem->readMemVal(PC));
+}
+
 void Processor::SEI_impl(Memory *mem) {
     setInterruptDisableBit();
 
@@ -460,3 +468,38 @@ void Processor::SEC_impl(Memory *mem) {
     updateClock(mem->readMemVal(PC));
     UpdatePC(mem->readMemVal(PC));
 }
+
+void Processor::INC_zpg(Memory *mem) {
+    uint8_t nextAddr = mem->readMem(PC + 1);
+    uint8_t temp = mem->readMem((uint16_t)nextAddr);
+    temp++;
+    mem->setMem((uint16_t)nextAddr, temp);
+
+    if(temp==0) {
+        setZeroBit();
+    }
+    if(temp<0) {
+        setNegativeBit();
+    }
+
+    updateClock(mem->readMemVal(PC));
+    UpdatePC(mem->readMemVal(PC));
+}
+/***
+void Processor::INC_zpgx(Memory *mem) {
+    uint16_t nextAddr = mem->readMem(PC + 1);
+    nextAddr += X;
+    uint8_t temp = mem->readMem((uint16_t)nextAddr);
+    temp++;
+    mem->setMem((uint16_t)nextAddr, temp);
+
+    if(temp==0) {
+        setZeroBit();
+    }
+    if(temp<0) {
+        setNegativeBit();
+    }
+
+    updateClock(mem->readMemVal(PC));
+    UpdatePC(mem->readMemVal(PC));
+}****/
