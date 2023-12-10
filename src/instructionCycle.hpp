@@ -13,6 +13,7 @@ class InstructionCycle {
     Memory mem;
 public:
     InstructionCycle();
+    InstructionCycle(int a);
     uint8_t IFetch();
     //void IDecode();
     void Execute(uint8_t opcode);

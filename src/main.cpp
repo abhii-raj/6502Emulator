@@ -5,11 +5,11 @@
 #include "dataView.hpp"
 
 int main() {
-    InstructionCycle IC;
+    InstructionCycle IC(1);
     dataView dv;
     Processor P;
     //P.VMInit(IC.retMemoryObj());
     //std::cout << std::hex << P.retStackTopLoc() << std::endl;
-    IC.IFetch();
+    //IC.IFetch();
     return 0;
 }
