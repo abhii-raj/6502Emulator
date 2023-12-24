@@ -392,7 +392,114 @@ void Processor::CLV_impl(Memory *mem) {
     UpdatePC(mem->readMemVal(PC));
 }
 
+void Processor::STY_zpg(Memory *mem) {
+    uint16_t effAddrToRead = mem->readMemVal(PC + 1);
+    uint8_t effVal = mem->readMemVal(effAddrToRead);
+    mem->setMem(effVal, Y);
+    
+    updateClock(mem->readMemVal(PC));
+    UpdatePC(mem->readMemVal(PC));
+}
 
+void Processor::STY_zpgx(Memory *mem) {
+    uint8_t effAddrToRead = mem->readMemVal(PC + 1);
+    effAddrToRead += X;
 
+    uint8_t effValFetched = mem->readMemVal((uint16_t)effAddrToRead);
+     mem->setMem(effValFetched, Y);
+    
+    updateClock(mem->readMemVal(PC));
+    UpdatePC(mem->readMemVal(PC));
+}
 
+void Processor::STY_abs(Memory *mem) {
+    uint16_t nextTwoWordsAddr = mem->readNextTwoWords(PC + 1);
+    mem->setMem(nextTwoWordsAddr, Y);
 
+    updateClock(mem->readMemVal(PC));
+    UpdatePC(mem->readMemVal(PC));
+}
+
+void Processor::STX_zpg(Memory *mem) {
+    uint16_t effAddrToRead = mem->readMemVal(PC + 1);
+    uint8_t effVal = mem->readMemVal(effAddrToRead);
+    mem->setMem(effVal, X);
+    
+    updateClock(mem->readMemVal(PC));
+    UpdatePC(mem->readMemVal(PC));
+}
+
+void Processor::STX_zpgx(Memory *mem) {
+    uint8_t effAddrToRead = mem->readMemVal(PC + 1);
+    effAddrToRead += X;
+
+    uint8_t effValFetched = mem->readMemVal((uint16_t)effAddrToRead);
+     mem->setMem(effValFetched, X);
+    
+    updateClock(mem->readMemVal(PC));
+    UpdatePC(mem->readMemVal(PC));
+}
+
+void Processor::STX_abs(Memory *mem) {
+    uint16_t nextTwoWordsAddr = mem->readNextTwoWords(PC + 1);
+    mem->setMem(nextTwoWordsAddr, X);
+
+    updateClock(mem->readMemVal(PC));
+    UpdatePC(mem->readMemVal(PC));
+}
+
+void Processor::SEI_impl(Memory *mem) {
+    setInterruptDisableBit();
+
+    updateClock(mem->readMemVal(PC));
+    UpdatePC(mem->readMemVal(PC));
+}
+
+void Processor::SED_impl(Memory *mem) {
+    setDecimalBit();
+
+    updateClock(mem->readMemVal(PC));
+    UpdatePC(mem->readMemVal(PC));
+}
+
+void Processor::SEC_impl(Memory *mem) {
+    setCarryBit();
+
+    updateClock(mem->readMemVal(PC));
+    UpdatePC(mem->readMemVal(PC));
+}
+
+void Processor::INC_zpg(Memory *mem) {
+    uint8_t nextAddr = mem->readMem(PC + 1);
+    uint8_t temp = mem->readMem((uint16_t)nextAddr);
+    temp++;
+    mem->setMem((uint16_t)nextAddr, temp);
+
+    if(temp==0) {
+        setZeroBit();
+    }
+    if(temp<0) {
+        setNegativeBit();
+    }
+
+    updateClock(mem->readMemVal(PC));
+    UpdatePC(mem->readMemVal(PC));
+}
+/***
+void Processor::INC_zpgx(Memory *mem) {
+    uint16_t nextAddr = mem->readMem(PC + 1);
+    nextAddr += X;
+    uint8_t temp = mem->readMem((uint16_t)nextAddr);
+    temp++;
+    mem->setMem((uint16_t)nextAddr, temp);
+
+    if(temp==0) {
+        setZeroBit();
+    }
+    if(temp<0) {
+        setNegativeBit();
+    }
+
+    updateClock(mem->readMemVal(PC));
+    UpdatePC(mem->readMemVal(PC));
+}****/
