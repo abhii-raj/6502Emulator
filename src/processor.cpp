@@ -470,8 +470,8 @@ void Processor::SEC_impl(Memory *mem) {
 }
 
 void Processor::INC_zpg(Memory *mem) {
-    uint8_t nextAddr = mem->readMem(PC + 1);
-    uint8_t temp = mem->readMem((uint16_t)nextAddr);
+    uint8_t nextAddr = mem->readMemVal(PC + 1);
+    uint8_t temp = mem->readMemVal((uint16_t)nextAddr);
     temp++;
     mem->setMem((uint16_t)nextAddr, temp);
 
