@@ -201,6 +201,12 @@ public:
     //Jump to New Location Saving Return Address
     void JSR_abs(Memory *mem);
 
+    /*** PHA Instruction ***/
+    void PHA_impl(Memory *mem);
+
+    /*** PHP Instruction ***/
+    void PHP_impl(Memory *mem);
+
 };
 
 

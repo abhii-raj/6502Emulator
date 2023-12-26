@@ -516,10 +516,10 @@ void Processor::NOP_impl(Memory *mem) {
 // Jump to New Location Saving Return Address
 void Processor::JSR_abs(Memory *mem) {
     // effective address of the topmost free location in stack
-    uint16_t actStackAddr = 0x0100 + SP;
+    uint16_t effStackAddr = 0x0100 + SP;
 
     // push PC + 3 to the stack
-    mem->setMem(actStackAddr, PC+3);
+    mem->setMem(effStackAddr, PC+3);
 
     // update stack pointer
     // decreasing by 1 word
@@ -530,4 +530,30 @@ void Processor::JSR_abs(Memory *mem) {
 
     updateClock(mem->readMemVal(PC));
     PC = newLoc;
+}
+
+void Processor::PHA_impl(Memory *mem) {
+    uint16_t effStackAddr = 0x0100 + SP;
+
+    // push A to stack
+    mem->setMem(effStackAddr, A);
+
+    //update SP
+    SP--;
+
+    updateClock(mem->readMemVal(PC));
+    UpdatePC(mem->readMemVal(PC));
+}
+
+void Processor::PHP_impl(Memory *mem) {
+    uint16_t effStackAddr = 0x0100 + SP;
+
+    // push A to stack
+    mem->setMem(effStackAddr, FR);
+
+    //update SP
+    SP--;
+
+    updateClock(mem->readMemVal(PC));
+    UpdatePC(mem->readMemVal(PC));
 }
