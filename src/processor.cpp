@@ -507,3 +507,27 @@ void Processor::INC_zpgx(Memory *mem) {
     updateClock(mem->readMemVal(PC));
     UpdatePC(mem->readMemVal(PC));
 }****/
+
+void Processor::NOP_impl(Memory *mem) {
+    updateClock(mem->readMemVal(PC));
+    UpdatePC(mem->readMemVal(PC));
+}
+
+// Jump to New Location Saving Return Address
+void Processor::JSR_abs(Memory *mem) {
+    // effective address of the topmost free location in stack
+    uint16_t actStackAddr = 0x0100 + SP;
+
+    // push PC + 3 to the stack
+    mem->setMem(actStackAddr, PC+3);
+
+    // update stack pointer
+    // decreasing by 1 word
+    SP--;
+
+    // new location where control is shifted to
+    uint16_t newLoc = mem->readNextTwoWords(PC + 1);
+
+    updateClock(mem->readMemVal(PC));
+    PC = newLoc;
+}

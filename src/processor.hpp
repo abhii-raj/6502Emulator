@@ -194,6 +194,13 @@ public:
     void INC_abs(Memory *mem);
     void INC_absx(Memory *mem);
 
+    /*** NOP Instruction ***/
+    void NOP_impl(Memory *mem);
+
+    /*** JSR Instruction ***/
+    //Jump to New Location Saving Return Address
+    void JSR_abs(Memory *mem);
+
 };
 
 
