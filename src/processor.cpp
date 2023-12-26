@@ -582,16 +582,20 @@ void Processor::PLA_impl(Memory *mem) {
 void Processor::PLP_impl(Memory *mem) {
     uint16_t effStackAddr = 0x0100 + SP;
 
-    // store top most word of the stack into 'A' register
-    FR = mem->readMemVal(effStackAddr);
+    // store top most word of the stack into a temporary variable
+    uint8_t tempVal = mem->readMemVal(effStackAddr);
 
     //update SP
     SP++;
 
-    /**
-     * NOTE : check if flag bits are affected by this instruction or not
-     * and make necessary update
-     */
+    // update flag bit
+    if((tempVal & 1) == 1) setCarryBit();
+    if((tempVal & 2) == 1) setZeroBit();
+    if((tempVal & 4) == 1) setInterruptDisableBit();
+    if((tempVal & 8) == 1) setDecimalBit();
+    // unaffected by 4th and 5th bit
+    if((tempVal & 64) == 1) setOverflowBit();       // 6th bit
+    if((tempVal & 128) == 1) setNegativeBit();      // 7th bit
 
     updateClock(mem->readMemVal(PC));
     UpdatePC(mem->readMemVal(PC));
