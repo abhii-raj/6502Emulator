@@ -557,3 +557,42 @@ void Processor::PHP_impl(Memory *mem) {
     updateClock(mem->readMemVal(PC));
     UpdatePC(mem->readMemVal(PC));
 }
+
+void Processor::PLA_impl(Memory *mem) {
+    uint16_t effStackAddr = 0x0100 + SP;
+
+    // store top most word of the stack into 'A' register
+    A = mem->readMemVal(effStackAddr);
+
+    //update SP
+    SP++;
+
+    // update flag bits
+    if(A==0) {
+        setZeroBit();
+    }
+    if(A<0) {
+        setNegativeBit();
+    }
+
+    updateClock(mem->readMemVal(PC));
+    UpdatePC(mem->readMemVal(PC));
+}
+
+void Processor::PLP_impl(Memory *mem) {
+    uint16_t effStackAddr = 0x0100 + SP;
+
+    // store top most word of the stack into 'A' register
+    FR = mem->readMemVal(effStackAddr);
+
+    //update SP
+    SP++;
+
+    /**
+     * NOTE : check if flag bits are affected by this instruction or not
+     * and make necessary update
+     */
+
+    updateClock(mem->readMemVal(PC));
+    UpdatePC(mem->readMemVal(PC));
+}

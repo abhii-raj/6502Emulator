@@ -207,6 +207,12 @@ public:
     /*** PHP Instruction ***/
     void PHP_impl(Memory *mem);
 
+    /*** PLA Instruction ***/
+    void PLA_impl(Memory *mem);
+
+    /*** PLP Instruction ***/
+    void PLP_impl(Memory *mem);
+
 };
 
 
