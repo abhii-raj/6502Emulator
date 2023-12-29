@@ -7,6 +7,7 @@
 #include "codeLoad.hpp"
 
 #include <iostream>
+#include <math.h>
 
 void Processor::VMInit(Memory *mem) {
     // read 0xFFFC and 0xFFFD(reset vector) to get the address to initialise PC to
@@ -588,15 +589,17 @@ void Processor::PLP_impl(Memory *mem) {
     //update SP
     SP++;
 
-    // wrong logic
     // update flag bit
-    if((tempVal & 1) == 1) setCarryBit();
-    if((tempVal & 2) == 1) setZeroBit();
-    if((tempVal & 4) == 1) setInterruptDisableBit();
-    if((tempVal & 8) == 1) setDecimalBit();
-    // unaffected by 4th and 5th bit
-    if((tempVal & 64) == 1) setOverflowBit();       // 6th bit
-    if((tempVal & 128) == 1) setNegativeBit();      // 7th bit
+    // ignore 4th and 54th bits
+    // 4th and 5th bit of tempVal does not affect flag register
+    for(int i=0;i<8;i++) {
+        int bitVal = tempVal % 2;
+        tempVal = tempVal/2;
+        int toOR_edWith = bitVal * pow(2, i);
+        if( i!=4 && i!=5) {
+            FR = FR | toOR_edWith;
+        }
+    }
 
     updateClock(mem->readMemVal(PC));
     UpdatePC(mem->readMemVal(PC));
