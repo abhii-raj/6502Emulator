@@ -588,6 +588,7 @@ void Processor::PLP_impl(Memory *mem) {
     //update SP
     SP++;
 
+    // wrong logic
     // update flag bit
     if((tempVal & 1) == 1) setCarryBit();
     if((tempVal & 2) == 1) setZeroBit();

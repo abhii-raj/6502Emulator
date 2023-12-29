@@ -8,6 +8,7 @@
 #include "dataView.hpp"
 
 #include <iostream>
+#include <unistd.h>
 
 // continuous run
 // this function continuously executes instructions till BRK is not found
@@ -46,11 +47,18 @@ InstructionCycle::InstructionCycle(int modeFlag) {
             Execute(opcode);
         }
         else if(modeFlag == 2) {
+            int c = proc.cpuClock;
+            int x = c;
             while((opcode = IFetch()) != 0x00) {
+                c = proc.cpuClock;
+                x = c-x;
                 dv.ADump_hex(proc);
                 dv.PCDump_hex(proc);
                 dv.FDump(proc);
+                printf("Time :%d\n", x);
                 Execute(opcode);
+                sleep(x);
+                x = x;
             }
         }
         else
