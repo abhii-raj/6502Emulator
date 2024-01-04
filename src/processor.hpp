@@ -213,6 +213,52 @@ public:
     /*** PLP Instruction ***/
     void PLP_impl(Memory *mem);
 
+    /*** LDX Instruction ***/
+    void LDX_imdt(Memory *mem);
+    void LDX_abs(Memory *mem);
+    void LDX_absy(Memory *mem);
+    void LDX_zpg(Memory *mem);
+    void LDX_zpgy(Memory *mem);
+
+    /***  LDY Instruction ***/
+    void LDY_imdt(Memory *mem);
+    void LDY_abs(Memory *mem);
+    void LDY_absx(Memory *mem);
+    void LDY_zpg(Memory *mem);
+    void LDY_zpgx(Memory *mem);
+
+    /*** ORA Instructions ***/
+    void ORA_imdt(Memory *mem);
+    void ORA_zpg(Memory *mem);
+    void ORA_zpgx(Memory *mem);
+    void ORA_abs(Memory *mem);
+    void ORA_absx(Memory *mem);
+    void ORA_absy(Memory *mem);
+    void ORA_idrx(Memory *mem);
+    void ORA_idry(Memory *mem);
+
+    /*** EOR Instructions ***/
+    void EOR_imdt(Memory *mem);
+    void EOR_zpg(Memory *mem);
+    void EOR_zpgx(Memory *mem);
+    void EOR_abs(Memory *mem);
+    void EOR_absx(Memory *mem);
+    void EOR_absy(Memory *mem);
+    void EOR_idrx(Memory *mem);
+    void EOR_idry(Memory *mem);
+
+    /*** AND Instructions ***/
+    void AND_imdt(Memory *mem);
+    void AND_zpg(Memory *mem);
+    void AND_zpgx(Memory *mem);
+    void AND_abs(Memory *mem);
+    void AND_absx(Memory *mem);
+    void AND_absy(Memory *mem);
+    void AND_idrx(Memory *mem);
+    void AND_idry(Memory *mem);
+
+
+
 };
 
 
