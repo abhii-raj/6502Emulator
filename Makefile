@@ -21,3 +21,6 @@ $(PROGNAME): instructionCycle.o memory.o processor.o codeLoad.o dataView.o main.
 
 clean: 
 	rm *.o
+
+exec:
+	./$(PROGNAME)
