@@ -146,5 +146,110 @@ void InstructionCycle::Execute(uint8_t opcode) {
         case 0x98:
             proc.TYA_impl(&mem);
             break;
+        case 0x98:
+            proc.LDX_imdt(&mem);
+            break;
+        case 0x98:
+            proc.LDX_abs(&mem);
+            break;
+        case 0x98:
+            proc.LDX_absy(&mem);
+            break;
+        case 0x98:
+            proc.LDX_zpg(&mem);
+            break;
+        case 0x98:
+            proc.LDX_zpgy(&mem);
+            break;
+        case 0x98:
+            proc.LDY_imdt(&mem);
+            break;
+        case 0x98:
+            proc.LDY_abs(&mem);
+            break;
+        case 0x98:
+            proc.LDY_absx(&mem);
+            break;
+        case 0x98:
+            proc.LDY_zpg(&mem);
+            break;
+        case 0x98:
+            proc.LDY_zpgx(&mem);
+            break;
+        case 0x98:
+            proc.ORA_imdt(&mem);
+            break;
+        case 0x98:
+            proc.ORA_zpg(&mem);
+            break;
+        case 0x98:
+            proc.ORA_zpgx(&mem);
+            break;
+        case 0x98:
+            proc.ORA_abs(&mem);
+            break;
+        case 0x98:
+            proc.ORA_absx(&mem);
+            break;
+        case 0x98:
+            proc.ORA_absy(&mem);
+            break;
+        case 0x98:
+            proc.ORA_idrx(&mem);
+            break;
+        case 0x98:
+            proc.ORA_idry(&mem);
+            break;
+        case 0x98:
+            proc.EOR_imdt(&mem);
+            break;
+        case 0x98:
+            proc.EOR_zpg(&mem);
+            break;
+        case 0x98:
+            proc.EOR_zpgx(&mem);
+            break;
+        case 0x98:
+            proc.EOR_abs(&mem);
+            break;
+        case 0x98:
+            proc.EOR_absx(&mem);
+            break;
+        case 0x98:
+            proc.EOR_absy(&mem);
+            break;
+        case 0x98:
+            proc.EOR_idrx(&mem);
+            break;
+        case 0x98:
+            proc.EOR_idry(&mem);
+            break;
+        case 0x98:
+            proc.AND_imdt(&mem);
+            break;
+        case 0x98:
+            proc.AND_zpg(&mem);
+            break;
+        case 0x98:
+            proc.AND_zpgx(&mem);
+            break;
+        case 0x98:
+            proc.AND_abs(&mem);
+            break;
+        case 0x98:
+            proc.AND_absx(&mem);
+            break;
+        case 0x98:
+            proc.AND_absy(&mem);
+            break;
+        case 0x98:
+            proc.AND_idrx(&mem);
+            break;
+        case 0x98:
+            proc.AND_idry(&mem);
+            break;
+
+
+
     }
 }
