@@ -12,7 +12,7 @@
 
 // continuous run
 // this function continuously executes instructions till BRK is not found
-InstructionCycle::InstructionCycle() {
+/***InstructionCycle::InstructionCycle() {
     proc.VMInit(&mem);
 
     uint8_t opcode;
@@ -26,7 +26,7 @@ InstructionCycle::InstructionCycle() {
     dv.ADump_hex(proc);
     dv.PCDump_hex(proc);
     dv.FDump(proc);
-}
+}***/
 
 // step run
 // this function executes instructions step wise
@@ -38,6 +38,7 @@ InstructionCycle::InstructionCycle(int modeFlag) {
     dataView dv;
     int stopFlag = 1;
     while(stopFlag) {
+        std::cout << mem.readMemVal(0x0400) << std::endl;
         std::cout << "step : 1\ncontinue: 2\nbreak: 3" << std::endl;
         std::cin >> modeFlag;
         if(modeFlag == 1) {
