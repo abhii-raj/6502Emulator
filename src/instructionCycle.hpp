@@ -12,8 +12,12 @@ class InstructionCycle {
     Processor proc;
     Memory mem;
 public:
-    InstructionCycle();
+    // for text based operation
     InstructionCycle(int a);
+
+    // for GUI based operation
+    InstructionCycle(int a, int *f_argc, char ***f_argv);
+
     uint8_t IFetch();
     //void IDecode();
     void Execute(uint8_t opcode);

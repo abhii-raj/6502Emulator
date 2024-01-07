@@ -4,10 +4,8 @@
 #include "instructionCycle.hpp"
 #include "dataView.hpp"
 
-int main() {
-    InstructionCycle IC(1);
-    dataView dv;
-    Processor P;
+int main(int argc, char **argv) {
+    InstructionCycle IC(1, &argc, &argv);
     //P.VMInit(IC.retMemoryObj());
     //std::cout << std::hex << P.retStackTopLoc() << std::endl;
     //IC.IFetch();
