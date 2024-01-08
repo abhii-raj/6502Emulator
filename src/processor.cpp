@@ -26,8 +26,6 @@ void Processor::VMInit(Memory *mem) {
     // stack starts from (SP + 0x100)
     // stack register is initialised from 0xff because 8 bit register can't store 0x1ff
     SP = 0xFF;
-
-    CodeLoad codeload("../OPCODE INPUT/opcodeInput1.txt", 0x0400, mem);
 }
 
 // increments the clock tick by the parameter value

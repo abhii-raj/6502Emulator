@@ -6,6 +6,7 @@
 #include "processor.hpp"
 #include "memory.hpp"
 #include "dataView.hpp"
+#include "codeLoad.hpp"
 
 #include <iostream>
 #include <unistd.h>
@@ -34,6 +35,9 @@
 // to determine if to execute instruction stepwise or continuously or break
 InstructionCycle::InstructionCycle(int modeFlag) {
     proc.VMInit(&mem);
+    load.CodeLoadFromFile("../OPCODE INPUT/opcodeInput1.txt",
+                          0x0400, &mem);
+
     uint8_t opcode = IFetch();
     dataView dv;
     int stopFlag = 1;

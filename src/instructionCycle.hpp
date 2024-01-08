@@ -7,10 +7,12 @@
 
 #include "processor.hpp"
 #include "memory.hpp"
+#include "codeLoad.hpp"
 
 class InstructionCycle {
     Processor proc;
     Memory mem;
+    CodeLoad load;
 public:
     // for text based operation
     InstructionCycle(int modeFlag);
