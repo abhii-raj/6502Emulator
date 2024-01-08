@@ -27,7 +27,12 @@ void setupUI() {
     gtk_window_set_default_size(GTK_WINDOW(window), 500, 500);
     gtk_window_set_title(GTK_WINDOW(window), "6502 Emulator");
 
+    // to add multiple widgets to the window
+    GtkWidget *fix = gtk_fixed_new();
+    gtk_container_add(GTK_CONTAINER(window), fix);
+
     // GTK ListStore
+    // used inside GTK TreeView
     colList = gtk_list_store_new(6, G_TYPE_STRING, G_TYPE_STRING, G_TYPE_STRING,
                               G_TYPE_STRING, G_TYPE_STRING, G_TYPE_STRING);
     // GTK TreeView
@@ -43,11 +48,7 @@ void setupUI() {
     GtkTreeViewColumn* SP_col = retTreeCol("SP", cellRenderer, treeview);
     GtkTreeViewColumn* FR_col = retTreeCol("N V - B D I Z C", cellRenderer, treeview);
 
-    GtkWidget *fix;
-    fix = gtk_fixed_new();
-
-    gtk_container_add(GTK_CONTAINER(window), fix);
-
+    // put widgets inside GtkFixed
     gtk_fixed_put(GTK_FIXED(fix), treeview, 50, 60);
 
     // for closing application
