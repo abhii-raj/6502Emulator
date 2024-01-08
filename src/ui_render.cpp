@@ -31,6 +31,7 @@ void setupUI() {
     GtkWidget *fix = gtk_fixed_new();
     gtk_container_add(GTK_CONTAINER(window), fix);
 
+    /**** ROWS AND COLUMNS TO OUTPUT VALUE OF REGISTERS ****/
     // GTK ListStore
     // used inside GTK TreeView
     colList = gtk_list_store_new(6, G_TYPE_STRING, G_TYPE_STRING, G_TYPE_STRING,
@@ -48,8 +49,30 @@ void setupUI() {
     GtkTreeViewColumn* SP_col = retTreeCol("SP", cellRenderer, treeview);
     GtkTreeViewColumn* FR_col = retTreeCol("N V - B D I Z C", cellRenderer, treeview);
 
+    /**** FOR TEXT BUFFER AND TEXTVIEW ****/
+    // GTK textview
+    GtkWidget *textview = gtk_text_view_new();
+    // GTK text buffer
+    GtkTextBuffer *txtBuff = gtk_text_view_get_buffer(GTK_TEXT_VIEW(textview));
+
+    gtk_text_view_set_wrap_mode (GTK_TEXT_VIEW(textview), GTK_WRAP_CHAR);
+
+
+    /*** GTK SCROLLED WINDOW FOR TEXT VIEW ****/
+    GtkWidget *scr_window_textview = gtk_scrolled_window_new(NULL, NULL);
+    gtk_scrolled_window_set_policy(GTK_SCROLLED_WINDOW(scr_window_textview),
+                                   GTK_POLICY_AUTOMATIC, GTK_POLICY_AUTOMATIC);
+    gtk_scrolled_window_set_min_content_height(GTK_SCROLLED_WINDOW(scr_window_textview), 300);
+    gtk_scrolled_window_set_min_content_width(GTK_SCROLLED_WINDOW(scr_window_textview), 400);
+    gtk_scrolled_window_set_shadow_type (GTK_SCROLLED_WINDOW(scr_window_textview), GTK_SHADOW_IN);
+
+    // adding textview widget to scrollable window
+    gtk_container_add(GTK_CONTAINER(GTK_SCROLLED_WINDOW(scr_window_textview)), textview);
+
+
     // put widgets inside GtkFixed
     gtk_fixed_put(GTK_FIXED(fix), treeview, 50, 60);
+    gtk_fixed_put(GTK_FIXED(fix), scr_window_textview, 800, 60);
 
     // for closing application
     g_signal_connect(window, "destroy", G_CALLBACK(onWindowDestroy), NULL);
