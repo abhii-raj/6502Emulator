@@ -69,10 +69,14 @@ void setupUI() {
     // adding textview widget to scrollable window
     gtk_container_add(GTK_CONTAINER(GTK_SCROLLED_WINDOW(scr_window_textview)), textview);
 
+    // button to load opcode into memory
+    GtkWidget *loadButton = gtk_button_new_with_label("Load");
+
 
     // put widgets inside GtkFixed
     gtk_fixed_put(GTK_FIXED(fix), treeview, 50, 60);
     gtk_fixed_put(GTK_FIXED(fix), scr_window_textview, 800, 60);
+    gtk_fixed_put(GTK_FIXED(fix), loadButton, 800, 400);
 
     // for closing application
     g_signal_connect(window, "destroy", G_CALLBACK(onWindowDestroy), NULL);
