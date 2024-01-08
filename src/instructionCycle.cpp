@@ -7,8 +7,6 @@
 #include "memory.hpp"
 #include "dataView.hpp"
 
-#include "ui_render.hpp"
-
 #include <iostream>
 #include <unistd.h>
 
@@ -76,10 +74,6 @@ InstructionCycle::InstructionCycle(int modeFlag) {
         dv.PCDump_hex(proc);
         dv.FDump(proc);
     }
-}
-
-InstructionCycle::InstructionCycle(int a, int *f_argc, char ***f_argv) {
-    setupUI(f_argc, f_argv);
 }
 
 Processor* InstructionCycle::retProcessorObj() {

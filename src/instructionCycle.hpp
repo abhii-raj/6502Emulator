@@ -13,10 +13,7 @@ class InstructionCycle {
     Memory mem;
 public:
     // for text based operation
-    InstructionCycle(int a);
-
-    // for GUI based operation
-    InstructionCycle(int a, int *f_argc, char ***f_argv);
+    InstructionCycle(int modeFlag);
 
     uint8_t IFetch();
     //void IDecode();
