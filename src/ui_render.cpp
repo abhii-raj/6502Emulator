@@ -8,6 +8,7 @@
 #include <gtk-3.0/gtk/gtk.h>
 
 #include <iostream>
+#include <algorithm>
 
 void onWindowDestroy(GtkWidget *widget, gpointer user_data) {
     window = NULL;
@@ -39,7 +40,8 @@ void addRow(gpointer user_data) {
     std::string SP_str = std::to_string(local_procRef->SP);
     const char *SP_cstr = SP_str.c_str();
     std::string FR_str = std::to_string(local_procRef->FR);
-    const char *FR_cstr = FR_str.c_str();
+    std::string FR_str_bin = decToBin(FR_str);
+    const char *FR_cstr_bin = FR_str_bin.c_str();
 
     gtk_list_store_set(colList, &iter,
                        0, PC_cstr,
@@ -47,12 +49,13 @@ void addRow(gpointer user_data) {
                        2, X_cstr,
                        3, Y_cstr,
                        4, SP_cstr,
-                       5, FR_cstr,
+                       5, FR_cstr_bin,
                        -1);
+    std::cout << "fr" << FR_cstr_bin << std::endl;
 }
 
 gpointer rowUpdateThread(gpointer user_data) {
-    g_idle_add (G_SOURCE_FUNC(addRow), NULL);
+    g_idle_add (G_SOURCE_FUNC(GUI_Binding_InstrCycle), NULL);
 }
 
 void onLoadButtonClick(GtkButton *button,GtkTextBuffer* txtBuff) {
@@ -62,8 +65,7 @@ void onLoadButtonClick(GtkButton *button,GtkTextBuffer* txtBuff) {
     char *str = gtk_text_buffer_get_text(txtBuff, &s_iter, &e_iter, FALSE);
     std::string OpcodeBuffer(str);
     cl.CodeLoadFromStrBuffer(OpcodeBuffer, 0x0400, local_memRef);
-    local_procRef->VMInit(local_memRef);
-
+    //local_procRef->VMInit(local_memRef);
     g_thread_new("Row Update", rowUpdateThread, NULL);
     local_memRef->readMem(0x400);
     local_memRef->readMem(0x401);
@@ -73,6 +75,39 @@ void onLoadButtonClick(GtkButton *button,GtkTextBuffer* txtBuff) {
     local_memRef->readMem(0x405);
 
     //printf("%s\n", str);
+}
+
+void GUI_Binding_InstrCycle(gpointer user_data) {
+    Processor *proc = local_procRef;
+    Memory *mem = local_memRef;
+    proc->VMInit(mem);
+    //proc->PC = 0x0400;
+    uint8_t opcode;
+
+    while( (opcode = IC.IFetch()) != 0x00 ) {
+        IC.Execute(opcode);
+        addRow(NULL);
+    }
+}
+
+std::string decToBin(std::string decNum) {
+    std::string temp = "";
+    temp.clear();
+    int num = std::stoi(decNum, 0, 10);
+    int rem = 0;
+    int n = num;
+    while(n > 0) {
+        rem = n%2;
+        n = n/2;
+        char t;
+        if(rem == 0) t = '0';
+        else t = '1';
+        temp += t;
+        temp += ' ';
+    }
+    reverse(temp.begin(), temp.end());
+    //const char *str = temp.c_str();
+    return temp;
 }
 
 void setupUI() {
