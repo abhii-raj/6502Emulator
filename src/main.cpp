@@ -6,8 +6,8 @@
 #include "ui_render.hpp"
 
 int main(int argc, char **argv) {
-    InstructionCycle IC(1);
-    //mainUI(&argc, &argv);
+    //InstructionCycle IC(1);
+    mainUI(&argc, &argv);
     //P.VMInit(IC.retMemoryObj());
     //std::cout << std::hex << P.retStackTopLoc() << std::endl;
     //IC.IFetch();

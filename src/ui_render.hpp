@@ -12,6 +12,7 @@ static GtkListStore *colList;
 
 void onWindowDestroy(GtkWidget *widget, gpointer user_data);
 GtkTreeViewColumn* retTreeCol(char *ColumnHeading, GtkCellRenderer* cell, GtkWidget* treeview);
+void onLoadButtonClick(GtkButton *button, GtkTextBuffer* txtBuff);
 void setupUI();
 void mainUI(int *f_argc, char ***f_argv);
 

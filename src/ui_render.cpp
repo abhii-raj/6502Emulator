@@ -21,6 +21,14 @@ GtkTreeViewColumn* retTreeCol(char *ColumnHeading, GtkCellRenderer* cell, GtkWid
     gtk_tree_view_append_column (GTK_TREE_VIEW (treeview), col);
 }
 
+void onLoadButtonClick(GtkButton *button,GtkTextBuffer* txtBuff) {
+    GtkTextIter s_iter, e_iter;
+    gtk_text_buffer_get_start_iter(txtBuff, &s_iter);
+    gtk_text_buffer_get_end_iter(txtBuff, &e_iter);
+    char *str = gtk_text_buffer_get_text(txtBuff, &s_iter, &e_iter, FALSE);
+    printf("%s\n", str);
+}
+
 void setupUI() {
     window = gtk_window_new(GTK_WINDOW_TOPLEVEL);
 
@@ -80,6 +88,8 @@ void setupUI() {
 
     // for closing application
     g_signal_connect(window, "destroy", G_CALLBACK(onWindowDestroy), NULL);
+    // on clicking Load button
+    g_signal_connect(loadButton, "clicked", G_CALLBACK(onLoadButtonClick), txtBuff);
 }
 
 void mainUI(int *f_argc, char ***f_argv) {
