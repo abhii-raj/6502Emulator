@@ -34,10 +34,10 @@ void onLoadButtonClick(GtkButton *button,GtkTextBuffer* txtBuff) {
     local_memRef->readMem(0x401);
     local_memRef->readMem(0x402);
     local_memRef->readMem(0x403);
+    local_memRef->readMem(0x404);
     local_memRef->readMem(0x405);
-    local_memRef->readMem(0x406);
 
-    printf("%s\n", str);
+    //printf("%s\n", str);
 }
 
 void setupUI() {
