@@ -7,6 +7,8 @@
 
 #include <gtk-3.0/gtk/gtk.h>
 
+#include <iostream>
+
 void onWindowDestroy(GtkWidget *widget, gpointer user_data) {
     window = NULL;
     gtk_widget_destroy(widget);
@@ -14,12 +16,43 @@ void onWindowDestroy(GtkWidget *widget, gpointer user_data) {
     printf("closing\n");
 }
 
-GtkTreeViewColumn* retTreeCol(char *ColumnHeading, GtkCellRenderer* cell, GtkWidget* treeview) {
+GtkTreeViewColumn* retTreeCol(char *ColumnHeading, GtkCellRenderer* cell, GtkWidget* treeview, int col_atr) {
     GtkTreeViewColumn* col = gtk_tree_view_column_new();
     gtk_tree_view_column_set_title( col, ColumnHeading);
     gtk_tree_view_column_pack_start (col, cell, TRUE);
-    gtk_tree_view_column_add_attribute (col, cell, "text", 1);
+    gtk_tree_view_column_add_attribute (col, cell, "text", col_atr);
     gtk_tree_view_append_column (GTK_TREE_VIEW (treeview), col);
+}
+
+void addRow(gpointer user_data) {
+    GtkTreeIter iter;
+    gtk_list_store_append(colList, &iter);
+
+    std::string PC_str = std::to_string(local_procRef->PC);
+    const char *PC_cstr = PC_str.c_str();
+    std::string A_str = std::to_string(local_procRef->A);
+    const char *A_cstr = A_str.c_str();
+    std::string X_str = std::to_string(local_procRef->X);
+    const char *X_cstr = X_str.c_str();
+    std::string Y_str = std::to_string(local_procRef->Y);
+    const char *Y_cstr = Y_str.c_str();
+    std::string SP_str = std::to_string(local_procRef->SP);
+    const char *SP_cstr = SP_str.c_str();
+    std::string FR_str = std::to_string(local_procRef->FR);
+    const char *FR_cstr = FR_str.c_str();
+
+    gtk_list_store_set(colList, &iter,
+                       0, PC_cstr,
+                       1, A_cstr,
+                       2, X_cstr,
+                       3, Y_cstr,
+                       4, SP_cstr,
+                       5, FR_cstr,
+                       -1);
+}
+
+gpointer rowUpdateThread(gpointer user_data) {
+    g_idle_add (G_SOURCE_FUNC(addRow), NULL);
 }
 
 void onLoadButtonClick(GtkButton *button,GtkTextBuffer* txtBuff) {
@@ -29,7 +62,9 @@ void onLoadButtonClick(GtkButton *button,GtkTextBuffer* txtBuff) {
     char *str = gtk_text_buffer_get_text(txtBuff, &s_iter, &e_iter, FALSE);
     std::string OpcodeBuffer(str);
     cl.CodeLoadFromStrBuffer(OpcodeBuffer, 0x0400, local_memRef);
+    local_procRef->VMInit(local_memRef);
 
+    g_thread_new("Row Update", rowUpdateThread, NULL);
     local_memRef->readMem(0x400);
     local_memRef->readMem(0x401);
     local_memRef->readMem(0x402);
@@ -61,12 +96,12 @@ void setupUI() {
 
     GtkCellRenderer *cellRenderer = gtk_cell_renderer_text_new();
 
-    GtkTreeViewColumn* PC_col = retTreeCol("Program Counter", cellRenderer, treeview);
-    GtkTreeViewColumn* A_col = retTreeCol("A", cellRenderer, treeview);
-    GtkTreeViewColumn* X_col = retTreeCol("X", cellRenderer, treeview);
-    GtkTreeViewColumn* Y_col = retTreeCol("Y", cellRenderer, treeview);
-    GtkTreeViewColumn* SP_col = retTreeCol("SP", cellRenderer, treeview);
-    GtkTreeViewColumn* FR_col = retTreeCol("N V - B D I Z C", cellRenderer, treeview);
+    GtkTreeViewColumn* PC_col = retTreeCol("Program Counter", cellRenderer, treeview, 0);
+    GtkTreeViewColumn* A_col = retTreeCol("A", cellRenderer, treeview, 1);
+    GtkTreeViewColumn* X_col = retTreeCol("X", cellRenderer, treeview, 2);
+    GtkTreeViewColumn* Y_col = retTreeCol("Y", cellRenderer, treeview, 3);
+    GtkTreeViewColumn* SP_col = retTreeCol("SP", cellRenderer, treeview, 4);
+    GtkTreeViewColumn* FR_col = retTreeCol("N V - B D I Z C", cellRenderer, treeview, 5);
 
     /**** FOR TEXT BUFFER AND TEXTVIEW ****/
     // GTK textview
