@@ -7,8 +7,16 @@
 
 #include <gtk-3.0/gtk/gtk.h>
 
+#include "instructionCycle.hpp"
+#include "memory.hpp"
+#include "codeLoad.hpp"
+
 static GtkWidget *window;
 static GtkListStore *colList;
+
+static InstructionCycle IC;
+static Memory *local_memRef = IC.retMemoryObj();
+static CodeLoad cl;
 
 void onWindowDestroy(GtkWidget *widget, gpointer user_data);
 GtkTreeViewColumn* retTreeCol(char *ColumnHeading, GtkCellRenderer* cell, GtkWidget* treeview);

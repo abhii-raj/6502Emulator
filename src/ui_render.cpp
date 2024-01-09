@@ -3,6 +3,7 @@
 //
 
 #include "ui_render.hpp"
+#include "instructionCycle.hpp"
 
 #include <gtk-3.0/gtk/gtk.h>
 
@@ -26,6 +27,16 @@ void onLoadButtonClick(GtkButton *button,GtkTextBuffer* txtBuff) {
     gtk_text_buffer_get_start_iter(txtBuff, &s_iter);
     gtk_text_buffer_get_end_iter(txtBuff, &e_iter);
     char *str = gtk_text_buffer_get_text(txtBuff, &s_iter, &e_iter, FALSE);
+    std::string OpcodeBuffer(str);
+    cl.CodeLoadFromStrBuffer(OpcodeBuffer, 0x0400, local_memRef);
+
+    local_memRef->readMem(0x400);
+    local_memRef->readMem(0x401);
+    local_memRef->readMem(0x402);
+    local_memRef->readMem(0x403);
+    local_memRef->readMem(0x405);
+    local_memRef->readMem(0x406);
+
     printf("%s\n", str);
 }
 

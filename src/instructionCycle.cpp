@@ -13,6 +13,8 @@
 
 // continuous run
 // this function continuously executes instructions till BRK is not found
+
+// update this function to 'InstructionCycleFunc ()' when required
 /***InstructionCycle::InstructionCycle() {
     proc.VMInit(&mem);
 
@@ -33,7 +35,7 @@
 // this function executes instructions step wise
 // and waits for signal from input
 // to determine if to execute instruction stepwise or continuously or break
-InstructionCycle::InstructionCycle(int modeFlag) {
+void InstructionCycle::InstructionCycleFunc(int modeFlag) {
     proc.VMInit(&mem);
     load.CodeLoadFromFile("../OPCODE INPUT/opcodeInput1.txt",
                           0x0400, &mem);

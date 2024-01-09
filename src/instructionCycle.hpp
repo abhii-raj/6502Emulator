@@ -15,7 +15,7 @@ class InstructionCycle {
     CodeLoad load;
 public:
     // for text based operation
-    InstructionCycle(int modeFlag);
+    void InstructionCycleFunc(int modeFlag);
 
     uint8_t IFetch();
     //void IDecode();
