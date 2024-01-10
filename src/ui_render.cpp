@@ -51,11 +51,12 @@ void addRow(gpointer user_data) {
                        4, SP_cstr,
                        5, FR_cstr_bin,
                        -1);
-    std::cout << "fr" << FR_cstr_bin << std::endl;
+    std::cout << FR_cstr_bin << std::endl;
 }
 
 gpointer rowUpdateThread(gpointer user_data) {
     g_idle_add (G_SOURCE_FUNC(GUI_Binding_InstrCycle), NULL);
+    //g_usleep(10000);
 }
 
 void onLoadButtonClick(GtkButton *button,GtkTextBuffer* txtBuff) {
@@ -66,22 +67,23 @@ void onLoadButtonClick(GtkButton *button,GtkTextBuffer* txtBuff) {
     std::string OpcodeBuffer(str);
     cl.CodeLoadFromStrBuffer(OpcodeBuffer, 0x0400, local_memRef);
     //local_procRef->VMInit(local_memRef);
-    g_thread_new("Row Update", rowUpdateThread, NULL);
+    //printf("%s\n", str);
     local_memRef->readMem(0x400);
     local_memRef->readMem(0x401);
     local_memRef->readMem(0x402);
     local_memRef->readMem(0x403);
     local_memRef->readMem(0x404);
     local_memRef->readMem(0x405);
+}
 
-    //printf("%s\n", str);
+void onContinuousRunButtonClick(GtkButton *button,GtkTextBuffer* txtBuff) {
+    g_thread_new("RowUpdate", rowUpdateThread, NULL);
 }
 
 void GUI_Binding_InstrCycle(gpointer user_data) {
     Processor *proc = local_procRef;
     Memory *mem = local_memRef;
     proc->VMInit(mem);
-    //proc->PC = 0x0400;
     uint8_t opcode;
 
     while( (opcode = IC.IFetch()) != 0x00 ) {
@@ -106,7 +108,6 @@ std::string decToBin(std::string decNum) {
         temp += ' ';
     }
     reverse(temp.begin(), temp.end());
-    //const char *str = temp.c_str();
     return temp;
 }
 
@@ -161,16 +162,22 @@ void setupUI() {
     // button to load opcode into memory
     GtkWidget *loadButton = gtk_button_new_with_label("Load");
 
+    // button to execute all instruction in one step
+    GtkWidget *continuousRunButton = gtk_button_new_with_label("Continuous Run");
+
 
     // put widgets inside GtkFixed
     gtk_fixed_put(GTK_FIXED(fix), treeview, 50, 60);
     gtk_fixed_put(GTK_FIXED(fix), scr_window_textview, 800, 60);
     gtk_fixed_put(GTK_FIXED(fix), loadButton, 800, 400);
+    gtk_fixed_put(GTK_FIXED(fix), continuousRunButton, 900, 400);
 
     // for closing application
     g_signal_connect(window, "destroy", G_CALLBACK(onWindowDestroy), NULL);
     // on clicking Load button
     g_signal_connect(loadButton, "clicked", G_CALLBACK(onLoadButtonClick), txtBuff);
+    // on clicking Continuous Run button
+    g_signal_connect(continuousRunButton, "clicked", G_CALLBACK(onContinuousRunButtonClick), txtBuff);
 }
 
 void mainUI(int *f_argc, char ***f_argv) {

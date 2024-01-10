@@ -25,6 +25,7 @@ GtkTreeViewColumn* retTreeCol(char *ColumnHeading, GtkCellRenderer* cell, GtkWid
 void addRow(gpointer user_data);
 gpointer rowUpdateThread(gpointer user_data);
 void onLoadButtonClick(GtkButton *button, GtkTextBuffer* txtBuff);
+void onContinuousRunButtonClick(GtkButton *button,GtkTextBuffer* txtBuff);
 void GUI_Binding_InstrCycle(gpointer user_data);
 std::string decToBin(std::string decNum);
 void setupUI();
