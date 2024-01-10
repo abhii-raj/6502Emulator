@@ -107,7 +107,22 @@ std::string decToBin(std::string decNum) {
         temp += t;
         temp += ' ';
     }
+    //temp.append(" 0 0");
+    // pad string if the contents of flag register is less than 8
+    while(temp.length() < 15) {
+        temp.append("0 ");
+    }
     reverse(temp.begin(), temp.end());
+    //temp[3] = ' ';
+    temp[5] = '-';
+    //temp[5] = ' ';
+    /***
+    // pad string if the length of register is less than 8
+    if(temp.length() < 8) {
+        for(int i=0;i<(8-temp.length());) {
+            temp.append("o");
+        }
+    }***/
     return temp;
 }
 
