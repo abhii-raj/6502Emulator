@@ -246,6 +246,24 @@ public:
     void AND_abs(Memory *mem);
     void AND_idrx(Memory *mem);
 
+    /*** DEC Instructions ***/
+    void DEC_zpg(Memory *mem);
+    void DEC_zpgx(Memory *mem);
+    void DEC_abs(Memory *mem);
+    void DEC_absx(Memory *mem);
+
+    /*** CPX Instructions ***/
+    void CPX_imdt(Memory *mem);
+    void CPX_zpg(Memory *mem);
+    void CPX_abs(Memory *mem);
+
+    /*** CPY Instructions ***/
+    void CPY_imdt(Memory *mem);
+    void CPY_zpg(Memory *mem);
+    void CPY_abs(Memory *mem);
+
+
+
 
 
 
