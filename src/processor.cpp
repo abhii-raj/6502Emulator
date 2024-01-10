@@ -1005,4 +1005,172 @@ void Processor::AND_idrx(Memory *mem) {
 
 }
 
+void Processor::DEC_zpg(Memory *mem) {
+    uint8_t tempmem = 0;
 
+    uint8_t zeroPageAddr = mem->readMemVal(PC + 1);
+    tempmem = mem->readMemVal(zeroPageAddr);
+    tempmem = tempmem-1;
+    if(A == 0){
+        setZeroBit();
+    }
+    if((A & 0b10000000) == 0b10000000){
+        setNegativeBit();
+    }
+
+    updateClock(mem->readMemVal(PC));
+    UpdatePC(mem->readMemVal(PC));
+
+}
+
+void Processor::DEC_abs(Memory *mem) {
+    uint8_t tempmem = 0;
+
+    uint16_t nextTwoWordsAddr = mem->readNextTwoWords(PC + 1);
+    tempmem = mem->readMemVal(nextTwoWordsAddr);
+    tempmem = tempmem -1;
+    if(A == 0){
+        setZeroBit();
+    }
+    if((A & 0b10000000) == 0b10000000){
+        setNegativeBit();
+    }
+
+    updateClock(mem->readMemVal(PC));
+    UpdatePC(mem->readMemVal(PC));
+}
+
+void Processor::DEC_absx(Memory *mem) {
+    uint8_t tempmem = 0;
+
+    uint16_t nextTwoWordsAddr = mem->readNextTwoWords(PC + 1);
+    uint16_t effectiveAddr = nextTwoWordsAddr + X;
+    tempmem = mem->readMemVal(effectiveAddr);
+    tempmem = tempmem -1;
+    if(A == 0){
+        setZeroBit();
+    }
+    if((A & 0b10000000) == 0b10000000){
+        setNegativeBit();
+    }
+
+    updateClock(mem->readMemVal(PC));
+    UpdatePC(mem->readMemVal(PC));
+}
+
+void Processor::DEC_zpgx(Memory *mem) {
+    uint8_t tempmem = 0;
+    uint8_t zpgAddrX = mem->readMemVal(PC+1);
+    zpgAddrX += X;
+    tempmem = mem->readMemVal(zpgAddrX);
+    tempmem = tempmem-1;
+    if(A == 0){
+        setZeroBit();
+    }
+    if((A & 0b10000000) == 0b10000000){
+        setNegativeBit();
+    }
+
+    updateClock(mem->readMemVal(PC));
+    UpdatePC(mem->readMemVal(PC));
+}
+
+void Processor::CPX_imdt(Memory *mem) {
+    uint8_t tempmem = 0;
+    tempmem = mem->readMemVal(PC + 1);
+    uint8_t result = X-tempmem;
+
+    if(result == 0){
+        setZeroBit();
+    }
+    if((result & 0b10000000) == 0b10000000){
+        setNegativeBit();
+    }
+
+    updateClock(mem->readMemVal(PC));
+    UpdatePC(mem->readMemVal(PC));
+}
+
+void Processor::CPX_abs(Memory *mem) {
+    uint8_t tempmem = 0;
+    uint16_t nextTwoWordsAddr = mem->readNextTwoWords(PC + 1);
+    tempmem = mem->readMemVal(nextTwoWordsAddr);
+    uint_8 result = X-tempmem;
+
+    if(result == 0){
+        setZeroBit();
+    }
+    if((result & 0b10000000) == 0b10000000){
+        setNegativeBit();
+    }
+
+    updateClock(mem->readMemVal(PC));
+    UpdatePC(mem->readMemVal(PC));
+}
+
+void Processor::CPX_zpg(Memory *mem) {
+    uint8_t tempmem = 0;
+
+    uint8_t zeroPageAddr = mem->readMemVal(PC + 1);
+    tempmem = mem->readMemVal(zeroPageAddr);
+    uint8_t result = X-tempmem;
+    if(result == 0){
+        setZeroBit();
+    }
+    if((result & 0b10000000) == 0b10000000){
+        setNegativeBit();
+    }
+
+    updateClock(mem->readMemVal(PC));
+    UpdatePC(mem->readMemVal(PC));
+}
+
+void Processor::CPY_imdt(Memory *mem) {
+    uint8_t tempmem = 0;
+    tempmem = mem->readMemVal(PC + 1);
+    uint8_t result = Y-tempmem;
+
+    if(result == 0){
+        setZeroBit();
+    }
+    if((result & 0b10000000) == 0b10000000){
+        setNegativeBit();
+    }
+
+    updateClock(mem->readMemVal(PC));
+    UpdatePC(mem->readMemVal(PC));
+}
+
+void Processor::CPY_abs(Memory *mem) {
+    uint8_t tempmem = 0;
+    uint16_t nextTwoWordsAddr = mem->readNextTwoWords(PC + 1);
+    tempmem = mem->readMemVal(nextTwoWordsAddr);
+    uint_8 result = Y-tempmem;
+
+    if(result == 0){
+        setZeroBit();
+    }
+    if((result & 0b10000000) == 0b10000000){
+        setNegativeBit();
+    }
+
+    updateClock(mem->readMemVal(PC));
+    UpdatePC(mem->readMemVal(PC));
+}
+
+void Processor::CPY_zpg(Memory *mem) {
+    uint8_t tempmem = 0;
+
+    uint8_t zeroPageAddr = mem->readMemVal(PC + 1);
+    tempmem = mem->readMemVal(zeroPageAddr);
+    uint8_t result = Y-tempmem;
+    if(result == 0){
+        setZeroBit();
+    }
+    if((result & 0b10000000) == 0b10000000){
+        setNegativeBit();
+    }
+
+    updateClock(mem->readMemVal(PC));
+    UpdatePC(mem->readMemVal(PC));
+}
