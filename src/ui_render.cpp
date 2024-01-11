@@ -30,33 +30,30 @@ void addRow(gpointer user_data) {
     gtk_list_store_append(colList, &iter);
 
     std::string PC_str = std::to_string(local_procRef->PC);
-    const char *PC_cstr = PC_str.c_str();
     std::string A_str = std::to_string(local_procRef->A);
-    const char *A_cstr = A_str.c_str();
     std::string X_str = std::to_string(local_procRef->X);
-    const char *X_cstr = X_str.c_str();
     std::string Y_str = std::to_string(local_procRef->Y);
-    const char *Y_cstr = Y_str.c_str();
     std::string SP_str = std::to_string(local_procRef->SP);
-    const char *SP_cstr = SP_str.c_str();
     std::string FR_str = std::to_string(local_procRef->FR);
     std::string FR_str_bin = decToBin(FR_str);
-    const char *FR_cstr_bin = FR_str_bin.c_str();
 
     gtk_list_store_set(colList, &iter,
-                       0, PC_cstr,
-                       1, A_cstr,
-                       2, X_cstr,
-                       3, Y_cstr,
-                       4, SP_cstr,
-                       5, FR_cstr_bin,
+                       0, PC_str.c_str(),
+                       1, A_str.c_str(),
+                       2, X_str.c_str(),
+                       3, Y_str.c_str(),
+                       4, SP_str.c_str(),
+                       5, FR_str_bin.c_str(),
                        -1);
-    std::cout << FR_cstr_bin << std::endl;
 }
 
-gpointer rowUpdateThread(gpointer user_data) {
-    g_idle_add (G_SOURCE_FUNC(GUI_Binding_InstrCycle), NULL);
+gpointer cont_rowUpdateThread(gpointer user_data) {
+    g_idle_add (G_SOURCE_FUNC(GUI_Binding_contRun_InstrCycle), NULL);
     //g_usleep(10000);
+}
+
+gpointer step_rowUpdateThread(gpointer user_data) {
+    g_idle_add (G_SOURCE_FUNC(GUI_Binding_stepRun_InstrCycle), NULL);
 }
 
 void onLoadButtonClick(GtkButton *button,GtkTextBuffer* txtBuff) {
@@ -77,16 +74,33 @@ void onLoadButtonClick(GtkButton *button,GtkTextBuffer* txtBuff) {
 }
 
 void onContinuousRunButtonClick(GtkButton *button,GtkTextBuffer* txtBuff) {
-    g_thread_new("RowUpdate", rowUpdateThread, NULL);
+    g_thread_new("RowUpdate", cont_rowUpdateThread, NULL);
 }
 
-void GUI_Binding_InstrCycle(gpointer user_data) {
+void onStepRunButtonClick(GtkButton *button,GtkTextBuffer* txtBuff) {
+    //local_procRef->VMInit(local_memRef);
+    g_thread_new("RowUpdate", step_rowUpdateThread, NULL);
+}
+
+void GUI_Binding_contRun_InstrCycle(gpointer user_data) {
     Processor *proc = local_procRef;
     Memory *mem = local_memRef;
     proc->VMInit(mem);
     uint8_t opcode;
 
     while( (opcode = IC.IFetch()) != 0x00 ) {
+        IC.Execute(opcode);
+        addRow(NULL);
+    }
+}
+// Not working properly
+// find some way of initialising VM only once at the start
+void GUI_Binding_stepRun_InstrCycle(gpointer user_data) {
+    Processor *proc = local_procRef;
+    Memory *mem = local_memRef;
+
+    uint8_t opcode;
+    if( (opcode = IC.IFetch()) != 0x00 ) {
         IC.Execute(opcode);
         addRow(NULL);
     }
@@ -101,28 +115,16 @@ std::string decToBin(std::string decNum) {
     while(n > 0) {
         rem = n%2;
         n = n/2;
-        char t;
-        if(rem == 0) t = '0';
-        else t = '1';
-        temp += t;
+        if(rem == 0) temp += '0';
+        else temp += '1';
         temp += ' ';
     }
-    //temp.append(" 0 0");
     // pad string if the contents of flag register is less than 8
     while(temp.length() < 15) {
         temp.append("0 ");
     }
     reverse(temp.begin(), temp.end());
-    //temp[3] = ' ';
     temp[5] = '-';
-    //temp[5] = ' ';
-    /***
-    // pad string if the length of register is less than 8
-    if(temp.length() < 8) {
-        for(int i=0;i<(8-temp.length());) {
-            temp.append("o");
-        }
-    }***/
     return temp;
 }
 
@@ -180,12 +182,16 @@ void setupUI() {
     // button to execute all instruction in one step
     GtkWidget *continuousRunButton = gtk_button_new_with_label("Continuous Run");
 
+    // button to execute one instruction in one step
+    GtkWidget *stepRunButton = gtk_button_new_with_label("Step Run");
+
 
     // put widgets inside GtkFixed
     gtk_fixed_put(GTK_FIXED(fix), treeview, 50, 60);
     gtk_fixed_put(GTK_FIXED(fix), scr_window_textview, 800, 60);
     gtk_fixed_put(GTK_FIXED(fix), loadButton, 800, 400);
     gtk_fixed_put(GTK_FIXED(fix), continuousRunButton, 900, 400);
+    gtk_fixed_put(GTK_FIXED(fix), stepRunButton, 1050, 400);
 
     // for closing application
     g_signal_connect(window, "destroy", G_CALLBACK(onWindowDestroy), NULL);
@@ -193,6 +199,8 @@ void setupUI() {
     g_signal_connect(loadButton, "clicked", G_CALLBACK(onLoadButtonClick), txtBuff);
     // on clicking Continuous Run button
     g_signal_connect(continuousRunButton, "clicked", G_CALLBACK(onContinuousRunButtonClick), txtBuff);
+
+    g_signal_connect(stepRunButton, "clicked", G_CALLBACK(onStepRunButtonClick), txtBuff);
 }
 
 void mainUI(int *f_argc, char ***f_argv) {
