@@ -15,6 +15,8 @@
 static GtkWidget *window;
 static GtkListStore *colList;
 
+static int firstPress = 1;
+
 static InstructionCycle IC;
 static Memory *local_memRef = IC.retMemoryObj();
 static Processor *local_procRef = IC.retProcessorObj();

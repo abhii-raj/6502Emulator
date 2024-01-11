@@ -74,21 +74,23 @@ void onLoadButtonClick(GtkButton *button,GtkTextBuffer* txtBuff) {
 }
 
 void onContinuousRunButtonClick(GtkButton *button,GtkTextBuffer* txtBuff) {
-    g_thread_new("RowUpdate", cont_rowUpdateThread, NULL);
+    g_thread_new("RowUpdate1", cont_rowUpdateThread, NULL);
 }
 
 void onStepRunButtonClick(GtkButton *button,GtkTextBuffer* txtBuff) {
     //local_procRef->VMInit(local_memRef);
-    g_thread_new("RowUpdate", step_rowUpdateThread, NULL);
+    g_thread_new("RowUpdate2", step_rowUpdateThread, NULL);
 }
 
 // only clears textview right now
-// TODO : clear memory and undo the tree view
+// TODO : clear memory
 void onClearButtonClick(GtkButton *button,GtkTextBuffer* txtBuff) {
     GtkTextIter s_iter, e_iter;
     gtk_text_buffer_get_start_iter(txtBuff, &s_iter);
     gtk_text_buffer_get_end_iter(txtBuff, &e_iter);
     gtk_text_buffer_delete(txtBuff, &s_iter, &e_iter);
+
+    gtk_list_store_clear(colList);
 }
 
 void GUI_Binding_contRun_InstrCycle(gpointer user_data) {
@@ -105,14 +107,18 @@ void GUI_Binding_contRun_InstrCycle(gpointer user_data) {
 // Not working properly
 // find some way of initialising VM only once at the start
 void GUI_Binding_stepRun_InstrCycle(gpointer user_data) {
+    //static int firstPress = 1;
     Processor *proc = local_procRef;
     Memory *mem = local_memRef;
+    if(firstPress == 1)
+        proc->VMInit(mem);
 
     uint8_t opcode;
     if( (opcode = IC.IFetch()) != 0x00 ) {
         IC.Execute(opcode);
         addRow(NULL);
     }
+    firstPress++;
 }
 
 std::string decToBin(std::string decNum) {
