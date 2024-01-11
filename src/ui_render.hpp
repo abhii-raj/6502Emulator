@@ -28,6 +28,7 @@ gpointer step_rowUpdateThread(gpointer user_data);
 void onLoadButtonClick(GtkButton *button, GtkTextBuffer* txtBuff);
 void onContinuousRunButtonClick(GtkButton *button,GtkTextBuffer* txtBuff);
 void onStepRunButtonClick(GtkButton *button,GtkTextBuffer* txtBuff);
+void onClearButtonClick(GtkButton *button,GtkTextBuffer* txtBuff);
 void GUI_Binding_contRun_InstrCycle(gpointer user_data);
 void GUI_Binding_stepRun_InstrCycle(gpointer user_data);
 std::string decToBin(std::string decNum);

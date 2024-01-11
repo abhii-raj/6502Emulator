@@ -82,6 +82,15 @@ void onStepRunButtonClick(GtkButton *button,GtkTextBuffer* txtBuff) {
     g_thread_new("RowUpdate", step_rowUpdateThread, NULL);
 }
 
+// only clears textview right now
+// TODO : clear memory and undo the tree view
+void onClearButtonClick(GtkButton *button,GtkTextBuffer* txtBuff) {
+    GtkTextIter s_iter, e_iter;
+    gtk_text_buffer_get_start_iter(txtBuff, &s_iter);
+    gtk_text_buffer_get_end_iter(txtBuff, &e_iter);
+    gtk_text_buffer_delete(txtBuff, &s_iter, &e_iter);
+}
+
 void GUI_Binding_contRun_InstrCycle(gpointer user_data) {
     Processor *proc = local_procRef;
     Memory *mem = local_memRef;
@@ -178,20 +187,22 @@ void setupUI() {
 
     // button to load opcode into memory
     GtkWidget *loadButton = gtk_button_new_with_label("Load");
-
     // button to execute all instruction in one step
-    GtkWidget *continuousRunButton = gtk_button_new_with_label("Continuous Run");
-
+    GtkWidget *continuousRunButton = gtk_button_new_with_label("Continuous \nRun");
     // button to execute one instruction in one step
     GtkWidget *stepRunButton = gtk_button_new_with_label("Step Run");
+    // button to clear textview, treeview, and memory
+    GtkWidget *clearButton = gtk_button_new_with_label("Clear");
 
 
     // put widgets inside GtkFixed
     gtk_fixed_put(GTK_FIXED(fix), treeview, 50, 60);
-    gtk_fixed_put(GTK_FIXED(fix), scr_window_textview, 800, 60);
-    gtk_fixed_put(GTK_FIXED(fix), loadButton, 800, 400);
-    gtk_fixed_put(GTK_FIXED(fix), continuousRunButton, 900, 400);
-    gtk_fixed_put(GTK_FIXED(fix), stepRunButton, 1050, 400);
+    gtk_fixed_put(GTK_FIXED(fix), scr_window_textview, 500, 60);
+    gtk_fixed_put(GTK_FIXED(fix), loadButton, 920, 60);
+    gtk_fixed_put(GTK_FIXED(fix), continuousRunButton, 920, 100);
+    gtk_fixed_put(GTK_FIXED(fix), stepRunButton, 920, 160);
+    gtk_fixed_put(GTK_FIXED(fix), clearButton, 920, 200);
+
 
     // for closing application
     g_signal_connect(window, "destroy", G_CALLBACK(onWindowDestroy), NULL);
@@ -199,8 +210,10 @@ void setupUI() {
     g_signal_connect(loadButton, "clicked", G_CALLBACK(onLoadButtonClick), txtBuff);
     // on clicking Continuous Run button
     g_signal_connect(continuousRunButton, "clicked", G_CALLBACK(onContinuousRunButtonClick), txtBuff);
-
+    // on clicking Step Run button
     g_signal_connect(stepRunButton, "clicked", G_CALLBACK(onStepRunButtonClick), txtBuff);
+    // on clicking Clear Run button
+    g_signal_connect(clearButton, "clicked", G_CALLBACK(onClearButtonClick), txtBuff);
 }
 
 void mainUI(int *f_argc, char ***f_argv) {
