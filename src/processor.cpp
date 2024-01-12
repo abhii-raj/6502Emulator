@@ -614,7 +614,6 @@ void Processor::LDX_imdt(Memory *mem) {
 
     updateClock(mem->readMemVal(PC));
     UpdatePC(mem->readMemVal(PC));
-
 }
 
 void Processor::LDX_abs(Memory *mem) {
@@ -629,7 +628,6 @@ void Processor::LDX_abs(Memory *mem) {
     }
     updateClock(mem->readMemVal(PC));
     UpdatePC(mem->readMemVal(PC));
-
 }
 
 void Processor::LDX_zpg(Memory *mem){
@@ -645,7 +643,6 @@ void Processor::LDX_zpg(Memory *mem){
     }
     updateClock(mem->readMemVal(PC));
     UpdatePC(mem->readMemVal(PC));
-
 }
 
 void Processor::LDX_zpgy(Memory *mem) {
@@ -718,14 +715,13 @@ void Processor::LDY_zpgx(Memory *mem) {
     }
     updateClock(mem->readMemVal(PC));
     UpdatePC(mem->readMemVal(PC));
-
 }
 
 void Processor::ORA_imdt(Memory *mem) {
-    uint8_t tempmem = 0;
-    tempmem = mem->readMemVal(PC + 1);
+    uint8_t tempMem = 0;
+    tempMem = mem->readMemVal(PC + 1);
 
-    A |= tempmem;
+    A |= tempMem;
     if(A == 0){
         setZeroBit();
     }
@@ -734,16 +730,15 @@ void Processor::ORA_imdt(Memory *mem) {
     }
     updateClock(mem->readMemVal(PC));
     UpdatePC(mem->readMemVal(PC));
-
 }
 
 void Processor::ORA_abs(Memory *mem) {
-    uint8_t tempmem = 0;
+    uint8_t tempMem = 0;
 
     uint16_t nextTwoWordsAddr = mem->readNextTwoWords(PC + 1);
-    tempmem = mem->readMemVal(nextTwoWordsAddr);
+    tempMem = mem->readMemVal(nextTwoWordsAddr);
 
-    A |= tempmem;
+    A |= tempMem;
     if(A == 0){
         setZeroBit();
     }
@@ -753,16 +748,15 @@ void Processor::ORA_abs(Memory *mem) {
 
     updateClock(mem->readMemVal(PC));
     UpdatePC(mem->readMemVal(PC));
-
 }
 
 void Processor::ORA_zpg(Memory *mem) {
-    uint8_t tempmem = 0;
+    uint8_t tempMem = 0;
 
     uint8_t zeroPageAddr = mem->readMemVal(PC + 1);
-    tempmem = mem->readMemVal(zeroPageAddr);
+    tempMem = mem->readMemVal(zeroPageAddr);
 
-    A |= tempmem;
+    A |= tempMem;
     if(A == 0){
         setZeroBit();
     }
@@ -772,17 +766,16 @@ void Processor::ORA_zpg(Memory *mem) {
 
     updateClock(mem->readMemVal(PC));
     UpdatePC(mem->readMemVal(PC));
-
 }
 
 void Processor::ORA_zpgx(Memory *mem) {
-    uint8_t tempmem = 0;
+    uint8_t tempMem = 0;
     uint8_t zpgAddrX = mem->readMemVal(PC+1);
     zpgAddrX += X;
 
-    tempmem = mem->readMemVal(zpgAddrX);
+    tempMem = mem->readMemVal(zpgAddrX);
 
-    A |= tempmem;
+    A |= tempMem;
     if(A == 0){
         setZeroBit();
     }
@@ -792,17 +785,16 @@ void Processor::ORA_zpgx(Memory *mem) {
 
     updateClock(mem->readMemVal(PC));
     UpdatePC(mem->readMemVal(PC));
-
 }
 
 void Processor::ORA_idrx(Memory *mem) {
-    uint8_t tempmem = 0 ;
+    uint8_t tempMem = 0 ;
 
     uint8_t zeroPageAddr = mem->readMemVal(PC + 1);
-    uint16_t effectiveAddr = zeroPageAddr + X // Wrap around if needed
-    tempmem = mem->readMemVal(effectiveAddr);
+    uint16_t effectiveAddr = zeroPageAddr + X; // Wrap around if needed
+    tempMem = mem->readMemVal(effectiveAddr);
 
-    A |= tempmem;
+    A |= tempMem;
     if(A == 0){
         setZeroBit();
     }
@@ -812,14 +804,13 @@ void Processor::ORA_idrx(Memory *mem) {
 
     updateClock(mem->readMemVal(PC));
     UpdatePC(mem->readMemVal(PC));
-
 }
 
 void Processor::EOR_imdt(Memory *mem) {
-    uint8_t tempmem = 0;
-    tempmem = mem->readMemVal(PC + 1);
+    uint8_t tempMem = 0;
+    tempMem = mem->readMemVal(PC + 1);
 
-    A ^= tempmem;
+    A ^= tempMem;
     if(A == 0){
         setZeroBit();
     }
@@ -828,16 +819,15 @@ void Processor::EOR_imdt(Memory *mem) {
     }
     updateClock(mem->readMemVal(PC));
     UpdatePC(mem->readMemVal(PC));
-
 }
 
 void Processor::EOR_abs(Memory *mem) {
-    uint8_t tempmem = 0;
+    uint8_t tempMem = 0;
 
     uint16_t nextTwoWordsAddr = mem->readNextTwoWords(PC + 1);
-    tempmem = mem->readMemVal(nextTwoWordsAddr);
+    tempMem = mem->readMemVal(nextTwoWordsAddr);
 
-    A ^= tempmem;
+    A ^= tempMem;
     if(A == 0){
         setZeroBit();
     }
@@ -847,16 +837,15 @@ void Processor::EOR_abs(Memory *mem) {
 
     updateClock(mem->readMemVal(PC));
     UpdatePC(mem->readMemVal(PC));
-
 }
 
 void Processor::EOR_zpg(Memory *mem) {
-    uint8_t tempmem = 0;
+    uint8_t tempMem = 0;
 
     uint8_t zeroPageAddr = mem->readMemVal(PC + 1);
-    tempmem = mem->readMemVal(zeroPageAddr);
+    tempMem = mem->readMemVal(zeroPageAddr);
 
-    A ^= tempmem;
+    A ^= tempMem;
     if(A == 0){
         setZeroBit();
     }
@@ -866,17 +855,16 @@ void Processor::EOR_zpg(Memory *mem) {
 
     updateClock(mem->readMemVal(PC));
     UpdatePC(mem->readMemVal(PC));
-
 }
 
 void Processor::EOR_zpgx(Memory *mem) {
-    uint8_t tempmem = 0;
+    uint8_t tempMem = 0;
     uint8_t zpgAddrX = mem->readMemVal(PC+1);
     zpgAddrX += X;
 
-    tempmem = mem->readMemVal(zpgAddrX);
+    tempMem = mem->readMemVal(zpgAddrX);
 
-    A ^= tempmem;
+    A ^= tempMem;
     if(A == 0){
         setZeroBit();
     }
@@ -886,17 +874,16 @@ void Processor::EOR_zpgx(Memory *mem) {
 
     updateClock(mem->readMemVal(PC));
     UpdatePC(mem->readMemVal(PC));
-
 }
 
 void Processor::EOR_idrx(Memory *mem) {
-    uint8_t tempmem = 0 ;
+    uint8_t tempMem = 0 ;
 
     uint8_t zeroPageAddr = mem->readMemVal(PC + 1);
-    uint16_t effectiveAddr = zeroPageAddr + X
-    tempmem = mem->readMemVal(effectiveAddr);
+    uint16_t effectiveAddr = zeroPageAddr + X;
+    tempMem = mem->readMemVal(effectiveAddr);
 
-    A ^= tempmem;
+    A ^= tempMem;
     if(A == 0){
         setZeroBit();
     }
@@ -910,10 +897,10 @@ void Processor::EOR_idrx(Memory *mem) {
 }
 
 void Processor::AND_imdt(Memory *mem) {
-    uint8_t tempmem = 0;
-    tempmem = mem->readMemVal(PC + 1);
+    uint8_t tempMem = 0;
+    tempMem = mem->readMemVal(PC + 1);
 
-    A &= tempmem;
+    A &= tempMem;
     if(A == 0){
         setZeroBit();
     }
@@ -922,16 +909,15 @@ void Processor::AND_imdt(Memory *mem) {
     }
     updateClock(mem->readMemVal(PC));
     UpdatePC(mem->readMemVal(PC));
-
 }
 
 void Processor::AND_abs(Memory *mem) {
-    uint8_t tempmem = 0;
+    uint8_t tempMem = 0;
 
     uint16_t nextTwoWordsAddr = mem->readNextTwoWords(PC + 1);
-    tempmem = mem->readMemVal(nextTwoWordsAddr);
+    tempMem = mem->readMemVal(nextTwoWordsAddr);
 
-    A &= tempmem;
+    A &= tempMem;
     if(A == 0){
         setZeroBit();
     }
@@ -941,16 +927,15 @@ void Processor::AND_abs(Memory *mem) {
 
     updateClock(mem->readMemVal(PC));
     UpdatePC(mem->readMemVal(PC));
-
 }
 
 void Processor::AND_zpg(Memory *mem) {
-    uint8_t tempmem = 0;
+    uint8_t tempMem = 0;
 
     uint8_t zeroPageAddr = mem->readMemVal(PC + 1);
-    tempmem = mem->readMemVal(zeroPageAddr);
+    tempMem = mem->readMemVal(zeroPageAddr);
 
-    A &= tempmem;
+    A &= tempMem;
     if(A == 0){
         setZeroBit();
     }
@@ -960,17 +945,16 @@ void Processor::AND_zpg(Memory *mem) {
 
     updateClock(mem->readMemVal(PC));
     UpdatePC(mem->readMemVal(PC));
-
 }
 
 void Processor::AND_zpgx(Memory *mem) {
-    uint8_t tempmem = 0;
+    uint8_t tempMem = 0;
     uint8_t zpgAddrX = mem->readMemVal(PC+1);
     zpgAddrX += X;
 
-    tempmem = mem->readMemVal(zpgAddrX);
+    tempMem = mem->readMemVal(zpgAddrX);
 
-    A &= tempmem;
+    A &= tempMem;
     if(A == 0){
         setZeroBit();
     }
@@ -980,17 +964,16 @@ void Processor::AND_zpgx(Memory *mem) {
 
     updateClock(mem->readMemVal(PC));
     UpdatePC(mem->readMemVal(PC));
-
 }
 
 void Processor::AND_idrx(Memory *mem) {
-    uint8_t tempmem = 0 ;
+    uint8_t tempMem = 0 ;
 
     uint8_t zeroPageAddr = mem->readMemVal(PC + 1);
     uint16_t effectiveAddr = zeroPageAddr + X;
-    tempmem = mem->readMemVal(effectiveAddr);
+    tempMem = mem->readMemVal(effectiveAddr);
 
-    A &= tempmem;
+    A &= tempMem;
     if(A == 0){
         setZeroBit();
     }
@@ -1000,15 +983,14 @@ void Processor::AND_idrx(Memory *mem) {
 
     updateClock(mem->readMemVal(PC));
     UpdatePC(mem->readMemVal(PC));
-
 }
 
 void Processor::DEC_zpg(Memory *mem) {
-    uint8_t tempmem = 0;
+    uint8_t tempMem = 0;
 
     uint8_t zeroPageAddr = mem->readMemVal(PC + 1);
-    tempmem = mem->readMemVal(zeroPageAddr);
-    tempmem = tempmem-1;
+    tempMem = mem->readMemVal(zeroPageAddr);
+    tempMem = tempMem - 1;
     if(A == 0){
         setZeroBit();
     }
@@ -1018,15 +1000,14 @@ void Processor::DEC_zpg(Memory *mem) {
 
     updateClock(mem->readMemVal(PC));
     UpdatePC(mem->readMemVal(PC));
-
 }
 
 void Processor::DEC_abs(Memory *mem) {
-    uint8_t tempmem = 0;
+    uint8_t tempMem = 0;
 
     uint16_t nextTwoWordsAddr = mem->readNextTwoWords(PC + 1);
-    tempmem = mem->readMemVal(nextTwoWordsAddr);
-    tempmem = tempmem -1;
+    tempMem = mem->readMemVal(nextTwoWordsAddr);
+    tempMem = tempMem - 1;
     if(A == 0){
         setZeroBit();
     }
@@ -1039,12 +1020,12 @@ void Processor::DEC_abs(Memory *mem) {
 }
 
 void Processor::DEC_absx(Memory *mem) {
-    uint8_t tempmem = 0;
+    uint8_t tempMem = 0;
 
     uint16_t nextTwoWordsAddr = mem->readNextTwoWords(PC + 1);
     uint16_t effectiveAddr = nextTwoWordsAddr + X;
-    tempmem = mem->readMemVal(effectiveAddr);
-    tempmem = tempmem -1;
+    tempMem = mem->readMemVal(effectiveAddr);
+    tempMem = tempMem - 1;
     if(A == 0){
         setZeroBit();
     }
@@ -1057,11 +1038,11 @@ void Processor::DEC_absx(Memory *mem) {
 }
 
 void Processor::DEC_zpgx(Memory *mem) {
-    uint8_t tempmem = 0;
+    uint8_t tempMem = 0;
     uint8_t zpgAddrX = mem->readMemVal(PC+1);
     zpgAddrX += X;
-    tempmem = mem->readMemVal(zpgAddrX);
-    tempmem = tempmem-1;
+    tempMem = mem->readMemVal(zpgAddrX);
+    tempMem = tempMem - 1;
     if(A == 0){
         setZeroBit();
     }
@@ -1074,9 +1055,9 @@ void Processor::DEC_zpgx(Memory *mem) {
 }
 
 void Processor::CPX_imdt(Memory *mem) {
-    uint8_t tempmem = 0;
-    tempmem = mem->readMemVal(PC + 1);
-    uint8_t result = X-tempmem;
+    uint8_t tempMem = 0;
+    tempMem = mem->readMemVal(PC + 1);
+    uint8_t result = X - tempMem;
 
     if(result == 0){
         setZeroBit();
@@ -1090,10 +1071,10 @@ void Processor::CPX_imdt(Memory *mem) {
 }
 
 void Processor::CPX_abs(Memory *mem) {
-    uint8_t tempmem = 0;
+    uint8_t tempMem = 0;
     uint16_t nextTwoWordsAddr = mem->readNextTwoWords(PC + 1);
-    tempmem = mem->readMemVal(nextTwoWordsAddr);
-    uint_8 result = X-tempmem;
+    tempMem = mem->readMemVal(nextTwoWordsAddr);
+    uint8_t result = X - tempMem;
 
     if(result == 0){
         setZeroBit();
@@ -1107,11 +1088,11 @@ void Processor::CPX_abs(Memory *mem) {
 }
 
 void Processor::CPX_zpg(Memory *mem) {
-    uint8_t tempmem = 0;
+    uint8_t tempMem = 0;
 
     uint8_t zeroPageAddr = mem->readMemVal(PC + 1);
-    tempmem = mem->readMemVal(zeroPageAddr);
-    uint8_t result = X-tempmem;
+    tempMem = mem->readMemVal(zeroPageAddr);
+    uint8_t result = X - tempMem;
     if(result == 0){
         setZeroBit();
     }
@@ -1124,9 +1105,9 @@ void Processor::CPX_zpg(Memory *mem) {
 }
 
 void Processor::CPY_imdt(Memory *mem) {
-    uint8_t tempmem = 0;
-    tempmem = mem->readMemVal(PC + 1);
-    uint8_t result = Y-tempmem;
+    uint8_t tempMem = 0;
+    tempMem = mem->readMemVal(PC + 1);
+    uint8_t result = Y - tempMem;
 
     if(result == 0){
         setZeroBit();
@@ -1140,10 +1121,10 @@ void Processor::CPY_imdt(Memory *mem) {
 }
 
 void Processor::CPY_abs(Memory *mem) {
-    uint8_t tempmem = 0;
+    uint8_t tempMem = 0;
     uint16_t nextTwoWordsAddr = mem->readNextTwoWords(PC + 1);
-    tempmem = mem->readMemVal(nextTwoWordsAddr);
-    uint_8 result = Y-tempmem;
+    tempMem = mem->readMemVal(nextTwoWordsAddr);
+    uint8_t result = Y - tempMem;
 
     if(result == 0){
         setZeroBit();
@@ -1157,11 +1138,11 @@ void Processor::CPY_abs(Memory *mem) {
 }
 
 void Processor::CPY_zpg(Memory *mem) {
-    uint8_t tempmem = 0;
+    uint8_t tempMem = 0;
 
     uint8_t zeroPageAddr = mem->readMemVal(PC + 1);
-    tempmem = mem->readMemVal(zeroPageAddr);
-    uint8_t result = Y-tempmem;
+    tempMem = mem->readMemVal(zeroPageAddr);
+    uint8_t result = Y - tempMem;
     if(result == 0){
         setZeroBit();
     }
