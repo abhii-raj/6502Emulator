@@ -22,6 +22,8 @@ public:
     // uses little endian
     // less significant byte are at earlier location
     uint16_t readNextTwoWords(uint16_t startLoc);
+
+    void resetMemory();
 };
 
 

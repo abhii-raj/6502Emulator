@@ -6,13 +6,16 @@
 #include "processor.hpp"
 #include "memory.hpp"
 #include "dataView.hpp"
+#include "codeLoad.hpp"
 
 #include <iostream>
 #include <unistd.h>
 
 // continuous run
 // this function continuously executes instructions till BRK is not found
-InstructionCycle::InstructionCycle() {
+
+// update this function to 'InstructionCycleFunc ()' when required
+/***InstructionCycle::InstructionCycle() {
     proc.VMInit(&mem);
 
     uint8_t opcode;
@@ -26,18 +29,22 @@ InstructionCycle::InstructionCycle() {
     dv.ADump_hex(proc);
     dv.PCDump_hex(proc);
     dv.FDump(proc);
-}
+}***/
 
 // step run
 // this function executes instructions step wise
 // and waits for signal from input
 // to determine if to execute instruction stepwise or continuously or break
-InstructionCycle::InstructionCycle(int modeFlag) {
+void InstructionCycle::InstructionCycleFunc(int modeFlag) {
     proc.VMInit(&mem);
+    load.CodeLoadFromFile("../OPCODE INPUT/opcodeInput1.txt",
+                          0x0400, &mem);
+
     uint8_t opcode = IFetch();
     dataView dv;
     int stopFlag = 1;
     while(stopFlag) {
+        std::cout << mem.readMemVal(0x0400) << std::endl;
         std::cout << "step : 1\ncontinue: 2\nbreak: 3" << std::endl;
         std::cin >> modeFlag;
         if(modeFlag == 1) {
