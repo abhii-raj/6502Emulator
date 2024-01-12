@@ -153,5 +153,77 @@ void InstructionCycle::Execute(uint8_t opcode) {
         case 0x98:
             proc.TYA_impl(&mem);
             break;
+        case 0xA2:
+            proc.LDX_imdt(&mem);
+            break;
+        case 0xAE:
+            proc.LDX_abs(&mem);
+            break;
+        case 0xA6:
+            proc.LDX_zpg(&mem);
+            break;
+        case 0xB6:
+            proc.LDX_zpgy(&mem);
+            break;
+        case 0xA0:
+            proc.LDY_imdt(&mem);
+            break;
+        case 0xAC:
+            proc.LDY_abs(&mem);
+            break;
+        case 0xA4:
+            proc.LDY_zpg(&mem);
+            break;
+        case 0xB4:
+            proc.LDY_zpgx(&mem);
+            break;
+        case 0x09:
+            proc.ORA_imdt(&mem);
+            break;
+        case 0x05:
+            proc.ORA_zpg(&mem);
+            break;
+        case 0x15:
+            proc.ORA_zpgx(&mem);
+            break;
+        case 0x0D:
+            proc.ORA_abs(&mem);
+            break;
+        case 0x01:
+            proc.ORA_idrx(&mem);
+            break;
+        case 0x49:
+            proc.EOR_imdt(&mem);
+            break;
+        case 0x45:
+            proc.EOR_zpg(&mem);
+            break;
+        case 0x55:
+            proc.EOR_zpgx(&mem);
+            break;
+        case 0x4D:
+            proc.EOR_abs(&mem);
+            break;
+        case 0x41:
+            proc.EOR_idrx(&mem);
+            break;
+        case 0x29:
+            proc.AND_imdt(&mem);
+            break;
+        case 0x25:
+            proc.AND_zpg(&mem);
+            break;
+        case 0x35:
+            proc.AND_zpgx(&mem);
+            break;
+        case 0x2D:
+            proc.AND_abs(&mem);
+            break;
+        case 0x21:
+            proc.AND_idrx(&mem);
+            break;
+
+
+
     }
 }
