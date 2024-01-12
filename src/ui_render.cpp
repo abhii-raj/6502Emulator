@@ -82,8 +82,7 @@ void onStepRunButtonClick(GtkButton *button,GtkTextBuffer* txtBuff) {
     g_thread_new("RowUpdate2", step_rowUpdateThread, NULL);
 }
 
-// only clears textview right now
-// TODO : clear memory
+// clears textview, list store, and memory
 void onClearButtonClick(GtkButton *button,GtkTextBuffer* txtBuff) {
     GtkTextIter s_iter, e_iter;
     gtk_text_buffer_get_start_iter(txtBuff, &s_iter);
@@ -91,6 +90,8 @@ void onClearButtonClick(GtkButton *button,GtkTextBuffer* txtBuff) {
     gtk_text_buffer_delete(txtBuff, &s_iter, &e_iter);
 
     gtk_list_store_clear(colList);
+
+    local_memRef->resetMemory();
 }
 
 void GUI_Binding_contRun_InstrCycle(gpointer user_data) {
@@ -104,8 +105,7 @@ void GUI_Binding_contRun_InstrCycle(gpointer user_data) {
         addRow(NULL);
     }
 }
-// Not working properly
-// find some way of initialising VM only once at the start
+
 void GUI_Binding_stepRun_InstrCycle(gpointer user_data) {
     //static int firstPress = 1;
     Processor *proc = local_procRef;

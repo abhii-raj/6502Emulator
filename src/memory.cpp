@@ -9,13 +9,7 @@
 // putting some instruction at few locations
 // to be able to write execute routines till assembler is made
 Memory::Memory() {
-    // sets all word as 0x00
-    for(int i=0; i<65536; i++) {
-        setMem(i, 0x00);
-    }
-    // setting reset vector
-    setMem(0xFFFC, 0x00);
-    setMem(0xFFFD, 0x04);
+    resetMemory();
 }
 
 void Memory::setMem(uint16_t loc, uint8_t val) {
@@ -40,4 +34,14 @@ uint16_t Memory::readNextTwoWords(uint16_t startLoc) {
     uint16_t effVal = lsB + msB;
 
     return effVal;
+}
+
+void Memory::resetMemory() {
+    // sets all word as 0x00
+    for(int i=0; i<65536; i++) {
+        setMem(i, 0x00);
+    }
+    // setting reset vector
+    setMem(0xFFFC, 0x00);
+    setMem(0xFFFD, 0x04);
 }
