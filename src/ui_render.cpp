@@ -92,6 +92,8 @@ void onClearButtonClick(GtkButton *button,GtkTextBuffer* txtBuff) {
     gtk_list_store_clear(colList);
 
     local_memRef->resetMemory();
+
+    firstPress = 1;
 }
 
 void GUI_Binding_contRun_InstrCycle(gpointer user_data) {
