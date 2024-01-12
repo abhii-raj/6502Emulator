@@ -112,13 +112,12 @@ void GUI_Binding_stepRun_InstrCycle(gpointer user_data) {
     Memory *mem = local_memRef;
     if(firstPress == 1)
         proc->VMInit(mem);
-
+    firstPress++;
     uint8_t opcode;
     if( (opcode = IC.IFetch()) != 0x00 ) {
         IC.Execute(opcode);
         addRow(NULL);
     }
-    firstPress++;
 }
 
 std::string decToBin(std::string decNum) {
