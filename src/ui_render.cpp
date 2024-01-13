@@ -6,6 +6,9 @@
 #include "instructionCycle.hpp"
 
 #include <gtk-3.0/gtk/gtk.h>
+#include <gtk-3.0/gtk/gtkwidget.h>
+#include <gtk-3.0/gtk/gtkstyleprovider.h>
+#include <gtk-3.0/gtk/gtkstylecontext.h>
 
 #include <iostream>
 #include <algorithm>
@@ -15,6 +18,36 @@ void onWindowDestroy(GtkWidget *widget, gpointer user_data) {
     gtk_widget_destroy(widget);
     gtk_main_quit();
     printf("closing\n");
+}
+
+void load_css(void) {
+    GtkCssProvider *provider;
+    GdkDisplay  *display;
+    GdkScreen *screen;
+
+    const gchar *css_style_file = "/home/shobhit/Desktop/6502Emulator/src/style.css";
+    GFile *css_fp = g_file_new_for_path(css_style_file);
+    std::cout << "GFile: " << css_fp << std::endl;
+    GError  *error = NULL;
+
+    provider = gtk_css_provider_new();
+    display = gdk_display_get_default();
+    screen = gdk_display_get_default_screen(display);
+
+    gtk_css_provider_load_from_file(provider, css_fp, &error);
+    gtk_style_context_add_provider_for_screen(screen, GTK_STYLE_PROVIDER(provider),
+                                              GTK_STYLE_PROVIDER_PRIORITY_APPLICATION);
+    if (error)
+    {
+        // Display a warning if the stylesheet is not loaded
+        g_warning ("%s", error->message);
+        std::cout << "Error: " << error->message << std::endl;
+        // Free the memory allocated for the error
+        // and acknowledge the error has been processed
+        g_clear_error (&error);
+    }
+    //gtk_css_provider_load_from_path(provider, css_style_file, &error);
+    g_object_unref(provider);
 }
 
 GtkTreeViewColumn* retTreeCol(char *ColumnHeading, GtkCellRenderer* cell, GtkWidget* treeview, int col_atr) {
@@ -146,9 +179,10 @@ std::string decToBin(std::string decNum) {
 
 void setupUI() {
     window = gtk_window_new(GTK_WINDOW_TOPLEVEL);
-
-    gtk_window_set_default_size(GTK_WINDOW(window), 500, 500);
+    gtk_window_set_default_size(GTK_WINDOW(window), 900, 600);
     gtk_window_set_title(GTK_WINDOW(window), "6502 Emulator");
+    //gtk_window_set_resizable(GTK_WINDOW(window), FALSE);
+    load_css();
 
     // to add multiple widgets to the window
     GtkWidget *fix = gtk_fixed_new();
@@ -180,7 +214,6 @@ void setupUI() {
 
     gtk_text_view_set_wrap_mode (GTK_TEXT_VIEW(textview), GTK_WRAP_CHAR);
 
-
     /*** GTK SCROLLED WINDOW FOR TEXT VIEW ****/
     GtkWidget *scr_window_textview = gtk_scrolled_window_new(NULL, NULL);
     gtk_scrolled_window_set_policy(GTK_SCROLLED_WINDOW(scr_window_textview),
@@ -192,23 +225,45 @@ void setupUI() {
     // adding textview widget to scrollable window
     gtk_container_add(GTK_CONTAINER(GTK_SCROLLED_WINDOW(scr_window_textview)), textview);
 
+    /*** GTK SCROLLED WINDOW FOR TREE VIEW ****/
+    GtkWidget *scr_window_treeview = gtk_scrolled_window_new(NULL, NULL);
+    gtk_scrolled_window_set_policy(GTK_SCROLLED_WINDOW(scr_window_treeview),
+                                   GTK_POLICY_AUTOMATIC, GTK_POLICY_AUTOMATIC);
+    gtk_scrolled_window_set_min_content_height(GTK_SCROLLED_WINDOW(scr_window_treeview), 400);
+    //gtk_scrolled_window_set_max_content_height(GTK_SCROLLED_WINDOW(scr_window_treeview), 600);
+    gtk_scrolled_window_set_min_content_width(GTK_SCROLLED_WINDOW(scr_window_treeview), 400);
+    gtk_scrolled_window_set_shadow_type (GTK_SCROLLED_WINDOW(scr_window_treeview), GTK_SHADOW_IN);
+
+    // adding treeview widget to scrollable window
+    gtk_container_add(GTK_CONTAINER(GTK_SCROLLED_WINDOW(scr_window_treeview)), treeview);
+
+    //gtk_widget_class_set_css_name(GTK_WIDGET_GET_CLASS (window), "window");
+    gtk_widget_set_name(window, "window");
+
     // button to load opcode into memory
     GtkWidget *loadButton = gtk_button_new_with_label("Load");
+    gtk_widget_set_name(loadButton, "loadButton");
+
     // button to execute all instruction in one step
-    GtkWidget *continuousRunButton = gtk_button_new_with_label("Continuous \nRun");
+    GtkWidget *continuousRunButton = gtk_button_new_with_label("Continuous Run");
+    gtk_widget_set_name(continuousRunButton, "continuousRunButton");
+
     // button to execute one instruction in one step
     GtkWidget *stepRunButton = gtk_button_new_with_label("Step Run");
+    gtk_widget_set_name(stepRunButton, "stepRunButton");
+
     // button to clear textview, treeview, and memory
     GtkWidget *clearButton = gtk_button_new_with_label("Clear");
+    gtk_widget_set_name(clearButton, "clearButton");
 
 
     // put widgets inside GtkFixed
-    gtk_fixed_put(GTK_FIXED(fix), treeview, 50, 60);
+    gtk_fixed_put(GTK_FIXED(fix), scr_window_treeview, 50, 60);
     gtk_fixed_put(GTK_FIXED(fix), scr_window_textview, 500, 60);
-    gtk_fixed_put(GTK_FIXED(fix), loadButton, 920, 60);
-    gtk_fixed_put(GTK_FIXED(fix), continuousRunButton, 920, 100);
-    gtk_fixed_put(GTK_FIXED(fix), stepRunButton, 920, 160);
-    gtk_fixed_put(GTK_FIXED(fix), clearButton, 920, 200);
+    gtk_fixed_put(GTK_FIXED(fix), loadButton, 500, 380);
+    gtk_fixed_put(GTK_FIXED(fix), continuousRunButton, 570, 380);
+    gtk_fixed_put(GTK_FIXED(fix), stepRunButton, 720, 380);
+    gtk_fixed_put(GTK_FIXED(fix), clearButton, 820, 380);
 
 
     // for closing application

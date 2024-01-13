@@ -23,6 +23,7 @@ static Processor *local_procRef = IC.retProcessorObj();
 static CodeLoad cl;
 
 void onWindowDestroy(GtkWidget *widget, gpointer user_data);
+void load_css(void);
 GtkTreeViewColumn* retTreeCol(char *ColumnHeading, GtkCellRenderer* cell, GtkWidget* treeview);
 void addRow(gpointer user_data);
 gpointer cont_rowUpdateThread(gpointer user_data);
