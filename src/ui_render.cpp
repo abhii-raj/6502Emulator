@@ -25,7 +25,7 @@ void load_css(void) {
     GdkDisplay  *display;
     GdkScreen *screen;
 
-    const gchar *css_style_file = "/home/shobhit/Desktop/6502Emulator/src/style.css";
+    const gchar *css_style_file = "../src/style.css";
     GFile *css_fp = g_file_new_for_path(css_style_file);
     std::cout << "GFile: " << css_fp << std::endl;
     GError  *error = NULL;
