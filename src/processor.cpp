@@ -699,7 +699,7 @@ void Processor::LDY_abs(Memory *mem) {
     else resetZeroBit();
 
     if((Y & 0b10000000) == 0b10000000) setNegativeBit();
-    else setNegativeBit();
+    else resetNegativeBit();
 
     updateClock(mem->readMemVal(PC));
     UpdatePC(mem->readMemVal(PC));
@@ -812,12 +812,11 @@ void Processor::ORA_idrx(Memory *mem) {
     tempMem = mem->readMemVal(effectiveAddr);
 
     A |= tempMem;
-    if(A == 0){
-        setZeroBit();
-    }
-    if((A & 0b10000000) == 0b10000000){
-        setNegativeBit();
-    }
+    if(A == 0) setZeroBit();
+    else resetZeroBit();
+
+    if((A & 0b10000000) == 0b10000000) setNegativeBit();
+    else resetNegativeBit();
 
     updateClock(mem->readMemVal(PC));
     UpdatePC(mem->readMemVal(PC));
@@ -828,12 +827,12 @@ void Processor::EOR_imdt(Memory *mem) {
     tempMem = mem->readMemVal(PC + 1);
 
     A ^= tempMem;
-    if(A == 0){
-        setZeroBit();
-    }
-    if((A & 0b10000000) == 0b10000000){
-        setNegativeBit();
-    }
+    if(A == 0) setZeroBit();
+    else resetZeroBit();
+
+    if((A & 0b10000000) == 0b10000000) setNegativeBit();
+    else resetNegativeBit();
+
     updateClock(mem->readMemVal(PC));
     UpdatePC(mem->readMemVal(PC));
 }
@@ -845,12 +844,11 @@ void Processor::EOR_abs(Memory *mem) {
     tempMem = mem->readMemVal(nextTwoWordsAddr);
 
     A ^= tempMem;
-    if(A == 0){
-        setZeroBit();
-    }
-    if((A & 0b10000000) == 0b10000000){
-        setNegativeBit();
-    }
+    if(A == 0) setZeroBit();
+    else resetZeroBit();
+    
+    if((A & 0b10000000) == 0b10000000) setNegativeBit();
+    else resetNegativeBit();
 
     updateClock(mem->readMemVal(PC));
     UpdatePC(mem->readMemVal(PC));
@@ -863,12 +861,11 @@ void Processor::EOR_zpg(Memory *mem) {
     tempMem = mem->readMemVal(zeroPageAddr);
 
     A ^= tempMem;
-    if(A == 0){
-        setZeroBit();
-    }
-    if((A & 0b10000000) == 0b10000000){
-        setNegativeBit();
-    }
+    if(A == 0) setZeroBit();
+    else resetZeroBit();
+
+    if((A & 0b10000000) == 0b10000000) setNegativeBit();
+    else resetNegativeBit();
 
     updateClock(mem->readMemVal(PC));
     UpdatePC(mem->readMemVal(PC));
@@ -882,12 +879,11 @@ void Processor::EOR_zpgx(Memory *mem) {
     tempMem = mem->readMemVal(zpgAddrX);
 
     A ^= tempMem;
-    if(A == 0){
-        setZeroBit();
-    }
-    if((A & 0b10000000) == 0b10000000){
-        setNegativeBit();
-    }
+    if(A == 0) setZeroBit();
+    else resetZeroBit();
+    
+    if((A & 0b10000000) == 0b10000000) setNegativeBit();
+    else resetNegativeBit();
 
     updateClock(mem->readMemVal(PC));
     UpdatePC(mem->readMemVal(PC));
@@ -901,12 +897,11 @@ void Processor::EOR_idrx(Memory *mem) {
     tempMem = mem->readMemVal(effectiveAddr);
 
     A ^= tempMem;
-    if(A == 0){
-        setZeroBit();
-    }
-    if((A & 0b10000000) == 0b10000000){
-        setNegativeBit();
-    }
+    if(A == 0) setZeroBit();
+    else resetZeroBit();
+
+    if((A & 0b10000000) == 0b10000000) setNegativeBit();
+    else resetNegativeBit();
 
     updateClock(mem->readMemVal(PC));
     UpdatePC(mem->readMemVal(PC));
