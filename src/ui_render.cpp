@@ -129,6 +129,11 @@ void onClearButtonClick(GtkButton *button,GtkTextBuffer* txtBuff) {
     firstPress = 1;
 }
 
+// pops memory dump window
+void onMemDumpButtonClick(GtkButton *button) {
+    setupMemDumpWindow();
+}
+
 void GUI_Binding_contRun_InstrCycle(gpointer user_data) {
     Processor *proc = local_procRef;
     Memory *mem = local_memRef;
@@ -290,6 +295,8 @@ void setupUI() {
     g_signal_connect(stepRunButton, "clicked", G_CALLBACK(onStepRunButtonClick), txtBuff);
     // on clicking Clear Run button
     g_signal_connect(clearButton, "clicked", G_CALLBACK(onClearButtonClick), txtBuff);
+    // on clicking Memory Dump button
+    g_signal_connect(memDumpButton, "clicked", G_CALLBACK(onMemDumpButtonClick), NULL);
 }
 
 void mainUI(int *f_argc, char ***f_argv) {
