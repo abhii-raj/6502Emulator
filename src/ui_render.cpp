@@ -210,6 +210,7 @@ void setupMemDumpWindow() {
     // memory dump window
     GtkWidget *memDumpWindow = gtk_window_new(GTK_WINDOW_TOPLEVEL);
     gtk_window_set_default_size(GTK_WINDOW(memDumpWindow), 300, 300);
+    gtk_window_set_resizable(GTK_WINDOW(memDumpWindow), FALSE);
     gtk_window_set_title(GTK_WINDOW(memDumpWindow), "Memory Dump");
 
     // memory dump scrollable window
@@ -233,7 +234,7 @@ void setupMemDumpWindow() {
     gtk_widget_show_all(memDumpWindow);
 
     g_signal_connect(memDumpWindow, "destroy", G_CALLBACK(onMemDumpWindowDestroy), NULL);
-    gtk_main();
+    //gtk_main();
 }
 
 void setupUI() {
@@ -319,7 +320,6 @@ void setupUI() {
     GtkWidget *memDumpButton = gtk_button_new_with_label("Memory Dump");
     gtk_widget_set_name(memDumpButton, "memDumpButton");
 
-
     // put widgets inside GtkFixed
     gtk_fixed_put(GTK_FIXED(fix), scr_window_treeview, 50, 60);
     gtk_fixed_put(GTK_FIXED(fix), scr_window_textview, 500, 60);
@@ -328,8 +328,6 @@ void setupUI() {
     gtk_fixed_put(GTK_FIXED(fix), stepRunButton, 720, 380);
     gtk_fixed_put(GTK_FIXED(fix), clearButton, 820, 380);
     gtk_fixed_put(GTK_FIXED(fix), memDumpButton, 500, 420);
-
-
 
     // for closing application
     g_signal_connect(window, "destroy", G_CALLBACK(onWindowDestroy), NULL);
