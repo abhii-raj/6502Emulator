@@ -170,15 +170,14 @@ void Processor::CMP_imdt(Memory *mem) {
     int temp = A - memoryVal;
     //std::cout << "memVal - " << (unsigned)memoryVal << std::endl;
     //std::cout << "temp - " << temp << std::endl;
-    if(temp == 0) {
-        setZeroBit();
-    }
-    if(temp < 0) {
-        setNegativeBit();
-    }
-    if(temp >= 0) {
-        setCarryBit();
-    }
+    if(temp == 0) setZeroBit();
+    else resetZeroBit();
+    
+    if(temp < 0) setNegativeBit();
+    else resetNegativeBit();
+    
+    if(temp >= 0) setCarryBit();
+    else resetCarryBit();
     updateClock(mem->readMemVal(PC));
     UpdatePC(mem->readMemVal(PC));
 }
