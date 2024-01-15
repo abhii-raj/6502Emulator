@@ -586,12 +586,12 @@ void Processor::PLA_impl(Memory *mem) {
     SP++;
 
     // update flag bits
-    if(A==0) {
-        setZeroBit();
-    }
-    if(A<0) {
-        setNegativeBit();
-    }
+    if(A==0) setZeroBit();
+    else resetZeroBit();
+    
+    if(A<0) setNegativeBit();
+    else resetNegativeBit();
+    
 
     updateClock(mem->readMemVal(PC));
     UpdatePC(mem->readMemVal(PC));
@@ -624,12 +624,12 @@ void Processor::PLP_impl(Memory *mem) {
 
 void Processor::LDX_imdt(Memory *mem) {
     X = mem->readMemVal(PC + 1);
-    if(X == 0) {
-        setZeroBit();
-    }
-    if((X & 0b10000000) == 0b10000000) {
-        setNegativeBit();
-    }
+    if(X == 0) setZeroBit();
+    else resetZeroBit();
+    
+    if((X & 0b10000000) == 0b10000000) setNegativeBit();
+    else resetNegativeBit();
+    
 
     updateClock(mem->readMemVal(PC));
     UpdatePC(mem->readMemVal(PC));
@@ -639,12 +639,12 @@ void Processor::LDX_abs(Memory *mem) {
     uint16_t nextTwoWordsAddr = mem->readNextTwoWords(PC + 1);
     X = mem->readMemVal(nextTwoWordsAddr);
 
-    if(X == 0) {
-        setZeroBit();
-    }
-    if((X & 0b10000000) == 0b10000000) {
-        setNegativeBit();
-    }
+    if(X == 0) setZeroBit();
+    else resetZeroBit();
+
+    if((X & 0b10000000) == 0b10000000) setNegativeBit();
+    else resetNegativeBit();
+    
     updateClock(mem->readMemVal(PC));
     UpdatePC(mem->readMemVal(PC));
 }
@@ -654,12 +654,12 @@ void Processor::LDX_zpg(Memory *mem){
 
     // Load the value from the zero-page address into the X register
     X = mem->readMemVal(zeroPageAddr);
-    if(X == 0 ) {
-        setZeroBit();
-    }
-    if((X & 0b10000000) == 0b10000000) {
-        setNegativeBit();
-    }
+    if(X == 0 ) setZeroBit();
+    else resetZeroBit();
+    
+    if((X & 0b10000000) == 0b10000000) setNegativeBit();
+    else resetNegativeBit();
+
     updateClock(mem->readMemVal(PC));
     UpdatePC(mem->readMemVal(PC));
 }
@@ -669,24 +669,23 @@ void Processor::LDX_zpgy(Memory *mem) {
     zpgAddrX += Y;
 
     X = mem->readMemVal(zpgAddrX);
-    if(X== 0){
-        setZeroBit();
-    }
-    if((X & 0b10000000) == 0b10000000){
-        setNegativeBit();
-    }
+    if(X== 0)setZeroBit();
+    else resetZeroBit();
+
+    if((X & 0b10000000) == 0b10000000) setNegativeBit();
+    else resetNegativeBit();
+
     updateClock(mem->readMemVal(PC));
     UpdatePC(mem->readMemVal(PC));
 }
 
 void Processor::LDY_imdt(Memory *mem) {
     Y = mem->readMemVal(PC + 1);
-    if(Y == 0) {
-        setZeroBit();
-    }
-    if((Y & 0b10000000) == 0b10000000) {
-        setNegativeBit();
-    }
+    if(Y == 0) setZeroBit();
+    else resetZeroBit();
+    
+    if((Y & 0b10000000) == 0b10000000) setNegativeBit();
+    else resetNegativeBit();
 
     updateClock(mem->readMemVal(PC));
     UpdatePC(mem->readMemVal(PC));
@@ -696,12 +695,12 @@ void Processor::LDY_abs(Memory *mem) {
     uint16_t nextTwoWordsAddr = mem->readNextTwoWords(PC + 1);
     Y = mem->readMemVal(nextTwoWordsAddr);
 
-    if(Y == 0) {
-        setZeroBit();
-    }
-    if((Y & 0b10000000) == 0b10000000) {
-        setNegativeBit();
-    }
+    if(Y == 0) setZeroBit();
+    else resetZeroBit();
+
+    if((Y & 0b10000000) == 0b10000000) setNegativeBit();
+    else setNegativeBit();
+    
     updateClock(mem->readMemVal(PC));
     UpdatePC(mem->readMemVal(PC));
 }
