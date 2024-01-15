@@ -20,6 +20,13 @@ void onWindowDestroy(GtkWidget *widget, gpointer user_data) {
     printf("closing\n");
 }
 
+void onMemDumpWindowDestroy(GtkWidget *widget, gpointer user_data) {
+    widget = NULL;
+    gtk_widget_destroy(widget);
+    gtk_main_quit();
+    printf("Memory Dump closing\n");
+}
+
 void load_css(void) {
     GtkCssProvider *provider;
     GdkDisplay  *display;
@@ -183,10 +190,27 @@ std::string decToBin(std::string decNum) {
 }
 
 void setupMemDumpWindow() {
+    // memory dump window
     GtkWidget *memDumpWindow = gtk_window_new(GTK_WINDOW_TOPLEVEL);
     gtk_window_set_default_size(GTK_WINDOW(memDumpWindow), 300, 300);
     gtk_window_set_title(GTK_WINDOW(memDumpWindow), "Memory Dump");
-    gtk_widget_show(memDumpWindow);
+
+    // memory dump scrollable window
+    GtkWidget *memDump_scr_win = gtk_scrolled_window_new(NULL, NULL);
+    gtk_scrolled_window_set_policy(GTK_SCROLLED_WINDOW(memDump_scr_win),
+                                   GTK_POLICY_AUTOMATIC, GTK_POLICY_ALWAYS);
+    // GTK textview
+    GtkWidget *textview_mem = gtk_text_view_new();
+    // GTK text buffer
+    GtkTextBuffer *txtBuff_mem = gtk_text_view_get_buffer(GTK_TEXT_VIEW(textview_mem));
+
+    gtk_text_view_set_wrap_mode (GTK_TEXT_VIEW(textview_mem),GTK_WRAP_CHAR);
+
+    gtk_container_add(GTK_CONTAINER(GTK_SCROLLED_WINDOW(memDump_scr_win)), textview_mem);
+    gtk_container_add(GTK_CONTAINER(GTK_WINDOW(memDumpWindow)), memDump_scr_win);
+    gtk_widget_show_all(memDumpWindow);
+
+    g_signal_connect(memDumpWindow, "destroy", G_CALLBACK(onMemDumpWindowDestroy), NULL);
     gtk_main();
 }
 
