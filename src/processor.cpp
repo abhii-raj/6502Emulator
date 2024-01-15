@@ -321,12 +321,12 @@ void Processor::TAY_impl(Memory *mem) {
 void Processor::TSX_impl(Memory *mem) {
     X = SP;
 
-    if(X==0) {
-        setZeroBit();
-    }
-    if(X<0) {
-        setNegativeBit();
-    }
+    if(X==0) setZeroBit();
+    else resetZeroBit();
+    
+    if(X<0) setNegativeBit();
+    else setNegativeBit();
+    
 
     updateClock(mem->readMemVal(PC));
     UpdatePC(mem->readMemVal(PC));
@@ -335,12 +335,11 @@ void Processor::TSX_impl(Memory *mem) {
 void Processor::INX_impl(Memory *mem) {
     X++;
 
-    if(X==0) {
-        setZeroBit();
-    }
-    if(X<0) {
-        setNegativeBit();
-    }
+    if(X==0) setZeroBit();
+    else resetZeroBit();
+    
+    if(X<0) setNegativeBit();
+    else resetNegativeBit();
 
     updateClock(mem->readMemVal(PC));
     UpdatePC(mem->readMemVal(PC));
@@ -349,12 +348,11 @@ void Processor::INX_impl(Memory *mem) {
 void Processor::INY_impl(Memory *mem) {
     Y++;
     
-    if(Y==0) {
-        setZeroBit();
-    }
-    if(Y<0) {
-        setNegativeBit();
-    }
+    if(Y==0) setZeroBit();
+    else resetZeroBit();
+
+    if(Y<0) setNegativeBit();
+    else resetNegativeBit();
 
     updateClock(mem->readMemVal(PC));
     UpdatePC(mem->readMemVal(PC));
@@ -363,12 +361,12 @@ void Processor::INY_impl(Memory *mem) {
 void Processor::DEX_impl(Memory *mem) {
     X--;
 
-    if(X==0){
-        setZeroBit();
-    }
-    if(X<0){
-        setNegativeBit();
-    }
+    if(X==0) setZeroBit();
+    else setZeroBit();
+    
+    if(X<0) setNegativeBit();
+    else resetNegativeBit();   
+    
 
     updateClock(mem->readMemVal(PC));
     UpdatePC(mem->readMemVal(PC));
@@ -377,12 +375,13 @@ void Processor::DEX_impl(Memory *mem) {
 void Processor::DEY_impl(Memory *mem) {
     Y--;
 
-    if(Y==0){
-        setZeroBit();
-    }
-    if(Y<0){
-        setNegativeBit();
-    }
+    if(Y==0) setZeroBit();
+    else resetZeroBit();
+
+    if(Y<0) setNegativeBit();
+    else resetNegativeBit();
+    
+    
     updateClock(mem->readMemVal(PC));
     UpdatePC(mem->readMemVal(PC));
 }
@@ -498,12 +497,12 @@ void Processor::INC_zpg(Memory *mem) {
     temp++;
     mem->setMem((uint16_t)nextAddr, temp);
 
-    if(temp==0) {
-        setZeroBit();
-    }
-    if(temp<0) {
-        setNegativeBit();
-    }
+    if(temp==0) setZeroBit();
+    else resetZeroBit();
+    
+    if(temp<0) setNegativeBit();
+    else resetNegativeBit();
+    
 
     updateClock(mem->readMemVal(PC));
     UpdatePC(mem->readMemVal(PC));
