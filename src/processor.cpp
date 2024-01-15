@@ -96,12 +96,11 @@ void Processor::resetCarryBit() {
 
 void Processor::LDA_imdt(Memory *mem) {
     A = mem->readMemVal(PC + 1);
-    if(A == 0) {
-        setZeroBit();
-    }
-    if((A & 0b10000000) == 0b10000000) {
-        setNegativeBit();
-    }
+    if(A == 0) setZeroBit();
+    else resetZeroBit();
+    
+    if((A & 0b10000000) == 0b10000000) setNegativeBit();
+    else resetNegativeBit();
 
     updateClock(mem->readMemVal(PC));
     UpdatePC(mem->readMemVal(PC));
@@ -111,12 +110,12 @@ void Processor::LDA_abs(Memory *mem) {
     uint16_t nextTwoWordsAddr = mem->readNextTwoWords(PC + 1);
     A = mem->readMemVal(nextTwoWordsAddr);
 
-    if(A == 0) {
-        setZeroBit();
-    }
-    if((A & 0b10000000) == 0b10000000) {
-        setNegativeBit();
-    }
+    if(A == 0) setZeroBit();
+    else resetZeroBit();
+    
+    if((A & 0b10000000) == 0b10000000) setNegativeBit();
+    else resetNegativeBit();
+    
     updateClock(mem->readMemVal(PC));
     UpdatePC(mem->readMemVal(PC));
 }
