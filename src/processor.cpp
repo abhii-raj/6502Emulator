@@ -362,7 +362,7 @@ void Processor::DEX_impl(Memory *mem) {
     X--;
 
     if(X==0) setZeroBit();
-    else setZeroBit();
+    else resetZeroBit();
     
     if(X<0) setNegativeBit();
     else resetNegativeBit();   
@@ -741,7 +741,7 @@ void Processor::ORA_imdt(Memory *mem) {
 
     A |= tempMem;
     if(A == 0) setZeroBit();
-    else setZeroBit();
+    else resetZeroBit();
 
     if((A & 0b10000000) == 0b10000000) setNegativeBit();
     else resetNegativeBit();
