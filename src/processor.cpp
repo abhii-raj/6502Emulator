@@ -72,6 +72,28 @@ void Processor::setCarryBit() {
     FR = FR|0b00000001;
 }
 
+void Processor::resetNegativeBit() {
+    FR = FR&0b01111111;
+}
+void Processor::resetOverflowBit() {
+    FR = FR&0b10111111;
+}
+void Processor::resetBreakBit() {
+    FR = FR&0b11101111;
+}
+void Processor::resetDecimalBit() {
+    FR = FR&0b11110111;
+}
+void Processor::resetInterruptDisableBit() {
+    FR = FR&0b11111011;
+}
+void Processor::resetZeroBit() {
+    FR = FR&0b11111101;
+}
+void Processor::resetCarryBit() {
+    FR = FR&0b11111110;
+}
+
 void Processor::LDA_imdt(Memory *mem) {
     A = mem->readMemVal(PC + 1);
     if(A == 0) {

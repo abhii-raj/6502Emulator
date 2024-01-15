@@ -94,6 +94,14 @@ public:
     void setZeroBit();
     void setCarryBit();
 
+    void resetNegativeBit();
+    void resetOverflowBit();
+    void resetBreakBit();
+    void resetDecimalBit();
+    void resetInterruptDisableBit();
+    void resetZeroBit();
+    void resetCarryBit();
+
     /*** LDA Instructions ***/
     // Processor Instructions
     void LDA_imdt(Memory *mem);  // LDA #oper
