@@ -177,6 +177,14 @@ std::string decToBin(std::string decNum) {
     return temp;
 }
 
+void setupMemDumpWindow() {
+    GtkWidget *memDumpWindow = gtk_window_new(GTK_WINDOW_TOPLEVEL);
+    gtk_window_set_default_size(GTK_WINDOW(memDumpWindow), 300, 300);
+    gtk_window_set_title(GTK_WINDOW(memDumpWindow), "Memory Dump");
+    gtk_widget_show(memDumpWindow);
+    gtk_main();
+}
+
 void setupUI() {
     window = gtk_window_new(GTK_WINDOW_TOPLEVEL);
     gtk_window_set_default_size(GTK_WINDOW(window), 900, 600);
@@ -256,6 +264,10 @@ void setupUI() {
     GtkWidget *clearButton = gtk_button_new_with_label("Clear");
     gtk_widget_set_name(clearButton, "clearButton");
 
+    // button to pop up memory dump window
+    GtkWidget *memDumpButton = gtk_button_new_with_label("Memory Dump");
+    gtk_widget_set_name(memDumpButton, "memDumpButton");
+
 
     // put widgets inside GtkFixed
     gtk_fixed_put(GTK_FIXED(fix), scr_window_treeview, 50, 60);
@@ -264,6 +276,8 @@ void setupUI() {
     gtk_fixed_put(GTK_FIXED(fix), continuousRunButton, 570, 380);
     gtk_fixed_put(GTK_FIXED(fix), stepRunButton, 720, 380);
     gtk_fixed_put(GTK_FIXED(fix), clearButton, 820, 380);
+    gtk_fixed_put(GTK_FIXED(fix), memDumpButton, 500, 420);
+
 
 
     // for closing application

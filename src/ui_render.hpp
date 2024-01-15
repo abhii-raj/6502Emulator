@@ -35,6 +35,7 @@ void onClearButtonClick(GtkButton *button,GtkTextBuffer* txtBuff);
 void GUI_Binding_contRun_InstrCycle(gpointer user_data);
 void GUI_Binding_stepRun_InstrCycle(gpointer user_data);
 std::string decToBin(std::string decNum);
+void setupMemDumpWindow();
 void setupUI();
 void mainUI(int *f_argc, char ***f_argv);
 

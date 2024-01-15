@@ -38,3 +38,12 @@
     background-color: orangered;
 }
 
+#memDumpButton {
+    background-image: none;
+    background-color: antiquewhite;
+}
+#memDumpButton:hover {
+    background-image: none;
+    background-color: bisque;
+}
+
