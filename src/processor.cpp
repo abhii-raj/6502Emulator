@@ -96,12 +96,11 @@ void Processor::resetCarryBit() {
 
 void Processor::LDA_imdt(Memory *mem) {
     A = mem->readMemVal(PC + 1);
-    if(A == 0) {
-        setZeroBit();
-    }
-    if((A & 0b10000000) == 0b10000000) {
-        setNegativeBit();
-    }
+    if(A == 0) setZeroBit();
+    else resetZeroBit();
+    
+    if((A & 0b10000000) == 0b10000000) setNegativeBit();
+    else resetNegativeBit();
 
     updateClock(mem->readMemVal(PC));
     UpdatePC(mem->readMemVal(PC));
@@ -111,12 +110,12 @@ void Processor::LDA_abs(Memory *mem) {
     uint16_t nextTwoWordsAddr = mem->readNextTwoWords(PC + 1);
     A = mem->readMemVal(nextTwoWordsAddr);
 
-    if(A == 0) {
-        setZeroBit();
-    }
-    if((A & 0b10000000) == 0b10000000) {
-        setNegativeBit();
-    }
+    if(A == 0) setZeroBit();
+    else resetZeroBit();
+    
+    if((A & 0b10000000) == 0b10000000) setNegativeBit();
+    else resetNegativeBit();
+    
     updateClock(mem->readMemVal(PC));
     UpdatePC(mem->readMemVal(PC));
 }
@@ -171,15 +170,15 @@ void Processor::CMP_imdt(Memory *mem) {
     int temp = A - memoryVal;
     //std::cout << "memVal - " << (unsigned)memoryVal << std::endl;
     //std::cout << "temp - " << temp << std::endl;
-    if(temp == 0) {
-        setZeroBit();
-    }
-    if(temp < 0) {
-        setNegativeBit();
-    }
-    if(temp >= 0) {
-        setCarryBit();
-    }
+    if(temp == 0) setZeroBit();
+    else resetZeroBit();
+    
+    if(temp < 0) setNegativeBit();
+    else resetNegativeBit();
+    
+    if(temp >= 0) setCarryBit();
+    else resetCarryBit();
+
     updateClock(mem->readMemVal(PC));
     UpdatePC(mem->readMemVal(PC));
 }
@@ -188,15 +187,16 @@ void Processor::CMP_zpg(Memory *mem) {
     uint16_t effAddrToRead = mem->readMemVal(PC + 1);
     uint8_t effVal = mem->readMemVal(effAddrToRead);
     int temp = A - effVal;
-    if(temp == 0) {
-        setZeroBit();
-    }
-    if(temp < 0) {
-        setNegativeBit();
-    }
-    if(temp >= 0) {
-        setCarryBit();
-    }
+    if(temp == 0) setZeroBit();
+    else resetZeroBit();
+    
+    if(temp < 0) setNegativeBit();
+    else resetNegativeBit();
+    
+    
+    if(temp >= 0) setCarryBit();
+    else resetCarryBit();
+
     updateClock(mem->readMemVal(PC));
     UpdatePC(mem->readMemVal(PC));
 }
@@ -207,15 +207,15 @@ void Processor::CMP_zpgx(Memory *mem) {
 
     uint8_t effValFetched = mem->readMemVal((uint16_t)effAddrToRead);
     int temp = A - effValFetched;
-    if(temp == 0) {
-        setZeroBit();
-    }
-    if(temp < 0) {
-        setNegativeBit();
-    }
-    if(temp >= 0) {
-        setCarryBit();
-    }
+    if(temp == 0) setZeroBit();
+    else resetZeroBit();
+    
+    if(temp < 0) setNegativeBit();
+    else resetNegativeBit();
+
+    if(temp >= 0) setCarryBit();
+    else resetCarryBit();
+    
     updateClock(mem->readMemVal(PC));
     UpdatePC(mem->readMemVal(PC));
 }
@@ -224,15 +224,15 @@ void Processor::CMP_abs(Memory *mem) {
     uint16_t nextTwoWordsAddr = mem->readNextTwoWords(PC + 1);
     int temp = A - mem->readMemVal(nextTwoWordsAddr);
 
-    if(temp == 0) {
-        setZeroBit();
-    }
-    if(temp < 0) {
-        setNegativeBit();
-    }
-    if(temp >= 0) {
-        setCarryBit();
-    }
+    if(temp == 0) setZeroBit();
+    else resetZeroBit();
+
+    if(temp < 0) setNegativeBit();
+    else resetNegativeBit();
+    
+    if(temp >= 0) setCarryBit();
+    else resetCarryBit();
+    
     updateClock(mem->readMemVal(PC));
     UpdatePC(mem->readMemVal(PC));
 }
@@ -240,12 +240,12 @@ void Processor::CMP_abs(Memory *mem) {
 void Processor::TYA_impl(Memory *mem) {
     A = Y;
 
-    if(A==0) {
-        setZeroBit();
-    }
-    if(A<0) {
-        setNegativeBit();
-    }
+    if(A==0) setZeroBit();
+    else resetZeroBit();
+    
+    if(A<0) setNegativeBit();
+    else resetNegativeBit();
+    
 
     updateClock(mem->readMemVal(PC));
     UpdatePC(mem->readMemVal(PC));
@@ -260,12 +260,11 @@ void Processor::TXS_impl(Memory *mem) {
 void Processor::TXA_impl(Memory *mem) {
     A = X;
 
-    if(A==0) {
-        setZeroBit();
-    }
-    if(A<0) {
-        setNegativeBit();
-    }
+    if(A==0) setZeroBit();
+    else resetZeroBit();
+    
+    if(A<0) setNegativeBit();
+    else resetNegativeBit();
 
     updateClock(mem->readMemVal(PC));
     UpdatePC(mem->readMemVal(PC));
@@ -295,12 +294,11 @@ void Processor::JMP_idr(Memory *mem) {
 void Processor::TAX_impl(Memory *mem) {
     X = A;
 
-    if(X==0) {
-        setZeroBit();
-    }
-    if(X<0) {
-        setNegativeBit();
-    }
+    if(X==0) setZeroBit();
+    else resetZeroBit();
+    
+    if(X<0) setNegativeBit();
+    else resetNegativeBit();
 
     updateClock(mem->readMemVal(PC));
     UpdatePC(mem->readMemVal(PC));
@@ -309,12 +307,12 @@ void Processor::TAX_impl(Memory *mem) {
 void Processor::TAY_impl(Memory *mem) {
     Y = A;
 
-    if(Y==0) {
-        setZeroBit();
-    }
-    if(Y<0) {
-        setNegativeBit();
-    }
+    if(Y==0) setZeroBit();
+    else resetZeroBit();
+
+    if(Y<0) setNegativeBit();
+    else resetNegativeBit();
+    
 
     updateClock(mem->readMemVal(PC));
     UpdatePC(mem->readMemVal(PC));
@@ -323,12 +321,12 @@ void Processor::TAY_impl(Memory *mem) {
 void Processor::TSX_impl(Memory *mem) {
     X = SP;
 
-    if(X==0) {
-        setZeroBit();
-    }
-    if(X<0) {
-        setNegativeBit();
-    }
+    if(X==0) setZeroBit();
+    else resetZeroBit();
+    
+    if(X<0) setNegativeBit();
+    else setNegativeBit();
+    
 
     updateClock(mem->readMemVal(PC));
     UpdatePC(mem->readMemVal(PC));
@@ -337,12 +335,11 @@ void Processor::TSX_impl(Memory *mem) {
 void Processor::INX_impl(Memory *mem) {
     X++;
 
-    if(X==0) {
-        setZeroBit();
-    }
-    if(X<0) {
-        setNegativeBit();
-    }
+    if(X==0) setZeroBit();
+    else resetZeroBit();
+    
+    if(X<0) setNegativeBit();
+    else resetNegativeBit();
 
     updateClock(mem->readMemVal(PC));
     UpdatePC(mem->readMemVal(PC));
@@ -351,12 +348,11 @@ void Processor::INX_impl(Memory *mem) {
 void Processor::INY_impl(Memory *mem) {
     Y++;
     
-    if(Y==0) {
-        setZeroBit();
-    }
-    if(Y<0) {
-        setNegativeBit();
-    }
+    if(Y==0) setZeroBit();
+    else resetZeroBit();
+
+    if(Y<0) setNegativeBit();
+    else resetNegativeBit();
 
     updateClock(mem->readMemVal(PC));
     UpdatePC(mem->readMemVal(PC));
@@ -365,12 +361,12 @@ void Processor::INY_impl(Memory *mem) {
 void Processor::DEX_impl(Memory *mem) {
     X--;
 
-    if(X==0){
-        setZeroBit();
-    }
-    if(X<0){
-        setNegativeBit();
-    }
+    if(X==0) setZeroBit();
+    else resetZeroBit();
+    
+    if(X<0) setNegativeBit();
+    else resetNegativeBit();   
+    
 
     updateClock(mem->readMemVal(PC));
     UpdatePC(mem->readMemVal(PC));
@@ -379,12 +375,13 @@ void Processor::DEX_impl(Memory *mem) {
 void Processor::DEY_impl(Memory *mem) {
     Y--;
 
-    if(Y==0){
-        setZeroBit();
-    }
-    if(Y<0){
-        setNegativeBit();
-    }
+    if(Y==0) setZeroBit();
+    else resetZeroBit();
+
+    if(Y<0) setNegativeBit();
+    else resetNegativeBit();
+    
+    
     updateClock(mem->readMemVal(PC));
     UpdatePC(mem->readMemVal(PC));
 }
@@ -500,12 +497,12 @@ void Processor::INC_zpg(Memory *mem) {
     temp++;
     mem->setMem((uint16_t)nextAddr, temp);
 
-    if(temp==0) {
-        setZeroBit();
-    }
-    if(temp<0) {
-        setNegativeBit();
-    }
+    if(temp==0) setZeroBit();
+    else resetZeroBit();
+    
+    if(temp<0) setNegativeBit();
+    else resetNegativeBit();
+    
 
     updateClock(mem->readMemVal(PC));
     UpdatePC(mem->readMemVal(PC));
@@ -589,12 +586,12 @@ void Processor::PLA_impl(Memory *mem) {
     SP++;
 
     // update flag bits
-    if(A==0) {
-        setZeroBit();
-    }
-    if(A<0) {
-        setNegativeBit();
-    }
+    if(A==0) setZeroBit();
+    else resetZeroBit();
+    
+    if(A<0) setNegativeBit();
+    else resetNegativeBit();
+    
 
     updateClock(mem->readMemVal(PC));
     UpdatePC(mem->readMemVal(PC));
@@ -627,12 +624,12 @@ void Processor::PLP_impl(Memory *mem) {
 
 void Processor::LDX_imdt(Memory *mem) {
     X = mem->readMemVal(PC + 1);
-    if(X == 0) {
-        setZeroBit();
-    }
-    if((X & 0b10000000) == 0b10000000) {
-        setNegativeBit();
-    }
+    if(X == 0) setZeroBit();
+    else resetZeroBit();
+    
+    if((X & 0b10000000) == 0b10000000) setNegativeBit();
+    else resetNegativeBit();
+    
 
     updateClock(mem->readMemVal(PC));
     UpdatePC(mem->readMemVal(PC));
@@ -642,12 +639,12 @@ void Processor::LDX_abs(Memory *mem) {
     uint16_t nextTwoWordsAddr = mem->readNextTwoWords(PC + 1);
     X = mem->readMemVal(nextTwoWordsAddr);
 
-    if(X == 0) {
-        setZeroBit();
-    }
-    if((X & 0b10000000) == 0b10000000) {
-        setNegativeBit();
-    }
+    if(X == 0) setZeroBit();
+    else resetZeroBit();
+
+    if((X & 0b10000000) == 0b10000000) setNegativeBit();
+    else resetNegativeBit();
+    
     updateClock(mem->readMemVal(PC));
     UpdatePC(mem->readMemVal(PC));
 }
@@ -657,12 +654,12 @@ void Processor::LDX_zpg(Memory *mem){
 
     // Load the value from the zero-page address into the X register
     X = mem->readMemVal(zeroPageAddr);
-    if(X == 0 ) {
-        setZeroBit();
-    }
-    if((X & 0b10000000) == 0b10000000) {
-        setNegativeBit();
-    }
+    if(X == 0 ) setZeroBit();
+    else resetZeroBit();
+    
+    if((X & 0b10000000) == 0b10000000) setNegativeBit();
+    else resetNegativeBit();
+
     updateClock(mem->readMemVal(PC));
     UpdatePC(mem->readMemVal(PC));
 }
@@ -672,24 +669,23 @@ void Processor::LDX_zpgy(Memory *mem) {
     zpgAddrX += Y;
 
     X = mem->readMemVal(zpgAddrX);
-    if(X== 0){
-        setZeroBit();
-    }
-    if((X & 0b10000000) == 0b10000000){
-        setNegativeBit();
-    }
+    if(X== 0)setZeroBit();
+    else resetZeroBit();
+
+    if((X & 0b10000000) == 0b10000000) setNegativeBit();
+    else resetNegativeBit();
+
     updateClock(mem->readMemVal(PC));
     UpdatePC(mem->readMemVal(PC));
 }
 
 void Processor::LDY_imdt(Memory *mem) {
     Y = mem->readMemVal(PC + 1);
-    if(Y == 0) {
-        setZeroBit();
-    }
-    if((Y & 0b10000000) == 0b10000000) {
-        setNegativeBit();
-    }
+    if(Y == 0) setZeroBit();
+    else resetZeroBit();
+    
+    if((Y & 0b10000000) == 0b10000000) setNegativeBit();
+    else resetNegativeBit();
 
     updateClock(mem->readMemVal(PC));
     UpdatePC(mem->readMemVal(PC));
@@ -699,12 +695,12 @@ void Processor::LDY_abs(Memory *mem) {
     uint16_t nextTwoWordsAddr = mem->readNextTwoWords(PC + 1);
     Y = mem->readMemVal(nextTwoWordsAddr);
 
-    if(Y == 0) {
-        setZeroBit();
-    }
-    if((Y & 0b10000000) == 0b10000000) {
-        setNegativeBit();
-    }
+    if(Y == 0) setZeroBit();
+    else resetZeroBit();
+
+    if((Y & 0b10000000) == 0b10000000) setNegativeBit();
+    else resetNegativeBit();
+
     updateClock(mem->readMemVal(PC));
     UpdatePC(mem->readMemVal(PC));
 }
@@ -714,12 +710,12 @@ void Processor::LDY_zpg(Memory *mem) {
 
     // Load the value from the zero-page address into the X register
     Y = mem->readMemVal(zeroPageAddr);
-    if(Y == 0 ) {
-        setZeroBit();
-    }
-    if((Y & 0b10000000) == 0b10000000) {
-        setNegativeBit();
-    }
+    if(Y == 0 ) setZeroBit();
+    else resetZeroBit();
+    
+    if((Y & 0b10000000) == 0b10000000) setNegativeBit();
+    else resetNegativeBit();
+
     updateClock(mem->readMemVal(PC));
     UpdatePC(mem->readMemVal(PC));
 }
@@ -729,12 +725,12 @@ void Processor::LDY_zpgx(Memory *mem) {
     zpgAddrY += X;
 
     Y = mem->readMemVal(zpgAddrY);
-    if(Y == 0){
-        setZeroBit();
-    }
-    if((Y & 0b10000000) == 0b10000000){
-        setNegativeBit();
-    }
+    if(Y == 0) setZeroBit();
+    else resetZeroBit();
+    
+    if((Y & 0b10000000) == 0b10000000) setNegativeBit();
+    else resetNegativeBit();
+
     updateClock(mem->readMemVal(PC));
     UpdatePC(mem->readMemVal(PC));
 }
@@ -744,12 +740,12 @@ void Processor::ORA_imdt(Memory *mem) {
     tempMem = mem->readMemVal(PC + 1);
 
     A |= tempMem;
-    if(A == 0){
-        setZeroBit();
-    }
-    if((A & 0b10000000) == 0b10000000){
-        setNegativeBit();
-    }
+    if(A == 0) setZeroBit();
+    else resetZeroBit();
+
+    if((A & 0b10000000) == 0b10000000) setNegativeBit();
+    else resetNegativeBit();
+    
     updateClock(mem->readMemVal(PC));
     UpdatePC(mem->readMemVal(PC));
 }
@@ -761,12 +757,13 @@ void Processor::ORA_abs(Memory *mem) {
     tempMem = mem->readMemVal(nextTwoWordsAddr);
 
     A |= tempMem;
-    if(A == 0){
-        setZeroBit();
-    }
-    if((A & 0b10000000) == 0b10000000){
-        setNegativeBit();
-    }
+    if(A == 0) setZeroBit();
+    else resetZeroBit();
+        
+    
+    if((A & 0b10000000) == 0b10000000) setNegativeBit();
+    else resetNegativeBit();
+    
 
     updateClock(mem->readMemVal(PC));
     UpdatePC(mem->readMemVal(PC));
@@ -779,12 +776,11 @@ void Processor::ORA_zpg(Memory *mem) {
     tempMem = mem->readMemVal(zeroPageAddr);
 
     A |= tempMem;
-    if(A == 0){
-        setZeroBit();
-    }
-    if((A & 0b10000000) == 0b10000000){
-        setNegativeBit();
-    }
+    if(A == 0) setZeroBit();
+    else resetZeroBit();
+
+    if((A & 0b10000000) == 0b10000000) setNegativeBit();
+    else resetNegativeBit();
 
     updateClock(mem->readMemVal(PC));
     UpdatePC(mem->readMemVal(PC));
@@ -798,12 +794,11 @@ void Processor::ORA_zpgx(Memory *mem) {
     tempMem = mem->readMemVal(zpgAddrX);
 
     A |= tempMem;
-    if(A == 0){
-        setZeroBit();
-    }
-    if((A & 0b10000000) == 0b10000000){
-        setNegativeBit();
-    }
+    if(A == 0) setZeroBit();
+    else resetZeroBit();
+    
+    if((A & 0b10000000) == 0b10000000) setNegativeBit();
+    else resetNegativeBit();
 
     updateClock(mem->readMemVal(PC));
     UpdatePC(mem->readMemVal(PC));
@@ -817,12 +812,11 @@ void Processor::ORA_idrx(Memory *mem) {
     tempMem = mem->readMemVal(effectiveAddr);
 
     A |= tempMem;
-    if(A == 0){
-        setZeroBit();
-    }
-    if((A & 0b10000000) == 0b10000000){
-        setNegativeBit();
-    }
+    if(A == 0) setZeroBit();
+    else resetZeroBit();
+
+    if((A & 0b10000000) == 0b10000000) setNegativeBit();
+    else resetNegativeBit();
 
     updateClock(mem->readMemVal(PC));
     UpdatePC(mem->readMemVal(PC));
@@ -833,12 +827,12 @@ void Processor::EOR_imdt(Memory *mem) {
     tempMem = mem->readMemVal(PC + 1);
 
     A ^= tempMem;
-    if(A == 0){
-        setZeroBit();
-    }
-    if((A & 0b10000000) == 0b10000000){
-        setNegativeBit();
-    }
+    if(A == 0) setZeroBit();
+    else resetZeroBit();
+
+    if((A & 0b10000000) == 0b10000000) setNegativeBit();
+    else resetNegativeBit();
+
     updateClock(mem->readMemVal(PC));
     UpdatePC(mem->readMemVal(PC));
 }
@@ -850,12 +844,11 @@ void Processor::EOR_abs(Memory *mem) {
     tempMem = mem->readMemVal(nextTwoWordsAddr);
 
     A ^= tempMem;
-    if(A == 0){
-        setZeroBit();
-    }
-    if((A & 0b10000000) == 0b10000000){
-        setNegativeBit();
-    }
+    if(A == 0) setZeroBit();
+    else resetZeroBit();
+    
+    if((A & 0b10000000) == 0b10000000) setNegativeBit();
+    else resetNegativeBit();
 
     updateClock(mem->readMemVal(PC));
     UpdatePC(mem->readMemVal(PC));
@@ -868,12 +861,11 @@ void Processor::EOR_zpg(Memory *mem) {
     tempMem = mem->readMemVal(zeroPageAddr);
 
     A ^= tempMem;
-    if(A == 0){
-        setZeroBit();
-    }
-    if((A & 0b10000000) == 0b10000000){
-        setNegativeBit();
-    }
+    if(A == 0) setZeroBit();
+    else resetZeroBit();
+
+    if((A & 0b10000000) == 0b10000000) setNegativeBit();
+    else resetNegativeBit();
 
     updateClock(mem->readMemVal(PC));
     UpdatePC(mem->readMemVal(PC));
@@ -887,12 +879,11 @@ void Processor::EOR_zpgx(Memory *mem) {
     tempMem = mem->readMemVal(zpgAddrX);
 
     A ^= tempMem;
-    if(A == 0){
-        setZeroBit();
-    }
-    if((A & 0b10000000) == 0b10000000){
-        setNegativeBit();
-    }
+    if(A == 0) setZeroBit();
+    else resetZeroBit();
+    
+    if((A & 0b10000000) == 0b10000000) setNegativeBit();
+    else resetNegativeBit();
 
     updateClock(mem->readMemVal(PC));
     UpdatePC(mem->readMemVal(PC));
@@ -906,12 +897,11 @@ void Processor::EOR_idrx(Memory *mem) {
     tempMem = mem->readMemVal(effectiveAddr);
 
     A ^= tempMem;
-    if(A == 0){
-        setZeroBit();
-    }
-    if((A & 0b10000000) == 0b10000000){
-        setNegativeBit();
-    }
+    if(A == 0) setZeroBit();
+    else resetZeroBit();
+
+    if((A & 0b10000000) == 0b10000000) setNegativeBit();
+    else resetNegativeBit();
 
     updateClock(mem->readMemVal(PC));
     UpdatePC(mem->readMemVal(PC));
@@ -923,12 +913,12 @@ void Processor::AND_imdt(Memory *mem) {
     tempMem = mem->readMemVal(PC + 1);
 
     A &= tempMem;
-    if(A == 0){
-        setZeroBit();
-    }
-    if((A & 0b10000000) == 0b10000000){
-        setNegativeBit();
-    }
+    if(A == 0) setZeroBit();
+    else resetZeroBit();
+
+    if((A & 0b10000000) == 0b10000000) setNegativeBit();
+    else resetNegativeBit();
+
     updateClock(mem->readMemVal(PC));
     UpdatePC(mem->readMemVal(PC));
 }
@@ -940,12 +930,11 @@ void Processor::AND_abs(Memory *mem) {
     tempMem = mem->readMemVal(nextTwoWordsAddr);
 
     A &= tempMem;
-    if(A == 0){
-        setZeroBit();
-    }
-    if((A & 0b10000000) == 0b10000000){
-        setNegativeBit();
-    }
+    if(A == 0) setZeroBit();
+    else resetZeroBit();
+
+    if((A & 0b10000000) == 0b10000000) setNegativeBit();
+    else resetNegativeBit();
 
     updateClock(mem->readMemVal(PC));
     UpdatePC(mem->readMemVal(PC));
@@ -958,12 +947,11 @@ void Processor::AND_zpg(Memory *mem) {
     tempMem = mem->readMemVal(zeroPageAddr);
 
     A &= tempMem;
-    if(A == 0){
-        setZeroBit();
-    }
-    if((A & 0b10000000) == 0b10000000){
-        setNegativeBit();
-    }
+    if(A == 0) setZeroBit();
+    else resetZeroBit();
+
+    if((A & 0b10000000) == 0b10000000) setNegativeBit();
+    else resetNegativeBit();
 
     updateClock(mem->readMemVal(PC));
     UpdatePC(mem->readMemVal(PC));
@@ -977,12 +965,11 @@ void Processor::AND_zpgx(Memory *mem) {
     tempMem = mem->readMemVal(zpgAddrX);
 
     A &= tempMem;
-    if(A == 0){
-        setZeroBit();
-    }
-    if((A & 0b10000000) == 0b10000000){
-        setNegativeBit();
-    }
+    if(A == 0) setZeroBit();
+    else resetZeroBit();
+    
+    if((A & 0b10000000) == 0b10000000)setNegativeBit();
+    else resetNegativeBit();
 
     updateClock(mem->readMemVal(PC));
     UpdatePC(mem->readMemVal(PC));
@@ -996,12 +983,11 @@ void Processor::AND_idrx(Memory *mem) {
     tempMem = mem->readMemVal(effectiveAddr);
 
     A &= tempMem;
-    if(A == 0){
-        setZeroBit();
-    }
-    if((A & 0b10000000) == 0b10000000){
-        setNegativeBit();
-    }
+    if(A == 0) setZeroBit();
+    else resetZeroBit();
+    
+    if((A & 0b10000000) == 0b10000000)setNegativeBit();
+    else resetNegativeBit();
 
     updateClock(mem->readMemVal(PC));
     UpdatePC(mem->readMemVal(PC));
@@ -1013,12 +999,11 @@ void Processor::DEC_zpg(Memory *mem) {
     uint8_t zeroPageAddr = mem->readMemVal(PC + 1);
     tempMem = mem->readMemVal(zeroPageAddr);
     tempMem = tempMem - 1;
-    if(A == 0){
-        setZeroBit();
-    }
-    if((A & 0b10000000) == 0b10000000){
-        setNegativeBit();
-    }
+    if(A == 0) setZeroBit();
+    else resetZeroBit();
+
+    if((A & 0b10000000) == 0b10000000) setNegativeBit();
+    else resetNegativeBit();
 
     updateClock(mem->readMemVal(PC));
     UpdatePC(mem->readMemVal(PC));
@@ -1030,12 +1015,11 @@ void Processor::DEC_abs(Memory *mem) {
     uint16_t nextTwoWordsAddr = mem->readNextTwoWords(PC + 1);
     tempMem = mem->readMemVal(nextTwoWordsAddr);
     tempMem = tempMem - 1;
-    if(A == 0){
-        setZeroBit();
-    }
-    if((A & 0b10000000) == 0b10000000){
-        setNegativeBit();
-    }
+    if(A == 0) setZeroBit();
+    else resetZeroBit();
+
+    if((A & 0b10000000) == 0b10000000) setNegativeBit();
+    else resetNegativeBit();
 
     updateClock(mem->readMemVal(PC));
     UpdatePC(mem->readMemVal(PC));
@@ -1048,12 +1032,11 @@ void Processor::DEC_absx(Memory *mem) {
     uint16_t effectiveAddr = nextTwoWordsAddr + X;
     tempMem = mem->readMemVal(effectiveAddr);
     tempMem = tempMem - 1;
-    if(A == 0){
-        setZeroBit();
-    }
-    if((A & 0b10000000) == 0b10000000){
-        setNegativeBit();
-    }
+    if(A == 0)setZeroBit();
+    else resetZeroBit();
+
+    if((A & 0b10000000) == 0b10000000) setNegativeBit();
+    else resetNegativeBit();
 
     updateClock(mem->readMemVal(PC));
     UpdatePC(mem->readMemVal(PC));
@@ -1065,12 +1048,11 @@ void Processor::DEC_zpgx(Memory *mem) {
     zpgAddrX += X;
     tempMem = mem->readMemVal(zpgAddrX);
     tempMem = tempMem - 1;
-    if(A == 0){
-        setZeroBit();
-    }
-    if((A & 0b10000000) == 0b10000000){
-        setNegativeBit();
-    }
+    if(A == 0) setZeroBit();
+    else resetZeroBit();
+
+    if((A & 0b10000000) == 0b10000000) setNegativeBit();
+    else resetNegativeBit();
 
     updateClock(mem->readMemVal(PC));
     UpdatePC(mem->readMemVal(PC));
@@ -1081,12 +1063,11 @@ void Processor::CPX_imdt(Memory *mem) {
     tempMem = mem->readMemVal(PC + 1);
     uint8_t result = X - tempMem;
 
-    if(result == 0){
-        setZeroBit();
-    }
-    if((result & 0b10000000) == 0b10000000){
-        setNegativeBit();
-    }
+    if(result == 0) setZeroBit();
+    else resetZeroBit();
+    
+    if((result & 0b10000000) == 0b10000000) setNegativeBit();
+    else resetNegativeBit();
 
     updateClock(mem->readMemVal(PC));
     UpdatePC(mem->readMemVal(PC));
@@ -1098,12 +1079,11 @@ void Processor::CPX_abs(Memory *mem) {
     tempMem = mem->readMemVal(nextTwoWordsAddr);
     uint8_t result = X - tempMem;
 
-    if(result == 0){
-        setZeroBit();
-    }
-    if((result & 0b10000000) == 0b10000000){
-        setNegativeBit();
-    }
+    if(result == 0) setZeroBit();
+    else resetZeroBit();
+
+    if((result & 0b10000000) == 0b10000000) setNegativeBit();
+    else resetNegativeBit();
 
     updateClock(mem->readMemVal(PC));
     UpdatePC(mem->readMemVal(PC));
@@ -1115,12 +1095,11 @@ void Processor::CPX_zpg(Memory *mem) {
     uint8_t zeroPageAddr = mem->readMemVal(PC + 1);
     tempMem = mem->readMemVal(zeroPageAddr);
     uint8_t result = X - tempMem;
-    if(result == 0){
-        setZeroBit();
-    }
-    if((result & 0b10000000) == 0b10000000){
-        setNegativeBit();
-    }
+    if(result == 0) setZeroBit();
+    else resetZeroBit();
+
+    if((result & 0b10000000) == 0b10000000) setNegativeBit();
+    else resetNegativeBit();
 
     updateClock(mem->readMemVal(PC));
     UpdatePC(mem->readMemVal(PC));
@@ -1131,12 +1110,11 @@ void Processor::CPY_imdt(Memory *mem) {
     tempMem = mem->readMemVal(PC + 1);
     uint8_t result = Y - tempMem;
 
-    if(result == 0){
-        setZeroBit();
-    }
-    if((result & 0b10000000) == 0b10000000){
-        setNegativeBit();
-    }
+    if(result == 0) setZeroBit();
+    else resetZeroBit();
+
+    if((result & 0b10000000) == 0b10000000) setNegativeBit();
+    else resetNegativeBit();
 
     updateClock(mem->readMemVal(PC));
     UpdatePC(mem->readMemVal(PC));
@@ -1148,12 +1126,11 @@ void Processor::CPY_abs(Memory *mem) {
     tempMem = mem->readMemVal(nextTwoWordsAddr);
     uint8_t result = Y - tempMem;
 
-    if(result == 0){
-        setZeroBit();
-    }
-    if((result & 0b10000000) == 0b10000000){
-        setNegativeBit();
-    }
+    if(result == 0) setZeroBit();
+    else resetZeroBit();
+
+    if((result & 0b10000000) == 0b10000000) setNegativeBit();
+    else resetNegativeBit();
 
     updateClock(mem->readMemVal(PC));
     UpdatePC(mem->readMemVal(PC));
@@ -1165,12 +1142,10 @@ void Processor::CPY_zpg(Memory *mem) {
     uint8_t zeroPageAddr = mem->readMemVal(PC + 1);
     tempMem = mem->readMemVal(zeroPageAddr);
     uint8_t result = Y - tempMem;
-    if(result == 0){
-        setZeroBit();
-    }
-    if((result & 0b10000000) == 0b10000000){
-        setNegativeBit();
-    }
+    if(result == 0) setZeroBit();
+    else resetZeroBit();
+    if((result & 0b10000000) == 0b10000000) setNegativeBit();
+    else resetNegativeBit();
 
     updateClock(mem->readMemVal(PC));
     UpdatePC(mem->readMemVal(PC));
