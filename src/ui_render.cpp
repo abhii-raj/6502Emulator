@@ -27,6 +27,23 @@ void onMemDumpWindowDestroy(GtkWidget *widget, gpointer user_data) {
     printf("Memory Dump closing\n");
 }
 
+// returns memory dump of first n locations of memory through std::string
+std::string readFullMemory(Memory *mem, int n) {
+    std::string memDump = "";
+    for(int idx = 0; idx < n; idx++) {
+        if(idx % 16 == 0 || idx == 0) {
+            if(idx != 0) memDump.append("\n");
+
+            memDump.append(std::to_string(idx));
+            memDump.append(": ");
+        }
+        std::string temp = std::to_string(mem->readMemVal(idx));
+        memDump.append(temp);
+        memDump.append(" ");
+    }
+    return memDump;
+}
+
 void load_css(void) {
     GtkCssProvider *provider;
     GdkDisplay  *display;
@@ -203,6 +220,11 @@ void setupMemDumpWindow() {
     GtkWidget *textview_mem = gtk_text_view_new();
     // GTK text buffer
     GtkTextBuffer *txtBuff_mem = gtk_text_view_get_buffer(GTK_TEXT_VIEW(textview_mem));
+
+    // read only first 512 memory locations for now
+    std::string temp_memDump = readFullMemory(local_memRef, 512).c_str();
+    const char *memDump_decimal = temp_memDump.c_str();
+    gtk_text_buffer_set_text(txtBuff_mem, memDump_decimal, temp_memDump.length());
 
     gtk_text_view_set_wrap_mode (GTK_TEXT_VIEW(textview_mem),GTK_WRAP_CHAR);
 

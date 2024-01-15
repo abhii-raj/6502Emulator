@@ -24,6 +24,7 @@ static CodeLoad cl;
 
 void onWindowDestroy(GtkWidget *widget, gpointer user_data);
 void onMemDumpWindowDestroy(GtkWidget *widget, gpointer user_data);
+std::string readFullMemory(Memory *mem, int n);
 void load_css(void);
 GtkTreeViewColumn* retTreeCol(char *ColumnHeading, GtkCellRenderer* cell, GtkWidget* treeview);
 void addRow(gpointer user_data);
