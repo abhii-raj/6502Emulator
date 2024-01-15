@@ -1016,7 +1016,7 @@ void Processor::DEC_abs(Memory *mem) {
     tempMem = mem->readMemVal(nextTwoWordsAddr);
     tempMem = tempMem - 1;
     if(A == 0) setZeroBit();
-    else re setZeroBit();
+    else resetZeroBit();
 
     if((A & 0b10000000) == 0b10000000) setNegativeBit();
     else resetNegativeBit();
