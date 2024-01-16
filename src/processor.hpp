@@ -270,10 +270,21 @@ public:
     void CPY_zpg(Memory *mem);
     void CPY_abs(Memory *mem);
 
+    /*** ROL Instructions ***/
+    // Rotates the bits in the Accumulator or in a byte in memory to the left, by one bit.
+    // moves bit 7 to the carry, moves the carry into bit 0, and every other bit moves one position to its left.
+    void ROL_A(Memory *mem);
+    void ROL_zpg(Memory *mem);
+    void ROL_zpgx(Memory *mem);
+    void ROL_abs(Memory *mem);
+    void ROL_absx(Memory *mem);
 
-
-
-
+    /*** ROR Instructions ***/
+    void ROR_A(Memory *mem);
+    void ROR_zpg(Memory *mem);
+    void ROR_zpgx(Memory *mem);
+    void ROR_abs(Memory *mem);
+    void ROR_absx(Memory *mem);
 
 };
 
