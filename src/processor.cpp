@@ -1153,10 +1153,6 @@ void Processor::CPY_zpg(Memory *mem) {
 
 void Processor::ROL_A(Memory *mem) {
      int leftmostBit = A & 0b10000000;
-
-     if(leftmostBit == 0b10000000) setCarryBit();
-     else resetCarryBit();
-
      A = A << 1;
      A = A | leftmostBit;
 
@@ -1165,4 +1161,7 @@ void Processor::ROL_A(Memory *mem) {
 
      if(A < 0) setNegativeBit();
      else resetNegativeBit();
+
+    if(leftmostBit == 0b10000000) setCarryBit();
+    else resetCarryBit();
 }
