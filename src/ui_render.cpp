@@ -101,6 +101,7 @@ void addRow(gpointer user_data) {
                        3, Y_str.c_str(),
                        4, SP_str.c_str(),
                        5, FR_str_bin.c_str(),
+                       6, local_procRef->cpuClock,
                        -1);
 }
 
@@ -251,8 +252,8 @@ void setupUI() {
     /**** ROWS AND COLUMNS TO OUTPUT VALUE OF REGISTERS ****/
     // GTK ListStore
     // used inside GTK TreeView
-    colList = gtk_list_store_new(6, G_TYPE_STRING, G_TYPE_STRING, G_TYPE_STRING,
-                              G_TYPE_STRING, G_TYPE_STRING, G_TYPE_STRING);
+    colList = gtk_list_store_new(7, G_TYPE_STRING, G_TYPE_STRING, G_TYPE_STRING,
+                              G_TYPE_STRING, G_TYPE_STRING, G_TYPE_STRING, G_TYPE_INT);
     // GTK TreeView
     GtkWidget *treeview = gtk_tree_view_new();
     gtk_tree_view_set_model(GTK_TREE_VIEW(treeview), GTK_TREE_MODEL(colList));
@@ -265,6 +266,8 @@ void setupUI() {
     GtkTreeViewColumn* Y_col = retTreeCol("Y", cellRenderer, treeview, 3);
     GtkTreeViewColumn* SP_col = retTreeCol("SP", cellRenderer, treeview, 4);
     GtkTreeViewColumn* FR_col = retTreeCol("N V - B D I Z C", cellRenderer, treeview, 5);
+    GtkTreeViewColumn* CPUClock_col = retTreeCol("Cycle", cellRenderer, treeview, 6);
+
 
     /**** FOR TEXT BUFFER AND TEXTVIEW ****/
     // GTK textview
@@ -291,7 +294,7 @@ void setupUI() {
                                    GTK_POLICY_AUTOMATIC, GTK_POLICY_AUTOMATIC);
     gtk_scrolled_window_set_min_content_height(GTK_SCROLLED_WINDOW(scr_window_treeview), 400);
     //gtk_scrolled_window_set_max_content_height(GTK_SCROLLED_WINDOW(scr_window_treeview), 600);
-    gtk_scrolled_window_set_min_content_width(GTK_SCROLLED_WINDOW(scr_window_treeview), 400);
+    gtk_scrolled_window_set_min_content_width(GTK_SCROLLED_WINDOW(scr_window_treeview), 450);
     gtk_scrolled_window_set_shadow_type (GTK_SCROLLED_WINDOW(scr_window_treeview), GTK_SHADOW_IN);
 
     // adding treeview widget to scrollable window
@@ -322,12 +325,12 @@ void setupUI() {
 
     // put widgets inside GtkFixed
     gtk_fixed_put(GTK_FIXED(fix), scr_window_treeview, 50, 60);
-    gtk_fixed_put(GTK_FIXED(fix), scr_window_textview, 500, 60);
-    gtk_fixed_put(GTK_FIXED(fix), loadButton, 500, 380);
-    gtk_fixed_put(GTK_FIXED(fix), continuousRunButton, 570, 380);
-    gtk_fixed_put(GTK_FIXED(fix), stepRunButton, 720, 380);
-    gtk_fixed_put(GTK_FIXED(fix), clearButton, 820, 380);
-    gtk_fixed_put(GTK_FIXED(fix), memDumpButton, 500, 420);
+    gtk_fixed_put(GTK_FIXED(fix), scr_window_textview, 550, 60);
+    gtk_fixed_put(GTK_FIXED(fix), loadButton, 550, 380);
+    gtk_fixed_put(GTK_FIXED(fix), continuousRunButton, 620, 380);
+    gtk_fixed_put(GTK_FIXED(fix), stepRunButton, 770, 380);
+    gtk_fixed_put(GTK_FIXED(fix), clearButton, 870, 380);
+    gtk_fixed_put(GTK_FIXED(fix), memDumpButton, 550, 420);
 
     // for closing application
     g_signal_connect(window, "destroy", G_CALLBACK(onWindowDestroy), NULL);
