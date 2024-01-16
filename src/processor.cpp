@@ -106,6 +106,37 @@ void Processor::LDA_imdt(Memory *mem) {
     UpdatePC(mem->readMemVal(PC));
 }
 
+void Processor::LDA_zpg(Memory *mem) {
+    uint8_t nextWordAddr = mem->readMemVal(PC + 1);
+    A = mem->readMemVal((uint16_t)nextWordAddr);
+
+    if(A == 0) setZeroBit();
+    else resetZeroBit();
+
+    if((A & 0b10000000) == 0b10000000) setNegativeBit();
+    else resetNegativeBit();
+
+    updateClock(PC);
+    UpdatePC(PC);
+}
+
+void Processor::LDA_zpgx(Memory *mem) {
+    uint8_t nextWordAddr = mem->readMemVal(PC + 1);
+    nextWordAddr += X;
+
+    A = mem->readMemVal((uint16_t)nextWordAddr);
+
+    if(A == 0) setZeroBit();
+    else resetZeroBit();
+
+    if((A & 0b10000000) == 0b10000000) setNegativeBit();
+    else resetNegativeBit();
+
+    updateClock(PC);
+    UpdatePC(PC);
+}
+
+
 void Processor::LDA_abs(Memory *mem) {
     uint16_t nextTwoWordsAddr = mem->readNextTwoWords(PC + 1);
     A = mem->readMemVal(nextTwoWordsAddr);
@@ -116,6 +147,38 @@ void Processor::LDA_abs(Memory *mem) {
     if((A & 0b10000000) == 0b10000000) setNegativeBit();
     else resetNegativeBit();
     
+    updateClock(mem->readMemVal(PC));
+    UpdatePC(mem->readMemVal(PC));
+}
+
+void Processor::LDA_absx(Memory *mem) {
+    uint16_t nextTwoWordsAddr = mem->readNextTwoWords(PC + 1);
+    uint16_t effAddr = nextTwoWordsAddr + X;
+
+    A = mem->readMemVal(effAddr);
+
+    if(A == 0) setZeroBit();
+    else resetZeroBit();
+
+    if((A & 0b10000000) == 0b10000000) setNegativeBit();
+    else resetNegativeBit();
+
+    updateClock(mem->readMemVal(PC));
+    UpdatePC(mem->readMemVal(PC));
+}
+
+void Processor::LDA_absy(Memory *mem) {
+    uint16_t nextTwoWordsAddr = mem->readNextTwoWords(PC + 1);
+    uint16_t effAddr = nextTwoWordsAddr + Y;
+
+    A = mem->readMemVal(effAddr);
+
+    if(A == 0) setZeroBit();
+    else resetZeroBit();
+
+    if((A & 0b10000000) == 0b10000000) setNegativeBit();
+    else resetNegativeBit();
+
     updateClock(mem->readMemVal(PC));
     UpdatePC(mem->readMemVal(PC));
 }
