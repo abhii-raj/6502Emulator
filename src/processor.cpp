@@ -140,7 +140,7 @@ void Processor::STA_zpg(Memory *mem) {
 
 void Processor::STA_zpgx(Memory *mem) {
     uint8_t nextWordAddr = mem->readMemVal(PC + 1);
-    nextWordAddr += mem->readMemVal(PC + 2);
+    nextWordAddr += X;
 
     mem->setMem((uint16_t)nextWordAddr, A);
     updateClock(mem->readMemVal(PC));
