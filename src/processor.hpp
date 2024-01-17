@@ -286,6 +286,20 @@ public:
     void ROR_abs(Memory *mem);
     void ROR_absx(Memory *mem);
 
+    /***  ASL Instructions ***/
+    void ASL_A(Memory *mem);
+    void ASL_zpg(Memory *mem);
+    void ASL_zpgx(Memory *mem);
+    void ASL_abs(Memory *mem);
+    void ASL_absx(Memory *mem);
+
+    /*** ADC Instructions ***/
+    void ADC_imdt(Memory *mem);
+    void ADC_zpg(Memory *mem);
+    void ADC_zpgx(Memory *mem);
+    void ADC_abs(Memory *mem);
+    void ADC_idrx(Memory *mem);
+
 };
 
 
