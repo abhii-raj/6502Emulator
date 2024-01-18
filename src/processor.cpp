@@ -1228,3 +1228,259 @@ void Processor::ROL_A(Memory *mem) {
     if(leftmostBit == 0b10000000) setCarryBit();
     else resetCarryBit();
 }
+
+void Processor::ROL_zpg(Memory *mem) {
+    uint8_t tempMem = 0;
+
+    uint8_t zeroPageAddr = mem->readMemVal(PC + 1);
+    tempMem = mem->readMemVal(zeroPageAddr);
+    int leftmostBit = tempMem & 0b10000000;
+    tempMem = tempMem << 1;
+    tempMem = tempMem | leftmostBit;
+
+    if(tempMem == 0) setZeroBit();
+    else resetZeroBit();
+
+    if(tempMem < 0) setNegativeBit();
+    else resetNegativeBit();
+
+    if(leftmostBit == 0b10000000) setCarryBit();
+    else resetCarryBit();
+}
+
+void Processor::ROL_abs(Memory *mem) {
+    uint8_t tempMem = 0;
+    uint16_t nextTwoWordsAddr = mem->readNextTwoWords(PC + 1);
+    tempMem = mem->readMemVal(nextTwoWordsAddr);
+    int leftmostBit = tempMem & 0b10000000;
+    tempMem = tempMem << 1;
+    tempMem = tempMem | leftmostBit;
+
+    if(tempMem == 0) setZeroBit();
+    else resetZeroBit();
+
+    if(tempMem < 0) setNegativeBit();
+    else resetNegativeBit();
+
+    if(leftmostBit == 0b10000000) setCarryBit();
+    else resetCarryBit();
+}
+
+void Processor::ROL_absx(Memory *mem) {
+    uint8_t tempMem = 0;
+
+    uint16_t nextTwoWordsAddr = mem->readNextTwoWords(PC + 1);
+    uint16_t effectiveAddr = nextTwoWordsAddr + X;
+    tempMem = mem->readMemVal(effectiveAddr);
+    int leftmostBit = tempMem & 0b10000000;
+    tempMem = tempMem << 1;
+    tempMem = tempMem | leftmostBit;
+
+    if(tempMem == 0) setZeroBit();
+    else resetZeroBit();
+
+    if(tempMem < 0) setNegativeBit();
+    else resetNegativeBit();
+
+    if(leftmostBit == 0b10000000) setCarryBit();
+    else resetCarryBit();
+
+}
+void Processor::ROL_zpgx(Memory *mem) {
+    uint8_t tempMem = 0;
+    uint8_t zpgAddrX = mem->readMemVal(PC+1);
+    zpgAddrX += X;
+    tempMem = mem->readMemVal(zpgAddrX);
+    int leftmostBit = tempMem & 0b10000000;
+    tempMem = tempMem << 1;
+    tempMem = tempMem | leftmostBit;
+
+    if(tempMem == 0) setZeroBit();
+    else resetZeroBit();
+
+    if(tempMem < 0) setNegativeBit();
+    else resetNegativeBit();
+
+    if(leftmostBit == 0b10000000) setCarryBit();
+    else resetCarryBit();
+}
+
+void Processor::ROR_A(Memory *mem) {
+    int rightmostBit = A & 0b00000001;
+    A = A >> 1;
+    A = A | (rightmostBit << 7);
+
+    if (A == 0) setZeroBit();
+    else resetZeroBit();
+
+    if (A < 0) setNegativeBit();
+    else resetNegativeBit();
+
+    if (rightmostBit == 0b00000001) setCarryBit();
+    else resetCarryBit();
+}
+
+void Processor::ROR_abs(Memory *mem) {
+    uint8_t tempMem = 0;
+    uint16_t nextTwoWordsAddr = mem->readNextTwoWords(PC + 1);
+    tempMem = mem->readMemVal(nextTwoWordsAddr);
+    int rightmostBit = tempMem & 0b00000001;
+    tempMem = tempMem >> 1;
+    tempMem = tempMem | (rightmostBit << 7);
+
+    if (tempMem == 0) setZeroBit();
+    else resetZeroBit();
+
+    if (tempMem < 0) setNegativeBit();
+    else resetNegativeBit();
+
+    if (rightmostBit == 0b00000001) setCarryBit();
+    else resetCarryBit();
+}
+
+void Processor::ROR_absx(Memory *mem) {
+    uint8_t tempMem = 0;
+
+    uint16_t nextTwoWordsAddr = mem->readNextTwoWords(PC + 1);
+    uint16_t effectiveAddr = nextTwoWordsAddr + X;
+    tempMem = mem->readMemVal(effectiveAddr);
+    int rightmostBit = tempMem & 0b00000001;
+    tempMem = tempMem >> 1;
+    tempMem = tempMem | (rightmostBit << 7);
+
+    if (tempMem == 0) setZeroBit();
+    else resetZeroBit();
+
+    if (tempMem < 0) setNegativeBit();
+    else resetNegativeBit();
+
+    if (rightmostBit == 0b00000001) setCarryBit();
+    else resetCarryBit();
+}
+
+void Processor::ROR_zpg(Memory *mem) {
+    uint8_t tempMem = 0;
+
+    uint8_t zeroPageAddr = mem->readMemVal(PC + 1);
+    tempMem = mem->readMemVal(zeroPageAddr);
+    int rightmostBit = tempMem & 0b00000001;
+    tempMem = tempMem >> 1;
+    tempMem = tempMem | (rightmostBit << 7);
+
+    if (tempMem == 0) setZeroBit();
+    else resetZeroBit();
+
+    if (tempMem < 0) setNegativeBit();
+    else resetNegativeBit();
+
+    if (rightmostBit == 0b00000001) setCarryBit();
+    else resetCarryBit();
+}
+
+void Processor::ROR_zpgx(Memory *mem) {
+    uint8_t tempMem = 0;
+    uint8_t zpgAddrX = mem->readMemVal(PC+1);
+    zpgAddrX += X;
+    tempMem = mem->readMemVal(zpgAddrX);
+    int rightmostBit = tempMem & 0b00000001;
+    tempMem = tempMem >> 1;
+    tempMem = tempMem | (rightmostBit << 7);
+
+    if (tempMem == 0) setZeroBit();
+    else resetZeroBit();
+
+    if (tempMem < 0) setNegativeBit();
+    else resetNegativeBit();
+
+    if (rightmostBit == 0b00000001) setCarryBit();
+    else resetCarryBit();
+}
+
+
+void Processor::ASL_A(Memory *mem) {
+    int leftmostBit = A & 0b10000000;
+    A = A << 1;
+
+    if(A == 0) setZeroBit();
+    else resetZeroBit();
+
+    if(A < 0) setNegativeBit();
+    else resetNegativeBit();
+
+    if(leftmostBit == 0b10000000) setCarryBit();
+    else resetCarryBit();
+}
+
+void Processor::ASL_zpg(Memory *mem) {
+    uint8_t tempMem = 0;
+
+    uint8_t zeroPageAddr = mem->readMemVal(PC + 1);
+    tempMem = mem->readMemVal(zeroPageAddr);
+    int leftmostBit = tempMem & 0b10000000;
+    tempMem = tempMem << 1;
+
+    if(tempMem == 0) setZeroBit();
+    else resetZeroBit();
+
+    if(tempMem < 0) setNegativeBit();
+    else resetNegativeBit();
+
+    if(leftmostBit == 0b10000000) setCarryBit();
+    else resetCarryBit();
+}
+
+void Processor::ASL_abs(Memory *mem) {
+    uint8_t tempMem = 0;
+    uint16_t nextTwoWordsAddr = mem->readNextTwoWords(PC + 1);
+    tempMem = mem->readMemVal(nextTwoWordsAddr);
+    int leftmostBit = tempMem & 0b10000000;
+    tempMem = tempMem << 1;
+
+    if(tempMem == 0) setZeroBit();
+    else resetZeroBit();
+
+    if(tempMem < 0) setNegativeBit();
+    else resetNegativeBit();
+
+    if(leftmostBit == 0b10000000) setCarryBit();
+    else resetCarryBit();
+}
+
+void Processor::ASL_absx(Memory *mem) {
+    uint8_t tempMem = 0;
+
+    uint16_t nextTwoWordsAddr = mem->readNextTwoWords(PC + 1);
+    uint16_t effectiveAddr = nextTwoWordsAddr + X;
+    tempMem = mem->readMemVal(effectiveAddr);
+    int leftmostBit = tempMem & 0b10000000;
+    tempMem = tempMem << 1;
+
+    if(tempMem == 0) setZeroBit();
+    else resetZeroBit();
+
+    if(tempMem < 0) setNegativeBit();
+    else resetNegativeBit();
+
+    if(leftmostBit == 0b10000000) setCarryBit();
+    else resetCarryBit();
+
+}
+void Processor::ASL_zpgx(Memory *mem) {
+    uint8_t tempMem = 0;
+    uint8_t zpgAddrX = mem->readMemVal(PC+1);
+    zpgAddrX += X;
+    tempMem = mem->readMemVal(zpgAddrX);
+    int leftmostBit = tempMem & 0b10000000;
+    tempMem = tempMem << 1;
+
+    if(tempMem == 0) setZeroBit();
+    else resetZeroBit();
+
+    if(tempMem < 0) setNegativeBit();
+    else resetNegativeBit();
+
+    if(leftmostBit == 0b10000000) setCarryBit();
+    else resetCarryBit();
+}
+
+
