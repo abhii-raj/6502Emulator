@@ -235,7 +235,7 @@ void setupMemDumpWindow() {
     gtk_widget_show_all(memDumpWindow);
 
     g_signal_connect(memDumpWindow, "destroy", G_CALLBACK(onMemDumpWindowDestroy), NULL);
-    //gtk_main();
+    gtk_main();
 }
 
 void setupUI() {
