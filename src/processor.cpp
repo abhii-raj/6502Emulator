@@ -1234,6 +1234,9 @@ void Processor::ROL_A(Memory *mem) {
 
     if(leftmostBit == 0b10000000) setCarryBit();
     else resetCarryBit();
+
+    updateClock(mem->readMemVal(PC));
+    UpdatePC(mem->readMemVal(PC));
 }
 
 void Processor::ROL_zpg(Memory *mem) {
@@ -1253,6 +1256,9 @@ void Processor::ROL_zpg(Memory *mem) {
 
     if(leftmostBit == 0b10000000) setCarryBit();
     else resetCarryBit();
+
+    updateClock(mem->readMemVal(PC));
+    UpdatePC(mem->readMemVal(PC));
 }
 
 void Processor::ROL_abs(Memory *mem) {
@@ -1271,6 +1277,9 @@ void Processor::ROL_abs(Memory *mem) {
 
     if(leftmostBit == 0b10000000) setCarryBit();
     else resetCarryBit();
+
+    updateClock(mem->readMemVal(PC));
+    UpdatePC(mem->readMemVal(PC));
 }
 
 void Processor::ROL_absx(Memory *mem) {
@@ -1292,6 +1301,8 @@ void Processor::ROL_absx(Memory *mem) {
     if(leftmostBit == 0b10000000) setCarryBit();
     else resetCarryBit();
 
+    updateClock(mem->readMemVal(PC));
+    UpdatePC(mem->readMemVal(PC));
 }
 void Processor::ROL_zpgx(Memory *mem) {
     uint8_t tempMem = 0;
@@ -1310,6 +1321,9 @@ void Processor::ROL_zpgx(Memory *mem) {
 
     if(leftmostBit == 0b10000000) setCarryBit();
     else resetCarryBit();
+
+    updateClock(mem->readMemVal(PC));
+    UpdatePC(mem->readMemVal(PC));
 }
 
 void Processor::ROR_A(Memory *mem) {
@@ -1325,6 +1339,9 @@ void Processor::ROR_A(Memory *mem) {
 
     if (rightmostBit == 0b00000001) setCarryBit();
     else resetCarryBit();
+
+    updateClock(mem->readMemVal(PC));
+    UpdatePC(mem->readMemVal(PC));
 }
 
 void Processor::ROR_abs(Memory *mem) {
@@ -1343,6 +1360,9 @@ void Processor::ROR_abs(Memory *mem) {
 
     if (rightmostBit == 0b00000001) setCarryBit();
     else resetCarryBit();
+
+    updateClock(mem->readMemVal(PC));
+    UpdatePC(mem->readMemVal(PC));
 }
 
 void Processor::ROR_absx(Memory *mem) {
@@ -1363,6 +1383,9 @@ void Processor::ROR_absx(Memory *mem) {
 
     if (rightmostBit == 0b00000001) setCarryBit();
     else resetCarryBit();
+
+    updateClock(mem->readMemVal(PC));
+    UpdatePC(mem->readMemVal(PC));
 }
 
 void Processor::ROR_zpg(Memory *mem) {
@@ -1382,6 +1405,9 @@ void Processor::ROR_zpg(Memory *mem) {
 
     if (rightmostBit == 0b00000001) setCarryBit();
     else resetCarryBit();
+
+    updateClock(mem->readMemVal(PC));
+    UpdatePC(mem->readMemVal(PC));
 }
 
 void Processor::ROR_zpgx(Memory *mem) {
@@ -1401,6 +1427,9 @@ void Processor::ROR_zpgx(Memory *mem) {
 
     if (rightmostBit == 0b00000001) setCarryBit();
     else resetCarryBit();
+
+    updateClock(mem->readMemVal(PC));
+    UpdatePC(mem->readMemVal(PC));
 }
 
 
@@ -1416,6 +1445,9 @@ void Processor::ASL_A(Memory *mem) {
 
     if(leftmostBit == 0b10000000) setCarryBit();
     else resetCarryBit();
+
+    updateClock(mem->readMemVal(PC));
+    UpdatePC(mem->readMemVal(PC));
 }
 
 void Processor::ASL_zpg(Memory *mem) {
@@ -1434,6 +1466,9 @@ void Processor::ASL_zpg(Memory *mem) {
 
     if(leftmostBit == 0b10000000) setCarryBit();
     else resetCarryBit();
+
+    updateClock(mem->readMemVal(PC));
+    UpdatePC(mem->readMemVal(PC));
 }
 
 void Processor::ASL_abs(Memory *mem) {
@@ -1451,6 +1486,9 @@ void Processor::ASL_abs(Memory *mem) {
 
     if(leftmostBit == 0b10000000) setCarryBit();
     else resetCarryBit();
+
+    updateClock(mem->readMemVal(PC));
+    UpdatePC(mem->readMemVal(PC));
 }
 
 void Processor::ASL_absx(Memory *mem) {
@@ -1471,6 +1509,8 @@ void Processor::ASL_absx(Memory *mem) {
     if(leftmostBit == 0b10000000) setCarryBit();
     else resetCarryBit();
 
+    updateClock(mem->readMemVal(PC));
+    UpdatePC(mem->readMemVal(PC));
 }
 void Processor::ASL_zpgx(Memory *mem) {
     uint8_t tempMem = 0;
@@ -1488,6 +1528,9 @@ void Processor::ASL_zpgx(Memory *mem) {
 
     if(leftmostBit == 0b10000000) setCarryBit();
     else resetCarryBit();
+
+    updateClock(mem->readMemVal(PC));
+    UpdatePC(mem->readMemVal(PC));
 }
 
 void Processor::BCC_rel(Memory *mem) {
