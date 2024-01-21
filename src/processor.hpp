@@ -77,6 +77,9 @@ public:
     // increments the clock tick depending on opcode
     void updateClock(uint8_t opcode);
 
+    // increments extra clock tick depending on transition during page transition
+    void updateClockOnTransition(uint8_t opcode, uint8_t offset);
+
     // increments PC depending on opcode
     void UpdatePC(uint8_t opcode);
 
@@ -300,6 +303,22 @@ public:
     void ADC_abs(Memory *mem);
     void ADC_idrx(Memory *mem);
 
+    /*** BCC Instructions ***/
+    void BCC_rel(Memory *mem);
+    /*** BCS Instructions ***/
+    void BCS_rel(Memory *mem);
+    /*** BEQ Instructions ***/
+    void BEQ_rel(Memory *mem);
+    /*** BNE Instructions ***/
+    void BNE_rel(Memory *mem);
+    /*** BMI Instructions ***/
+    void BMI_rel(Memory *mem);
+    /*** BPL Instructions ***/
+    void BPL_rel(Memory *mem);
+    /*** BVC Instructions ***/
+    void BVC_rel(Memory *mem);
+    /*** BVS Instructions ***/
+    void BVS_rel(Memory *mem);
 };
 
 

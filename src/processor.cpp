@@ -33,6 +33,13 @@ void Processor::updateClock(uint8_t opcode) {
     cpuClock += InstrTicksTable[lowNibble(opcode)][highNibble(opcode)];
 }
 
+// increments extra clock tick depending on transition during page transition
+void Processor::updateClockOnTransition(uint8_t opcode, uint8_t offset) {
+    long pageTransition = offset % 0xFF;
+    cpuClock += (InstrTicksTable[lowNibble(opcode)][highNibble(opcode)] + pageTransition);
+}
+
+
 // gives the location of top of the stack
 int Processor::retStackTopLoc() {
     return (SP + 0x100);
@@ -1483,4 +1490,123 @@ void Processor::ASL_zpgx(Memory *mem) {
     else resetCarryBit();
 }
 
+void Processor::BCC_rel(Memory *mem) {
+    if( (FR & 0b00000001) == 0b00000000) {
+        uint8_t offset = mem->readMemVal(PC + 1);
+
+        // update clock
+        updateClockOnTransition(PC, offset);
+        // branch
+        PC += offset;
+    }
+    else {
+        updateClock(mem->readMemVal(PC));
+        UpdatePC(mem->readMemVal(PC));
+    }
+}
+
+void Processor::BCS_rel(Memory *mem) {
+    if( (FR & 0b00000001) == 0b00000001) {
+        uint8_t offset = mem->readMemVal(PC + 1);
+
+        // update clock
+        updateClockOnTransition(PC, offset);
+        // branch
+        PC += offset;
+    }
+    else {
+        updateClock(mem->readMemVal(PC));
+        UpdatePC(mem->readMemVal(PC));
+    }
+}
+
+void Processor::BEQ_rel(Memory *mem) {
+    if( (FR & 0b00000010) == 0b00000010) {
+        uint8_t offset = mem->readMemVal(PC + 1);
+
+        // update clock
+        updateClockOnTransition(PC, offset);
+        // branch
+        PC += offset;
+    }
+    else {
+        updateClock(mem->readMemVal(PC));
+        UpdatePC(mem->readMemVal(PC));
+    }
+}
+
+void Processor::BNE_rel(Memory *mem) {
+    if( (FR & 0b00000010) == 0b00000000) {
+        uint8_t offset = mem->readMemVal(PC + 1);
+
+        // update clock
+        updateClockOnTransition(PC, offset);
+        // branch
+        PC += offset;
+    }
+    else {
+        updateClock(mem->readMemVal(PC));
+        UpdatePC(mem->readMemVal(PC));
+    }
+}
+
+void Processor::BMI_rel(Memory *mem) {
+    if( (FR & 0b10000000) == 0b10000000) {
+        uint8_t offset = mem->readMemVal(PC + 1);
+
+        // update clock
+        updateClockOnTransition(PC, offset);
+        // branch
+        PC += offset;
+    }
+    else {
+        updateClock(mem->readMemVal(PC));
+        UpdatePC(mem->readMemVal(PC));
+    }
+}
+
+void Processor::BPL_rel(Memory *mem) {
+    if( (FR & 0b10000000) == 0b00000000) {
+        uint8_t offset = mem->readMemVal(PC + 1);
+
+        // update clock
+        updateClockOnTransition(PC, offset);
+        // branch
+        PC += offset;
+    }
+    else {
+        updateClock(mem->readMemVal(PC));
+        UpdatePC(mem->readMemVal(PC));
+    }
+}
+
+void Processor::BVC_rel(Memory *mem) {
+    if( (FR & 0b01000000) == 0b00000000) {
+        uint8_t offset = mem->readMemVal(PC + 1);
+
+        // update clock
+        updateClockOnTransition(PC, offset);
+        // branch
+        PC += offset;
+    }
+    else {
+        updateClock(mem->readMemVal(PC));
+        UpdatePC(mem->readMemVal(PC));
+    }
+}
+
+void Processor::BVS_rel(Memory *mem) {
+    if( (FR & 0b01000000) == 0b01000000) {
+        uint8_t offset = mem->readMemVal(PC + 1);
+
+        // update clock
+        updateClockOnTransition(PC, offset);
+        // branch
+        PC += offset;
+    }
+    else {
+        updateClock(mem->readMemVal(PC));
+        UpdatePC(mem->readMemVal(PC));
+    }
+}
 
