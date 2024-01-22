@@ -303,22 +303,32 @@ public:
     void ADC_abs(Memory *mem);
     void ADC_idrx(Memory *mem);
 
-    /*** BCC Instructions ***/
+    /*** BCC Instruction ***/
     void BCC_rel(Memory *mem);
-    /*** BCS Instructions ***/
+    /*** BCS Instruction ***/
     void BCS_rel(Memory *mem);
-    /*** BEQ Instructions ***/
+    /*** BEQ Instruction ***/
     void BEQ_rel(Memory *mem);
-    /*** BNE Instructions ***/
+    /*** BNE Instruction ***/
     void BNE_rel(Memory *mem);
-    /*** BMI Instructions ***/
+    /*** BMI Instruction ***/
     void BMI_rel(Memory *mem);
-    /*** BPL Instructions ***/
+    /*** BPL Instruction ***/
     void BPL_rel(Memory *mem);
-    /*** BVC Instructions ***/
+    /*** BVC Instruction ***/
     void BVC_rel(Memory *mem);
-    /*** BVS Instructions ***/
+    /*** BVS Instruction ***/
     void BVS_rel(Memory *mem);
+
+    /*** SBC Instructions ***/
+    void SBC_imdt(Memory *mem);
+    void SBC_zpg(Memory *mem);
+    void SBC_zpgx(Memory *mem);
+    void SBC_abs(Memory *mem);
+    void SBC_absx(Memory *mem);
+    void SBC_absy(Memory *mem);
+    void SBC_idrx(Memory *mem);
+    void SBC_idry(Memory *mem);
 };
 
 

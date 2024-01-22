@@ -1653,3 +1653,41 @@ void Processor::BVS_rel(Memory *mem) {
     }
 }
 
+void Processor::SBC_imdt(Memory *mem) {
+    setCarryBit();
+    uint8_t valFromMem = mem->readMemVal(PC + 1);
+
+    // if borrow takes place
+    if(valFromMem > A) {
+        A = A - valFromMem - 1; // check this
+        resetCarryBit();
+    }
+    // otherwise
+    else {
+        A = A - valFromMem;
+    }
+    updateClock(mem->readMemVal(PC));
+    UpdatePC(mem->readMemVal(PC));
+}
+void Processor::SBC_zpg(Memory *mem) {
+
+}
+void Processor::SBC_zpgx(Memory *mem) {
+
+}
+void Processor::SBC_abs(Memory *mem) {
+
+}
+void Processor::SBC_absx(Memory *mem) {
+
+}
+void Processor::SBC_absy(Memory *mem) {
+
+}
+void Processor::SBC_idrx(Memory *mem) {
+
+}
+void Processor::SBC_idry(Memory *mem) {
+
+}
+
