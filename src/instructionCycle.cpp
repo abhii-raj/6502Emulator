@@ -144,14 +144,6 @@ void InstructionCycle::Execute(uint8_t opcode) {
         case 0x91:
             proc.STA_ind_Y(&mem);
             break;
-        /* CMP Instructions */
-    void CMP_imdt(Memory *mem);
-    //testing of following functions not done
-    void CMP_zpg(Memory *mem);
-    void CMP_zpgx(Memory *mem);
-    void CMP_abs(Memory *mem);
-
-    // testing of all t
         case 0xC9:
             proc.CMP_imdt(&mem);
             break;
