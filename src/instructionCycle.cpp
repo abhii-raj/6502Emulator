@@ -222,8 +222,119 @@ void InstructionCycle::Execute(uint8_t opcode) {
         case 0x21:
             proc.AND_idrx(&mem);
             break;
-
-
-
+       case 0xC6:
+            proc.DEC_zpg(&mem);
+            break;
+       case 0xD6:
+            proc.DEC_zpgx(&mem);
+            break;   
+       case 0xCE:
+            proc.DEC_abs(&mem);
+            break;  
+       case 0xDE:
+            proc.DEC_absx(&mem);
+            break; 
+        case 0xE0:
+            proc.CPX_imdt(&mem);
+            break;
+       case 0xE4:
+            proc.CPX_zpg(&mem);
+            break;
+        case 0xEC:
+            proc.CPX_abs(&mem);
+            break;
+       case 0xC0:
+            proc.CPY_imdt(&mem);
+            break; 
+        case 0xC4:
+            proc.CPY_zpg(&mem);
+            break;
+        case 0xCC:
+            proc.CPY_abs(&mem);
+            break;
+        case 0x2A:
+            proc.ROL_A(&mem);
+            break; 
+        case 0x26:
+            proc.ROL_zpg(&mem);
+            break;
+        case 0x36:
+            proc.ROL_zpgx(&mem);
+            break;
+        case 0x2E:
+            proc.ROL_abs(&mem);
+            break;
+        case 0x3E:
+            proc.ROL_absx(&mem);
+            break;
+        case 0x6A:
+            proc.ROL_A(&mem);
+            break;
+         case 0x66:
+            proc.ROR_zpg(&mem);
+            break;
+        case 0x76:
+            proc.ROR_zpgx(&mem);
+            break;
+        case 0x6E:
+            proc.ROR_abs(&mem);
+            break; 
+         case 0x7E:
+            proc.ROR_absx(&mem);
+            break; 
+       case 0x0A:
+            proc.ASL_A(&mem);
+            break;
+        case 0x06:
+            proc.ASL_zpg(&mem);
+            break;
+        case 0x16:
+            proc.ASL_zpgx(&mem);
+            break;
+        case 0x0E:
+            proc.ASL_abs(&mem);
+            break; 
+         case 0x1E:
+            proc.ASL_absx(&mem);
+            break;  
+         case 0x69:
+            proc.ADC_imdt(&mem);
+            break;
+        case 0x65:
+            proc.ADC_zpg(&mem);
+            break;
+        case 0x75:
+            proc.ADC_zpgx(&mem);
+            break;
+        case 0x6D:
+            proc.ADC_abs(&mem);
+            break; 
+         case 0x61:
+            proc.ADC_idrx(&mem);
+            break; 
+       case 0x90:
+            proc.BCC_rel(&mem);
+            break;
+        case 0xB0:
+            proc.BCS_rel(&mem);
+            break;
+        case 0xF0:
+            proc.BEQ_rel(&mem);
+            break;
+        case 0xD0:
+            proc.BNE_rel(&mem);
+            break;
+        case 0x30:
+            proc.BMI_rel(&mem);
+            break;
+        case 0x10:
+            proc.BPL_rel(&mem);
+            break;
+        case 0x50:
+            proc.BVC_rel(&mem);
+            break;
+        case 0x70:
+            proc.BVS_rel&mem);
+            break; 
     }
 }
