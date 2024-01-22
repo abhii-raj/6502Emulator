@@ -102,11 +102,47 @@ void InstructionCycle::Execute(uint8_t opcode) {
         case 0xA9:
             proc.LDA_imdt(&mem);
             break;
+        case 0xA5:
+            proc.LDA_zpg(&mem);
+            break;
+        case 0xB5:
+            proc.LDA_zpgx(&mem);
+            break;
         case 0xAD:
             proc.LDA_abs(&mem);
             break;
+        case 0xBD:
+            proc.LDA_absx(&mem);
+            break;
+        case 0xB9:
+            proc.LDA_absy(&mem);
+            break;
+        case 0xA1:
+            proc.LDA_ind_x(&mem);
+            break;
+        case 0xB1:
+            proc.LDA_ind_y(&mem);
+            break;
+        case 0x85:
+            proc.STA_zpg(&mem);
+            break;
+        case 0x95:
+            proc.STA_zpgx(&mem);
+            break;
         case 0x8D:
             proc.STA_abs(&mem);
+            break;
+         case 0x9D:
+            proc.STA_absx(&mem);
+            break;
+        case 0x99:
+            proc.STA_absy(&mem);
+            break;
+        case 0x81:
+            proc.STA_ind_x(&mem);
+            break;
+        case 0x91:
+            proc.STA_ind_Y(&mem);
             break;
         case 0xC9:
             proc.CMP_imdt(&mem);
