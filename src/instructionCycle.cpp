@@ -117,12 +117,12 @@ void InstructionCycle::Execute(uint8_t opcode) {
         case 0xB9:
             proc.LDA_absy(&mem);
             break;
-        case 0xA1:
+        /***case 0xA1:
             proc.LDA_ind_x(&mem);
-            break;
-        case 0xB1:
+            break; ***/
+      /***  case 0xB1:
             proc.LDA_ind_y(&mem);
-            break;
+            break; ***/
         case 0x85:
             proc.STA_zpg(&mem);
             break;
@@ -138,12 +138,12 @@ void InstructionCycle::Execute(uint8_t opcode) {
         case 0x99:
             proc.STA_absy(&mem);
             break;
-        case 0x81:
+        /***case 0x81:
             proc.STA_ind_x(&mem);
-            break;
-        case 0x91:
+            break; ***/
+        /**case 0x91:
             proc.STA_ind_Y(&mem);
-            break;
+            break; ***/
         case 0xC9:
             proc.CMP_imdt(&mem);
             break;
@@ -345,18 +345,18 @@ void InstructionCycle::Execute(uint8_t opcode) {
          case 0x69:
             proc.ADC_imdt(&mem);
             break;
-        case 0x65:
+        /***case 0x65:
             proc.ADC_zpg(&mem);
-            break;
-        case 0x75:
+            break; ***/
+       /*** case 0x75:
             proc.ADC_zpgx(&mem);
-            break;
-        case 0x6D:
+            break; ***/
+        /***case 0x6D:
             proc.ADC_abs(&mem);
-            break; 
-         case 0x61:
+            break; ***/
+        /*** case 0x61:
             proc.ADC_idrx(&mem);
-            break; 
+            break; ***/
        case 0x90:
             proc.BCC_rel(&mem);
             break;
@@ -379,7 +379,7 @@ void InstructionCycle::Execute(uint8_t opcode) {
             proc.BVC_rel(&mem);
             break;
         case 0x70:
-            proc.BVS_rel&mem);
+            proc.BVS_rel(&mem);
             break; 
     }
 }
