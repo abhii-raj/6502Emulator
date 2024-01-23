@@ -144,6 +144,15 @@ void InstructionCycle::Execute(uint8_t opcode) {
         /**case 0x91:
             proc.STA_ind_Y(&mem);
             break; ***/
+        case 0x86:
+            proc.STX_zpg(&mem);
+            break;
+        case 0x96:
+            proc.STX_zpgy(&mem);
+            break;
+        case 0x8E:
+            proc.STX_abs(&mem);
+            break;
         case 0xC9:
             proc.CMP_imdt(&mem);
             break;
