@@ -187,7 +187,7 @@ public:
 
     /***STX Instructions ***/
     void STX_zpg(Memory *mem);
-    void STX_zpgx(Memory *mem);
+    void STX_zpgy(Memory *mem);
     void STX_abs(Memory *mem);
 
     /***SEI Instructions ***/
@@ -329,6 +329,9 @@ public:
     void SBC_absy(Memory *mem);
     void SBC_idrx(Memory *mem);
     void SBC_idry(Memory *mem);
+
+    /*** RTS Instruction ***/
+    void RTS_impl(Memory *mem);
 };
 
 

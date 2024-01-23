@@ -521,12 +521,12 @@ void Processor::STX_zpg(Memory *mem) {
     UpdatePC(mem->readMemVal(PC));
 }
 
-void Processor::STX_zpgx(Memory *mem) {
+void Processor::STX_zpgy(Memory *mem) {
     uint8_t effAddrToRead = mem->readMemVal(PC + 1);
-    effAddrToRead += X;
+    effAddrToRead += Y;
 
     uint8_t effValFetched = mem->readMemVal((uint16_t)effAddrToRead);
-     mem->setMem(effValFetched, X);
+     mem->setMem(effValFetched, Y);
     
     updateClock(mem->readMemVal(PC));
     UpdatePC(mem->readMemVal(PC));
@@ -605,6 +605,12 @@ void Processor::NOP_impl(Memory *mem) {
 void Processor::JSR_abs(Memory *mem) {
     // effective address of the topmost free location in stack
     uint16_t effStackAddr = 0x0100 + SP;
+
+    /***
+     * currently PC + 3 (a 16 bit value) is pushed to an 8 bit word of the stack
+     * change it, so that both (8 bit) halves of the value of PC + 3 is
+     * pushed to the stack
+     */
 
     // push PC + 3 to the stack
     mem->setMem(effStackAddr, PC+3);
@@ -1689,5 +1695,44 @@ void Processor::SBC_idrx(Memory *mem) {
 }
 void Processor::SBC_idry(Memory *mem) {
 
+}
+
+void Processor::RTS_impl(Memory *mem) {
+    // first updates stack pointer to point to the location
+    // where return address is stored
+    SP++;
+    uint16_t effStackPtr = 0x100 + SP;
+    // address in memory, which was stored in stack
+    uint16_t retAddr = (uint16_t) mem->readNextTwoWords(effStackPtr);
+
+    updateClock(mem->readMemVal(PC));
+    PC = retAddr;
+}
+
+void Processor::ADC_imdt(Memory *mem) {
+    uint8_t val = mem->readMemVal(PC + 1);
+    uint8_t carry;
+    if(FR & 0b00000001 == 0b00000001) carry = 1;
+    else carry = 0;
+    uint16_t completeSum = A + val + carry;
+
+    // condition for overflow
+    // both the numbers to be added are positive and the result is negative
+    // both the numbers to be added are negative and the result is positive
+    // at this point A stores its original value and not the result of addition
+    if( (A < 0 && val < 0 && (short)completeSum > 0) ||
+    (A > 0 && val > 0 && (short)completeSum < 0) ) {
+        setOverflowBit();
+    }
+    else {
+        resetOverflowBit();
+    }
+    A = (uint8_t)completeSum;
+    if(A == 0) setZeroBit();
+    else resetZeroBit();
+    if(A < 0) setNegativeBit();
+    else resetNegativeBit();
+    if(completeSum > 256) setCarryBit();
+    resetCarryBit();
 }
 
