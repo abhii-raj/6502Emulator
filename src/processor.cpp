@@ -1736,5 +1736,8 @@ void Processor::ADC_imdt(Memory *mem) {
     else resetNegativeBit();
     if(completeSum > 256) setCarryBit();
     resetCarryBit();
+
+    updateClock(mem->readMemVal(PC));
+    UpdatePC(mem->readMemVal(PC));
 }
 
