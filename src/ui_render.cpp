@@ -140,7 +140,7 @@ void onStepRunButtonClick(GtkButton *button,GtkTextBuffer* txtBuff) {
     g_thread_new("RowUpdate2", step_rowUpdateThread, NULL);
 }
 
-// clears textview, list store, and memory
+// clears textview, list store, memory, and clock
 void onClearButtonClick(GtkButton *button,GtkTextBuffer* txtBuff) {
     GtkTextIter s_iter, e_iter;
     gtk_text_buffer_get_start_iter(txtBuff, &s_iter);
@@ -150,6 +150,7 @@ void onClearButtonClick(GtkButton *button,GtkTextBuffer* txtBuff) {
     gtk_list_store_clear(colList);
 
     local_memRef->resetMemory();
+    local_procRef->cpuClock = 0;
 
     firstPress = 1;
 }

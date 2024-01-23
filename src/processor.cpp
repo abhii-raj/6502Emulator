@@ -705,7 +705,6 @@ void Processor::LDX_imdt(Memory *mem) {
     
     if((X & 0b10000000) == 0b10000000) setNegativeBit();
     else resetNegativeBit();
-    
 
     updateClock(mem->readMemVal(PC));
     UpdatePC(mem->readMemVal(PC));
