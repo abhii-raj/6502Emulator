@@ -1546,7 +1546,7 @@ void Processor::BCC_rel(Memory *mem) {
         // update clock
         updateClockOnTransition(PC, offset);
         // branch
-        PC += offset;
+        PC += (int8_t)offset;
     }
     else {
         updateClock(mem->readMemVal(PC));
@@ -1561,7 +1561,7 @@ void Processor::BCS_rel(Memory *mem) {
         // update clock
         updateClockOnTransition(PC, offset);
         // branch
-        PC += offset;
+        PC += (int8_t)offset;
     }
     else {
         updateClock(mem->readMemVal(PC));
@@ -1571,12 +1571,12 @@ void Processor::BCS_rel(Memory *mem) {
 
 void Processor::BEQ_rel(Memory *mem) {
     if( (FR & 0b00000010) == 0b00000010) {
-        uint8_t offset = mem->readMemVal(PC + 1);
+        int8_t offset = mem->readMemVal(PC + 1);
 
         // update clock
         updateClockOnTransition(PC, offset);
         // branch
-        PC += offset;
+        PC += (int8_t)offset;
     }
     else {
         updateClock(mem->readMemVal(PC));
@@ -1589,9 +1589,9 @@ void Processor::BNE_rel(Memory *mem) {
         uint8_t offset = mem->readMemVal(PC + 1);
 
         // update clock
-        updateClockOnTransition(PC, offset);
+        updateClockOnTransition(PC, (uint8_t)offset);
         // branch
-        PC += offset;
+        PC += (int8_t)offset;
     }
     else {
         updateClock(mem->readMemVal(PC));
@@ -1606,7 +1606,7 @@ void Processor::BMI_rel(Memory *mem) {
         // update clock
         updateClockOnTransition(PC, offset);
         // branch
-        PC += offset;
+        PC += (int8_t)offset;
     }
     else {
         updateClock(mem->readMemVal(PC));
@@ -1621,7 +1621,7 @@ void Processor::BPL_rel(Memory *mem) {
         // update clock
         updateClockOnTransition(PC, offset);
         // branch
-        PC += offset;
+        PC += (int8_t)offset;
     }
     else {
         updateClock(mem->readMemVal(PC));
@@ -1636,7 +1636,7 @@ void Processor::BVC_rel(Memory *mem) {
         // update clock
         updateClockOnTransition(PC, offset);
         // branch
-        PC += offset;
+        PC += (int8_t)offset;
     }
     else {
         updateClock(mem->readMemVal(PC));
@@ -1651,7 +1651,7 @@ void Processor::BVS_rel(Memory *mem) {
         // update clock
         updateClockOnTransition(PC, offset);
         // branch
-        PC += offset;
+        PC += (int8_t)offset;
     }
     else {
         updateClock(mem->readMemVal(PC));
