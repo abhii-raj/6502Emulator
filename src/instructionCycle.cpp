@@ -165,6 +165,12 @@ void InstructionCycle::Execute(uint8_t opcode) {
          case 0xCD:
             proc.CMP_abs(&mem);
             break;
+        case 0x4C:
+            proc.JMP_abs(&mem);
+            break;
+         case 0x6C:
+            proc.JMP_idr(&mem);
+            break;
         case 0xCA:
             proc.DEX_impl(&mem);
             break;
@@ -206,6 +212,63 @@ void InstructionCycle::Execute(uint8_t opcode) {
             break;
         case 0x98:
             proc.TYA_impl(&mem);
+            break;
+         case 0x84:
+            proc.STY_zpg(&mem);
+            break;
+        case 0x94:
+            proc.STY_zpgx(&mem);
+            break;
+        case 0x8C:
+            proc.STY_abs(&mem);
+            break;
+         case 0x86:
+            proc.STX_zpg(&mem);
+            break;
+        case 0x96:
+            proc.STX_zpgx(&mem);
+            break;
+        case 0x8E:
+            proc.STX_abs(&mem);
+            break;
+        case 0x78:
+            proc.SEI_impl(&mem);
+            break;
+        case 0xF8:
+            proc.SED_impl(&mem);
+            break;
+        case 0x38:
+            proc.SEC_impl(&mem);
+            break;     
+        case 0xE6:
+            proc.INC_zpg(&mem);
+            break;
+        case 0xF6:
+            proc.INC_zpgx(&mem);
+            break;
+        case 0xEE:
+            proc.INC_abs(&mem);
+            break;
+        case 0xFE:
+            proc.INC_absx(&mem);
+            break; 
+        case 0xEA:
+            proc.NOP_impl(&mem);
+            break;
+        case 0x20:
+            proc.JSR_abs(&mem);
+            break;
+        case 0x48:
+            proc.PHA_impl(&mem);
+            break;
+        case 0x08:
+            proc.PHP_impl(&mem);
+            break;
+        case 0x68:
+            proc.PLA_impl(&mem);
+            break;
+        case 0x28:
+            proc.PLP_impl(&mem);
             break;
         case 0xA2:
             proc.LDX_imdt(&mem);
