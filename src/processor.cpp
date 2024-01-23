@@ -1254,6 +1254,8 @@ void Processor::ROL_zpg(Memory *mem) {
     tempMem = tempMem << 1;
     tempMem = tempMem | leftmostBit;
 
+    mem->setMem(PC + 1, tempMem);
+
     if(tempMem == 0) setZeroBit();
     else resetZeroBit();
 
@@ -1274,6 +1276,8 @@ void Processor::ROL_abs(Memory *mem) {
     int leftmostBit = tempMem & 0b10000000;
     tempMem = tempMem << 1;
     tempMem = tempMem | leftmostBit;
+
+    mem->setMem(nextTwoWordsAddr, tempMem);
 
     if(tempMem == 0) setZeroBit();
     else resetZeroBit();
@@ -1298,6 +1302,8 @@ void Processor::ROL_absx(Memory *mem) {
     tempMem = tempMem << 1;
     tempMem = tempMem | leftmostBit;
 
+    mem->setMem(effectiveAddr, tempMem);
+
     if(tempMem == 0) setZeroBit();
     else resetZeroBit();
 
@@ -1318,6 +1324,8 @@ void Processor::ROL_zpgx(Memory *mem) {
     int leftmostBit = tempMem & 0b10000000;
     tempMem = tempMem << 1;
     tempMem = tempMem | leftmostBit;
+
+    mem->setMem(zpgAddrX, tempMem);
 
     if(tempMem == 0) setZeroBit();
     else resetZeroBit();
@@ -1358,6 +1366,8 @@ void Processor::ROR_abs(Memory *mem) {
     tempMem = tempMem >> 1;
     tempMem = tempMem | (rightmostBit << 7);
 
+    mem->setMem(nextTwoWordsAddr, tempMem);
+
     if (tempMem == 0) setZeroBit();
     else resetZeroBit();
 
@@ -1381,6 +1391,8 @@ void Processor::ROR_absx(Memory *mem) {
     tempMem = tempMem >> 1;
     tempMem = tempMem | (rightmostBit << 7);
 
+    mem->setMem(effectiveAddr, tempMem);
+
     if (tempMem == 0) setZeroBit();
     else resetZeroBit();
 
@@ -1403,6 +1415,8 @@ void Processor::ROR_zpg(Memory *mem) {
     tempMem = tempMem >> 1;
     tempMem = tempMem | (rightmostBit << 7);
 
+    mem->setMem(PC + 1, tempMem);
+
     if (tempMem == 0) setZeroBit();
     else resetZeroBit();
 
@@ -1424,6 +1438,8 @@ void Processor::ROR_zpgx(Memory *mem) {
     int rightmostBit = tempMem & 0b00000001;
     tempMem = tempMem >> 1;
     tempMem = tempMem | (rightmostBit << 7);
+
+    mem->setMem(zpgAddrX, tempMem);
 
     if (tempMem == 0) setZeroBit();
     else resetZeroBit();
@@ -1464,6 +1480,8 @@ void Processor::ASL_zpg(Memory *mem) {
     int leftmostBit = tempMem & 0b10000000;
     tempMem = tempMem << 1;
 
+    mem->setMem(zeroPageAddr, tempMem);
+
     if(tempMem == 0) setZeroBit();
     else resetZeroBit();
 
@@ -1483,6 +1501,8 @@ void Processor::ASL_abs(Memory *mem) {
     tempMem = mem->readMemVal(nextTwoWordsAddr);
     int leftmostBit = tempMem & 0b10000000;
     tempMem = tempMem << 1;
+
+    mem->setMem(nextTwoWordsAddr, tempMem);
 
     if(tempMem == 0) setZeroBit();
     else resetZeroBit();
@@ -1506,6 +1526,8 @@ void Processor::ASL_absx(Memory *mem) {
     int leftmostBit = tempMem & 0b10000000;
     tempMem = tempMem << 1;
 
+    mem->setMem(effectiveAddr, tempMem);
+
     if(tempMem == 0) setZeroBit();
     else resetZeroBit();
 
@@ -1525,6 +1547,8 @@ void Processor::ASL_zpgx(Memory *mem) {
     tempMem = mem->readMemVal(zpgAddrX);
     int leftmostBit = tempMem & 0b10000000;
     tempMem = tempMem << 1;
+
+    mem->setMem(zpgAddrX, tempMem);
 
     if(tempMem == 0) setZeroBit();
     else resetZeroBit();
