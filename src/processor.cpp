@@ -1716,6 +1716,8 @@ void Processor::ADC_imdt(Memory *mem) {
     else carry = 0;
     uint16_t completeSum = A + val + carry;
 
+    /* could still contain potential bug, and fail on some condition
+     * since sign of carry is not checked */
     // condition for overflow
     // both the numbers to be added are positive and the result is negative
     // both the numbers to be added are negative and the result is positive
