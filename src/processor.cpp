@@ -1580,7 +1580,8 @@ void Processor::BCC_rel(Memory *mem) {
         // update clock
         updateClockOnTransition(PC, offset);
         // branch
-        PC += (int8_t)offset;
+        int8_t NOTOfTwosCompOfOffset = (~offset) - 1;
+        PC -= NOTOfTwosCompOfOffset;
     }
     else {
         updateClock(mem->readMemVal(PC));
@@ -1595,7 +1596,8 @@ void Processor::BCS_rel(Memory *mem) {
         // update clock
         updateClockOnTransition(PC, offset);
         // branch
-        PC += (int8_t)offset;
+        int8_t NOTOfTwosCompOfOffset = (~offset) - 1;
+        PC -= NOTOfTwosCompOfOffset;
     }
     else {
         updateClock(mem->readMemVal(PC));
@@ -1612,7 +1614,6 @@ void Processor::BEQ_rel(Memory *mem) {
         // branch
         int8_t NOTOfTwosCompOfOffset = (~offset) - 1;
         PC -= NOTOfTwosCompOfOffset;
-        //PC += offset;
     }
     else {
         updateClock(mem->readMemVal(PC));
@@ -1627,8 +1628,8 @@ void Processor::BNE_rel(Memory *mem) {
         // update clock
         updateClockOnTransition(PC, (uint8_t)offset);
         // branch
-        std::cout << (int) offset << std::endl;
-        std::cout << (int) (~offset) << std::endl;
+        //std::cout << (int) offset << std::endl;
+        //std::cout << (int) (~offset) << std::endl;
         int8_t NOTOfTwosCompOfOffset = (~offset) - 1;
         PC -= NOTOfTwosCompOfOffset;
     }
@@ -1645,7 +1646,8 @@ void Processor::BMI_rel(Memory *mem) {
         // update clock
         updateClockOnTransition(PC, offset);
         // branch
-        PC += (int8_t)offset;
+        int8_t NOTOfTwosCompOfOffset = (~offset) - 1;
+        PC -= NOTOfTwosCompOfOffset;
     }
     else {
         updateClock(mem->readMemVal(PC));
@@ -1660,7 +1662,8 @@ void Processor::BPL_rel(Memory *mem) {
         // update clock
         updateClockOnTransition(PC, offset);
         // branch
-        PC += (int8_t)offset;
+        int8_t NOTOfTwosCompOfOffset = (~offset) - 1;
+        PC -= NOTOfTwosCompOfOffset;
     }
     else {
         updateClock(mem->readMemVal(PC));
@@ -1675,7 +1678,8 @@ void Processor::BVC_rel(Memory *mem) {
         // update clock
         updateClockOnTransition(PC, offset);
         // branch
-        PC += (int8_t)offset;
+        int8_t NOTOfTwosCompOfOffset = (~offset) - 1;
+        PC -= NOTOfTwosCompOfOffset;
     }
     else {
         updateClock(mem->readMemVal(PC));
@@ -1690,7 +1694,8 @@ void Processor::BVS_rel(Memory *mem) {
         // update clock
         updateClockOnTransition(PC, offset);
         // branch
-        PC += (int8_t)offset;
+        int8_t NOTOfTwosCompOfOffset = (~offset) - 1;
+        PC -= NOTOfTwosCompOfOffset;
     }
     else {
         updateClock(mem->readMemVal(PC));
@@ -1778,7 +1783,9 @@ void Processor::ADC_imdt(Memory *mem) {
 
     updateClock(mem->readMemVal(PC));
     UpdatePC(mem->readMemVal(PC));
-}void Processor::ADC_abs(Memory *mem) {
+}
+
+void Processor::ADC_abs(Memory *mem) {
     uint8_t tempMem = 0;
     uint16_t nextTwoWordsAddr = mem->readNextTwoWords(PC + 1);
     uint8_t val = mem->readMemVal(nextTwoWordsAddr);
@@ -1874,10 +1881,10 @@ void Processor::ADC_zpgx(Memory *mem) {
     uint8_t carry;
     if(FR & 0b00000001 == 0b00000001) carry = 1;
     else carry = 0;
-    uint16_t completeSum = A + val + carry;
+    uint16_t completeSum = A + tempMem + carry;
 
-    if( (A < 0 && val < 0 && (short)completeSum > 0) ||
-        (A > 0 && val > 0 && (short)completeSum < 0) ) {
+    if( (A < 0 && tempMem < 0 && (short)completeSum > 0) ||
+        (A > 0 && tempMem > 0 && (short)completeSum < 0) ) {
         setOverflowBit();
     }
     else {
@@ -1893,7 +1900,6 @@ void Processor::ADC_zpgx(Memory *mem) {
 
     updateClock(mem->readMemVal(PC));
     UpdatePC(mem->readMemVal(PC));
-
 }
 
 

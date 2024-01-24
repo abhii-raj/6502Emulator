@@ -408,19 +408,19 @@ void InstructionCycle::Execute(uint8_t opcode) {
          case 0x69:
             proc.ADC_imdt(&mem);
             break;
-        /***case 0x65:
+         case 0x65:
             proc.ADC_zpg(&mem);
-            break; ***/
-       /*** case 0x75:
+            break;
+         case 0x75:
             proc.ADC_zpgx(&mem);
-            break; ***/
-        /***case 0x6D:
+            break;
+         case 0x6D:
             proc.ADC_abs(&mem);
-            break; ***/
-        /*** case 0x61:
+            break;
+         case 0x61:
             proc.ADC_idrx(&mem);
-            break; ***/
-       case 0x90:
+            break;
+        case 0x90:
             proc.BCC_rel(&mem);
             break;
         case 0xB0:
