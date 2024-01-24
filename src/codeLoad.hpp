@@ -10,9 +10,14 @@
 #include "memory.hpp"
 
 class CodeLoad {
+public:
     // read opcodes from the file, and start loading data
     // into memory at addrLoc starting from the 'loc' index
-    CodeLoad(std::string opcodeFilePath, uint16_t loc, Memory *mem);
+    void CodeLoadFromFile(std::string opcodeFilePath, uint16_t loc, Memory *mem);
+
+    // read opcodes from the string buffer, and start loading data
+    // into memory at addrLoc starting from the 'loc' index
+    void CodeLoadFromStrBuffer(std::string opcodeBuffer, uint16_t loc, Memory *mem);
 };
 
 

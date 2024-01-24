@@ -1,0 +1,49 @@
+/**window {
+    background-color: lightslategray;
+}***/
+
+#loadButton {
+    background-image: none;
+    background-color: lightyellow;
+}
+#loadButton:hover {
+    background-image: none;
+    background-color: yellow;
+}
+
+#continuousRunButton {
+    background-image: none;
+    background-color: lightgreen;
+}
+#continuousRunButton:hover {
+    background-image: none;
+    background-color: chartreuse;
+}
+
+#stepRunButton {
+    background-image: none;
+    background-color: lightgreen;
+}
+#stepRunButton:hover {
+    background-image: none;
+    background-color: chartreuse;
+}
+
+#clearButton {
+    background-image: none;
+    background-color: lightcoral;
+}
+#clearButton:hover {
+    background-image: none;
+    background-color: orangered;
+}
+
+#memDumpButton {
+    background-image: none;
+    background-color: antiquewhite;
+}
+#memDumpButton:hover {
+    background-image: none;
+    background-color: bisque;
+}
+

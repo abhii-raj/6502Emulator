@@ -3,13 +3,14 @@
 #include "processor.hpp"
 #include "instructionCycle.hpp"
 #include "dataView.hpp"
+#include "ui_render.hpp"
 
-int main() {
+int main(int argc, char **argv) {
     InstructionCycle IC;
-    dataView dv;
-    Processor P;
+    mainUI(&argc, &argv);
+
     //P.VMInit(IC.retMemoryObj());
     //std::cout << std::hex << P.retStackTopLoc() << std::endl;
-    IC.IFetch();
+    //IC.IFetch();
     return 0;
 }
