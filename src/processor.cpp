@@ -1230,7 +1230,9 @@ void Processor::CPY_zpg(Memory *mem) {
 void Processor::ROL_A(Memory *mem) {
      int leftmostBit = A & 0b10000000;
      A = A << 1;
-     A = A | leftmostBit;
+     if(leftmostBit = 0b10000000) {
+         A = A | 0b00000001;
+     }
 
      if(A == 0) setZeroBit();
      else resetZeroBit();
@@ -1252,7 +1254,9 @@ void Processor::ROL_zpg(Memory *mem) {
     tempMem = mem->readMemVal(zeroPageAddr);
     int leftmostBit = tempMem & 0b10000000;
     tempMem = tempMem << 1;
-    tempMem = tempMem | leftmostBit;
+    if(leftmostBit = 0b10000000) {
+        tempMem = tempMem | 0b00000001;
+    }
 
     mem->setMem(PC + 1, tempMem);
 
@@ -1275,7 +1279,9 @@ void Processor::ROL_abs(Memory *mem) {
     tempMem = mem->readMemVal(nextTwoWordsAddr);
     int leftmostBit = tempMem & 0b10000000;
     tempMem = tempMem << 1;
-    tempMem = tempMem | leftmostBit;
+    if(leftmostBit = 0b10000000) {
+        tempMem = tempMem | 0b00000001;
+    }
 
     mem->setMem(nextTwoWordsAddr, tempMem);
 
@@ -1300,7 +1306,9 @@ void Processor::ROL_absx(Memory *mem) {
     tempMem = mem->readMemVal(effectiveAddr);
     int leftmostBit = tempMem & 0b10000000;
     tempMem = tempMem << 1;
-    tempMem = tempMem | leftmostBit;
+    if(leftmostBit = 0b10000000) {
+        tempMem = tempMem | 0b00000001;
+    }
 
     mem->setMem(effectiveAddr, tempMem);
 
@@ -1323,7 +1331,9 @@ void Processor::ROL_zpgx(Memory *mem) {
     tempMem = mem->readMemVal(zpgAddrX);
     int leftmostBit = tempMem & 0b10000000;
     tempMem = tempMem << 1;
-    tempMem = tempMem | leftmostBit;
+    if(leftmostBit = 0b10000000) {
+        tempMem = tempMem | 0b00000001;
+    }
 
     mem->setMem(zpgAddrX, tempMem);
 
