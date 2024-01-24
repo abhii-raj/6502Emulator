@@ -1595,12 +1595,12 @@ void Processor::BCS_rel(Memory *mem) {
 
 void Processor::BEQ_rel(Memory *mem) {
     if( (FR & 0b00000010) == 0b00000010) {
-        int8_t offset = mem->readMemVal(PC + 1);
+        uint8_t offset = mem->readMemVal(PC + 1);
 
         // update clock
         updateClockOnTransition(PC, offset);
         // branch
-        PC += (int8_t)offset;
+        PC += offset;
     }
     else {
         updateClock(mem->readMemVal(PC));
@@ -1615,7 +1615,10 @@ void Processor::BNE_rel(Memory *mem) {
         // update clock
         updateClockOnTransition(PC, (uint8_t)offset);
         // branch
-        PC += (int8_t)offset;
+        std::cout << (int) offset << std::endl;
+        std::cout << (int) (~offset) << std::endl;
+        int8_t NOTOfTwosCompOfOffset = (~offset) - 1;
+        PC -= NOTOfTwosCompOfOffset;
     }
     else {
         updateClock(mem->readMemVal(PC));
