@@ -222,15 +222,6 @@ void InstructionCycle::Execute(uint8_t opcode) {
         case 0x8C:
             proc.STY_abs(&mem);
             break;
-         /***case 0x86:
-            proc.STX_zpg(&mem);
-            break;
-        case 0x96:
-            proc.STX_zpgx(&mem);
-            break;
-        case 0x8E:
-            proc.STX_abs(&mem);
-            break;***/
         case 0x78:
             proc.SEI_impl(&mem);
             break;

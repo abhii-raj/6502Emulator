@@ -1610,7 +1610,9 @@ void Processor::BEQ_rel(Memory *mem) {
         // update clock
         updateClockOnTransition(PC, offset);
         // branch
-        PC += offset;
+        int8_t NOTOfTwosCompOfOffset = (~offset) - 1;
+        PC -= NOTOfTwosCompOfOffset;
+        //PC += offset;
     }
     else {
         updateClock(mem->readMemVal(PC));
