@@ -1776,5 +1776,123 @@ void Processor::ADC_imdt(Memory *mem) {
 
     updateClock(mem->readMemVal(PC));
     UpdatePC(mem->readMemVal(PC));
+}void Processor::ADC_abs(Memory *mem) {
+    uint8_t tempMem = 0;
+    uint16_t nextTwoWordsAddr = mem->readNextTwoWords(PC + 1);
+    uint8_t val = mem->readMemVal(nextTwoWordsAddr);
+    uint8_t carry;
+    if(FR & 0b00000001 == 0b00000001) carry = 1;
+    else carry = 0;
+    uint16_t completeSum = A + val + carry;
+
+    if( (A < 0 && val < 0 && (short)completeSum > 0) ||
+        (A > 0 && val > 0 && (short)completeSum < 0) ) {
+        setOverflowBit();
+    }
+    else {
+        resetOverflowBit();
+    }
+    A = (uint8_t)completeSum;
+    if(A == 0) setZeroBit();
+    else resetZeroBit();
+    if(A < 0) setNegativeBit();
+    else resetNegativeBit();
+    if(completeSum > 256) setCarryBit();
+    resetCarryBit();
+
+    updateClock(mem->readMemVal(PC));
+    UpdatePC(mem->readMemVal(PC));
 }
+
+void Processor::ADC_idrx(Memory *mem) {
+    uint8_t tempMem = 0 ;
+
+    uint8_t zeroPageAddr = mem->readMemVal(PC + 1);
+    uint16_t effectiveAddr = zeroPageAddr + X;
+    uint8_t val = mem->readMemVal(effectiveAddr);
+    uint8_t carry;
+    if(FR & 0b00000001 == 0b00000001) carry = 1;
+    else carry = 0;
+    uint16_t completeSum = A + val + carry;
+
+    if( (A < 0 && val < 0 && (short)completeSum > 0) ||
+        (A > 0 && val > 0 && (short)completeSum < 0) ) {
+        setOverflowBit();
+    }
+    else {
+        resetOverflowBit();
+    }
+    A = (uint8_t)completeSum;
+    if(A == 0) setZeroBit();
+    else resetZeroBit();
+    if(A < 0) setNegativeBit();
+    else resetNegativeBit();
+    if(completeSum > 256) setCarryBit();
+    resetCarryBit();
+
+    updateClock(mem->readMemVal(PC));
+    UpdatePC(mem->readMemVal(PC));
+}
+
+void Processor::ADC_zpg(Memory *mem) {
+    uint8_t tempMem = 0;
+
+    uint8_t zeroPageAddr = mem->readMemVal(PC + 1);
+    uint8_t val = mem->readMemVal(zeroPageAddr);
+    uint8_t carry;
+    if(FR & 0b00000001 == 0b00000001) carry = 1;
+    else carry = 0;
+    uint16_t completeSum = A + val + carry;
+
+    if( (A < 0 && val < 0 && (short)completeSum > 0) ||
+        (A > 0 && val > 0 && (short)completeSum < 0) ) {
+        setOverflowBit();
+    }
+    else {
+        resetOverflowBit();
+    }
+    A = (uint8_t)completeSum;
+    if(A == 0) setZeroBit();
+    else resetZeroBit();
+    if(A < 0) setNegativeBit();
+    else resetNegativeBit();
+    if(completeSum > 256) setCarryBit();
+    resetCarryBit();
+
+    updateClock(mem->readMemVal(PC));
+    UpdatePC(mem->readMemVal(PC));
+}
+
+void Processor::ADC_zpgx(Memory *mem) {
+    uint8_t tempMem = 0;
+    uint8_t zpgAddrX = mem->readMemVal(PC+1);
+    zpgAddrX += X;
+
+    tempMem = mem->readMemVal(zpgAddrX);
+    uint8_t carry;
+    if(FR & 0b00000001 == 0b00000001) carry = 1;
+    else carry = 0;
+    uint16_t completeSum = A + val + carry;
+
+    if( (A < 0 && val < 0 && (short)completeSum > 0) ||
+        (A > 0 && val > 0 && (short)completeSum < 0) ) {
+        setOverflowBit();
+    }
+    else {
+        resetOverflowBit();
+    }
+    A = (uint8_t)completeSum;
+    if(A == 0) setZeroBit();
+    else resetZeroBit();
+    if(A < 0) setNegativeBit();
+    else resetNegativeBit();
+    if(completeSum > 256) setCarryBit();
+    resetCarryBit();
+
+    updateClock(mem->readMemVal(PC));
+    UpdatePC(mem->readMemVal(PC));
+
+}
+
+
 
