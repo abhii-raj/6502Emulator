@@ -1728,16 +1728,7 @@ void Processor::SBC_zpgx(Memory *mem) {
 void Processor::SBC_abs(Memory *mem) {
 
 }
-void Processor::SBC_absx(Memory *mem) {
-
-}
-void Processor::SBC_absy(Memory *mem) {
-
-}
 void Processor::SBC_idrx(Memory *mem) {
-
-}
-void Processor::SBC_idry(Memory *mem) {
 
 }
 

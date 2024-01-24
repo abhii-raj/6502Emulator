@@ -443,6 +443,21 @@ void InstructionCycle::Execute(uint8_t opcode) {
             break;
         case 0x70:
             proc.BVS_rel(&mem);
-            break; 
+            break;
+        case 0xE9:
+            proc.SBC_imdt(&mem);
+            break;
+        case 0xE5:
+            proc.SBC_zpg(&mem);
+            break;
+        case 0xF5:
+            proc.SBC_zpgx(&mem);
+            break;
+        case 0xED:
+            proc.SBC_abs(&mem);
+            break;
+        case 0xE1:
+            proc.SBC_idrx(&mem);
+            break;
     }
 }
