@@ -385,7 +385,7 @@ void InstructionCycle::Execute(uint8_t opcode) {
             proc.ROL_absx(&mem);
             break;
         case 0x6A:
-            proc.ROL_A(&mem);
+            proc.ROR_A(&mem);
             break;
          case 0x66:
             proc.ROR_zpg(&mem);
