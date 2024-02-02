@@ -45,3 +45,8 @@ Some references which are useful for learning about the 6502 processor and its e
 * https://www.cs.jhu.edu/~phi/csf/slides/lecture-6502-stack.pdf
 * http://6502.org/
 * https://www.atariarchives.org/2bml/chapter_10.php
+
+## Original Contributors
+* [Shobhit](https://github.com/dragon540)
+* [Abhishek Raj](https://github.com/abhii-raj)
+* [Satyam Govind Rao](https://github.com/ISHADOW007)
