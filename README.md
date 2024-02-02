@@ -1,45 +1,47 @@
-# P-18
-# Virtual Machine Simulating a 6502-Like Processor
-## Project Overview
-This project aims to develop a simple Virtual Machine (VM) that simulates a 6502-like processor, complete with CPU, memory, and I/O device emulation. The VM can execute instructions, and store and retrieve data functioning like a real computer.
+# 6502Emulator
+This software emulates the working of the 6502 microprocessor(although the 
+functioning and reliability is limited as yet). Input can be given to the emulator
+(currently in form of equivalent opcodes of the program), and instruction level execution can
+be seen.
 
-## Introduction
-A Virtual Machine (VM) is a software program that simulates a computer system, including a CPU, memory, and other hardware components. VMs are used for various purposes, such as secure code execution, legacy software support, and platform portability. In this project, we focus on creating a VM that simulates a simplified 6502-like processor, in contrast to complex modern VMs like VMWare, VirtualBox, or Qemu.
+This GUI based 6502 emulator was written originally for the mini project requirement of the 3rd semester of
+our engineering course.
 
-### Why Use a VM?
-**1. Reproducing Behaviour** - It can reproduce the behaviour of some specific computer which are not in production anymore. 
-It can be used to run legacy software (including retro games, older applications) which can’t run on modern processors.
+![Screenshot of the emulator running few simple instructions](pictures/ss1.png)
 
-**2. Hardware Prototyping** – Design and architecture modifications can be tested before actually producing the hardware.
+## Dependencies
+* Gtk-3.0
 
-**3. As a learning tool** – Our VM also acts as a tool to understand and appreciate the working of the fundamentals of modern processors in general and the specifics of 6502 in particular.
+## Build
+Once the project repository and Gtk-3.0(the only external library used) are installed properly, 
+cmake can be used to generate the executable. 
 
-## Project Scope
-The project encompasses the following key aspects:
+    $ cd 6502Emulator
+    $ cmake ..
 
-- **Functionalities**: Determine the functionalities to be implemented in the VM.
-- **Software Development**: Write the code to implement the VM's functionalities.
-- **Testing**: Conduct extensive testing to ensure the VM meets the project's objectives.
-- **Sample Programs**: Run basic programs and verify the status of registers and components.
-- **Documentation**: Create detailed documentation for reference.
+An executable will be generated at the [cmake-build-debug](cmake-build-debug)
 
-## Design
+## How To Run?
+This emulator, as of now, depends on third party assemblers to convert the 6502 assembly code into equivalent opcodes. 
 
-  ### 1. Processor
-  * #### Registers: 
-    The CPU includes various registers:
-     - Accumulator register(A)
-     - Index register(X and Y)
-     - Flag register
-     - Program counter
-     - Stack pointer register
-  * #### ALU: 
-    The Arithmetic Logic Unit performs arithmetic and logical operations.
+Use a third party assembler like [this](https://www.masswerk.at/6502/assembler.html) 
+or [this](https://skilldrick.github.io/easy6502/) 
+to convert assembly code (example programs are given at [asm_ex](asm_ex)) into equivalent opcode. 
+Then simply copy the opcode and paste it into the input window of the emulator, 
+and click on the ``Load`` button to load the opcode into the memory. Then use one of the two modes of execution to run 
+the program.
 
-  * #### Clock
-    The clock signal controls the timing of instruction execution, ensuring proper order and speed for each instruction.
+There are two modes of execution in the emulator
+1. Step Run - runs the program, executing one instruction with each click. 
+2. Continuous Run -  executes the whole program on a single click.
 
-  ### 2. Memory
-  Emulate memory for storing instructions and data.
+``Memory Dump`` button can be used to read the first 512 words of the memory.
 
-  ### 3. Mechanism of Loading Instructions to Memory
+``Clear`` button can be used to reset the emulator.
+
+## References
+Some references which are useful for learning about the 6502 processor and its emulation are :
+* https://www.masswerk.at/6502/6502_instruction_set.html
+* https://www.cs.jhu.edu/~phi/csf/slides/lecture-6502-stack.pdf
+* http://6502.org/
+* https://www.atariarchives.org/2bml/chapter_10.php
