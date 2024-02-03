@@ -14,12 +14,12 @@ our engineering course.
 
 ## Build
 Once the project repository and Gtk-3.0(the only external library used) are installed properly, 
-cmake can be used to generate the executable. 
+make can be used to generate the executable. 
 
     $ cd 6502Emulator
-    $ cmake ..
+    $ make
 
-An executable will be generated at the [cmake-build-debug](cmake-build-debug)
+An executable will be generated at project directory
 
 ## How To Run?
 This emulator, as of now, depends on third party assemblers to convert the 6502 assembly code into equivalent opcodes. 
