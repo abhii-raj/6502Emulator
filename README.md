@@ -7,7 +7,15 @@ be seen.
 This GUI based 6502 emulator was written originally for the mini project requirement of the 3rd semester of
 our engineering course.
 
-![Screenshot of the emulator running few simple instructions](pictures/ss1.png)
+<div style="text-align:center">
+
+![Screenshot of the emulator running a program multiplying 3 and 5](pictures/3x5res.png)
+
+Screenshot of the emulator running [this](asm_ex/MUL.asm) program multiplying 3 and 5, and
+storing the result in A register
+
+</div>
+
 
 ## Dependencies
 * Gtk-3.0
