@@ -5,7 +5,7 @@
 #ifndef INC_6502EMULATOR_UI_RENDER_HPP
 #define INC_6502EMULATOR_UI_RENDER_HPP
 
-#include <gtk-3.0/gtk/gtk.h>
+#include <gtk/gtk.h>
 
 #include "instructionCycle.hpp"
 #include "memory.hpp"

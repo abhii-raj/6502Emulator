@@ -5,10 +5,10 @@
 #include "ui_render.hpp"
 #include "instructionCycle.hpp"
 
-#include <gtk-3.0/gtk/gtk.h>
-#include <gtk-3.0/gtk/gtkwidget.h>
-#include <gtk-3.0/gtk/gtkstyleprovider.h>
-#include <gtk-3.0/gtk/gtkstylecontext.h>
+#include <gtk/gtk.h>
+#include <gtk/gtkwidget.h>
+#include <gtk/gtkstyleprovider.h>
+#include <gtk/gtkstylecontext.h>
 
 #include <iostream>
 #include <algorithm>
@@ -49,7 +49,7 @@ void load_css(void) {
     GdkDisplay  *display;
     GdkScreen *screen;
 
-    const gchar *css_style_file = "../src/style.css";
+    const gchar *css_style_file = "src/style.css";
     GFile *css_fp = g_file_new_for_path(css_style_file);
     std::cout << "GFile: " << css_fp << std::endl;
     GError  *error = NULL;
